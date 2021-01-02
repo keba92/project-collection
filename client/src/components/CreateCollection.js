@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
-import { useAuth0 } from "@auth0/auth0-react"; 
+import { useAuth0 } from "@auth0/auth0-react";
+import { Form, Button } from 'react-bootstrap';
+import TabelItems from './TableItems';
 
 export default function CreateCollection() {
-    
     const [collection, setCollection] = useState('');
     const [collections, setCollections] = useState([]);
     const [nameItem, setNameItem] = useState('');
@@ -34,7 +35,8 @@ export default function CreateCollection() {
     })
     
 
-    const createItem = () =>{
+    const createItem = (e) =>{
+        e.preventDefault();
         Axios.post('/addItem',{
             id: user.sub,
             collect: collectionItem,
@@ -55,37 +57,49 @@ export default function CreateCollection() {
                     onChange={(e)=>setCollection(e.target.value)}
                     placeholder='Введите название коллекции' 
                 />
-                <button onClick={createCollection}>Создать коллекцию</button>
+                <Button variant="primary" type="submit"onClick={createCollection}>
+                    Создать коллекцию
+                </Button>
             </div>
             <h1 className='create'>Создать элемент коллекции</h1>
             <div className='create-item create'>
-                <label>Выберите коллекцию: </label>
-                <select className='select-collection' onInput={(e)=>setCollectionItem(e.target.value)}>
-                    <option></option>
-                    {createOptions}
-                </select>
-                Введите название: <input 
-                                    className='name-item'
-                                    onChange={(e)=>setNameItem(e.target.value)}
-                                    placeholder='Введите название'
-                                    />
-                Введите краткое описание: <textarea 
-                                    className='short-name'
+            <Form>
+                <Form.Group controlId="exampleForm.ControlInput1">
+                    <Form.Label>Выберите коллекцию: </Form.Label>
+                    <Form.Control as="select" onInput={(e)=>setCollectionItem(e.target.value)}>
+                        <option></option>
+                        {createOptions}
+                    </Form.Control>
+                </Form.Group>
+                <Form.Group controlId="exampleForm.ControlInput2">
+                    <Form.Label>Введите название: </Form.Label>
+                    <Form.Control type="text" onChange={(e)=>setNameItem(e.target.value)} placeholder='Введите название' />
+                </Form.Group>
+                <Form.Group controlId="exampleForm.ControlTextarea1">
+                    <Form.Label>Введите краткое описание: </Form.Label>
+                    <Form.Control as="textarea" rows={3} 
                                     onChange={(e)=>setShortNameItem(e.target.value)}
-                                    placeholder='Введите краткое описание'
-                                    />
-                Выберите тематику: <select className='select-tag' onInput={(e)=>setOptionItem(e.target.value)}>
-                                        <option></option>
-                                        <option value='alcohol'>Алкоголь</option>
-                                        <option value='book'>Книга</option>
-                                   </select>
-                URL Картинки: <input 
-                                className='url-item'
-                                onChange={(e)=>setUrlPicture(e.target.value)}
-                                placeholder='Введите URL'
-                             />
-                             <button className='createItem' onClick={createItem}>Создать Элемент</button>
+                                    placeholder='Введите краткое описание' 
+                    />
+                </Form.Group>
+                <Form.Group controlId="exampleForm.ControlInput3">
+                    <Form.Label>Выберите тематику: </Form.Label>
+                    <Form.Control as="select" onInput={(e)=>setOptionItem(e.target.value)}>
+                        <option></option>
+                        <option value='alcohol'>Алкоголь</option>
+                        <option value='book'>Книга</option>
+                    </Form.Control>
+                </Form.Group>
+                <Form.Group controlId="exampleForm.ControlInput4">
+                    <Form.Label>Введите название: </Form.Label>
+                    <Form.Control type="text" onChange={(e)=>setUrlPicture(e.target.value)} placeholder='Введите URL'/>
+                </Form.Group>
+                <Button variant="primary" type="submit" onClick={createItem}>
+                    Создать Элемент
+                </Button>
+            </Form>
             </div>
+            <TabelItems />
         </div>
     )
 }

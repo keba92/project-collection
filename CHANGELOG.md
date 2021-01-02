@@ -5,6 +5,13 @@ The format is based on forthetraveler.netlify.app(https://keepachangelog.com/en/
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [1.1.0] - 2021-01-02
+### Added
+
+- Add same js-files.
+- Add bootstrap.
+
+
 ## [1.0.0] - 2021-01-02
 ### Added
 

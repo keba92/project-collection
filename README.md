@@ -1,8 +1,8 @@
 # Final-Progect-Collection
 
-v.1.0.0
+v.1.1.0
 
 ### Итоговый проект Itransition.
 
 
-Link : [Netlify]()
+Link : [Heroku](https://final-project-collection.herokuapp.com/)
