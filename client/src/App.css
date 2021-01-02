@@ -1,0 +1,50 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.header{
+  display: inline-block;
+  height: 60px;
+  width: 100%;
+  border-bottom: 2px solid gray;
+}
+
+.search-block {
+  float:left;
+  margin-top: 10px;
+  display: inline;
+  margin-left: 10%;
+}
+
+.input-search {
+  width: 40%;
+  height: 35px;
+}
+
+.log-block {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: inline;
+  padding-right: 50px;
+  float: right;
+}
+
+button {
+  width: 100px;
+  height: 35px;
+  background-color: white;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+img {
+  width: 20px;
+  margin-right: 5px;
+}
+
+.create {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
