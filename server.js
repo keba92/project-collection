@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const http = require('http').createServer(app);
 const path = require('path');
 const cors = require('cors');
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 const collections = require('./config/collectionSchema');
 const items = require('./config/itemSchema')
@@ -26,7 +26,7 @@ if (process.env.NODE_ENV === 'production'|| process.env.NODE_ENV === 'staging') 
   };
 
 http.listen(PORT, () => {
-    console.log('listening on *:3000');
+    console.log('listening on *:3001');
   });
 
 mongoose

@@ -6,7 +6,10 @@ const LogoutButton = () => {
 
   return (
     isAuthenticated && (
-      <button onClick={() => logout()}>
+      <button onClick={() => {
+        logout();
+        localStorage.clear();
+      }}>
         Log Out
       </button>
     )
