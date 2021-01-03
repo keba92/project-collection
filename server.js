@@ -18,7 +18,12 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-if (process.env.NODE_ENV !== 'production') { require('dotenv').config() }
+if (process.env.NODE_ENV === 'production'|| process.env.NODE_ENV === 'staging') {
+    app.use(express.static(path.join(__dirname,'client/build')));
+    app.get('*', function(req, res){
+      res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+    });
+  };
 
 http.listen(PORT, () => {
     console.log('listening on *:3000');
