@@ -1,8 +1,8 @@
 # Final-Progect-Collection
 
-v.1.2.0
+v.1.3.0
 
 ### Итоговый проект Itransition.
 
 
-Link : [Heroku](https://final-project-collection.herokuapp.com/)
+Link : [Heroku](https://project-collections.herokuapp.com/)

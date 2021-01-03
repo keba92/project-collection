@@ -71,6 +71,16 @@ app.post('/getItems', (req,res) =>{
         .catch((err)=> console.log(err))
     }
 })
+app.post('/getItemInfo', (req,res) => {
+    const { _id } = req.body;
+    items.find({
+        _id: _id
+    })
+    .then((data) =>{
+        return res.send(data);
+    })
+    .catch((err) => console.log(err))
+})
 
 app.get('/getCollection', (req,res) => {
     collections.find()

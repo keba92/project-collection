@@ -3,6 +3,8 @@ import { Card, Button } from 'react-bootstrap';
 import Axios from 'axios';
 import { useAuth0 } from "@auth0/auth0-react";
 import {  MarkdownPreview  } from 'react-marked-markdown';
+import ItemInfo from './ItemInfo';
+import { Link } from 'react-router-dom';
 
 
 export default function TabelItems() {
@@ -29,7 +31,7 @@ export default function TabelItems() {
                     <Card.Title>{el.name}</Card.Title>
                     <Card.Text>{el.collections}</Card.Text>
                     <MarkdownPreview value={el.description} />
-                    <Button variant="primary">Посмотреть</Button>
+                    <Link to={`/item/${el._id}`}> Посмотреть </Link>
                 </Card.Body>
             </Card>
         )

@@ -23,7 +23,7 @@ export default function CreateCollection() {
 
     const createCollection = ()=>{
         Axios.post('/addCollection', {
-            id: localStorage.getItem('id'),
+            id: user.sub,
             collect: collection
         })
     }
@@ -38,7 +38,7 @@ export default function CreateCollection() {
     const createItem = (e) =>{
         e.preventDefault();
         Axios.post('/addItem',{
-            id: localStorage.getItem('id'),
+            id: user.sub,
             collect: collectionItem,
             name: nameItem,
             description: shortNameItem,
