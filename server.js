@@ -8,7 +8,7 @@ const cors = require('cors');
 const PORT = process.env.PORT || 3000;
 
 const collections = require('./config/collectionSchema');
-const items = require('./config/ItemSchema')
+const items = require('./config/itemSchema')
 
 app.use(cors());
 app.use(express.json());
