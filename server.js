@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const http = require('http').createServer(app);
 const bodyParser = require('body-parser');
 const path = require('path');
-let port = require('./app')
 const cors = require('cors');
 
 const collections = require('./config/collectionSchema');
@@ -25,7 +24,7 @@ if (process.env.NODE_ENV === 'production'|| process.env.NODE_ENV === 'staging') 
   });
 };
 
-http.listen(port, () => {
+http.listen(process.env.PORT || 1234, () => {
     console.log('listening on *:1234');
   });
 
