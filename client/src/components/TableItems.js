@@ -11,7 +11,7 @@ export default function TabelItems() {
 
     useEffect(() => {
         let id;
-        (localStorage.getItem('id'))? id = localStorage.getItem('id') : id = 'all';
+        (isAuthenticated)? id = user.sub : id = 'all';
         Axios.post('/getItems', {
             id: id
         })
