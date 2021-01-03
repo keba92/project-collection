@@ -6,6 +6,7 @@ const User = () => {
 
   const saveLocalStorage = () => {
     localStorage.setItem('auth', 'true');
+    localStorage.setItem('id', user.sub);
   }
 
   return (
