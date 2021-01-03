@@ -4,10 +4,9 @@ const mongoose = require('mongoose');
 const http = require('http').createServer(app);
 const bodyParser = require('body-parser');
 const path = require('path');
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 5000;
 const cors = require('cors');
 
-const product = require('./config/productSchema');
 const collections = require('./config/collectionSchema');
 const items = require('./config/ItemSchema')
 
@@ -78,5 +77,5 @@ app.get('/getCollection', (req,res) => {
 })
 
 app.listen(PORT, () => {
-    console.log('listening on *:3000');
+    console.log('listening on *:5000');
   });
