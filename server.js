@@ -25,6 +25,10 @@ if (process.env.NODE_ENV === 'production'|| process.env.NODE_ENV === 'staging') 
   });
 };
 
+http.listen(PORT, () => {
+    console.log('listening on *:5000');
+  });
+
 mongoose
     .connect(
         'mongodb+srv://admin:admin@cluster0.ucss3.mongodb.net/project?retryWrites=true&w=majority',
@@ -75,7 +79,3 @@ app.get('/getCollection', (req,res) => {
     })
     .catch((err) => console.log(err))
 })
-
-app.listen(PORT, () => {
-    console.log('listening on *:5000');
-  });
