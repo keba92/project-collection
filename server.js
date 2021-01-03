@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const http = require('http').createServer(app);
 const bodyParser = require('body-parser');
 const path = require('path');
-let port = process.env.PORT || 1234;
+let port = require('./app')
 const cors = require('cors');
 
 const collections = require('./config/collectionSchema');
