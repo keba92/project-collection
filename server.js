@@ -77,6 +77,6 @@ app.get('/getCollection', (req,res) => {
     .catch((err) => console.log(err))
 })
 
-http.listen(PORT, () => {
+app.listen(PORT, () => {
     console.log('listening on *:3000');
   });
