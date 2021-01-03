@@ -2,8 +2,10 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const http = require('http').createServer(app);
 const path = require('path');
 const cors = require('cors');
+const PORT = process.env.PORT || 3000;
 
 const collections = require('./config/collectionSchema');
 const items = require('./config/ItemSchema')
@@ -16,18 +18,16 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-app.set( 'port', ( process.env.PORT || 5000 ));
-
 if (process.env.NODE_ENV === 'production'|| process.env.NODE_ENV === 'staging') {
-  app.use(express.static(path.join(__dirname,'client/build')));
-  app.get('*', function(req, res){
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-  });
-};
-
-app.listen( app.get( 'port' ), function() {
-    console.log( 'Node server is running on port ' + app.get( 'port' ));
+    app.use(express.static(path.join(__dirname,'client/build')));
+    app.get('*', function(req, res){
+      res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
     });
+  };
+
+http.listen(PORT, () => {
+    console.log('listening on *:3000');
+  });
 
 mongoose
     .connect(
