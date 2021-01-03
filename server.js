@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-const http = require('http').createServer(app);
 const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
@@ -17,6 +16,8 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+app.set( 'port', ( process.env.PORT || 5000 ));
+
 if (process.env.NODE_ENV === 'production'|| process.env.NODE_ENV === 'staging') {
   app.use(express.static(path.join(__dirname,'client/build')));
   app.get('*', function(req, res){
@@ -24,9 +25,9 @@ if (process.env.NODE_ENV === 'production'|| process.env.NODE_ENV === 'staging') 
   });
 };
 
-http.listen(process.env.PORT || 1234, () => {
-    console.log('listening on *:1234');
-  });
+app.listen( app.get( 'port' ), function() {
+    console.log( 'Node server is running on port ' + app.get( 'port' ));
+    });
 
 mongoose
     .connect(
