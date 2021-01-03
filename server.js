@@ -58,11 +58,15 @@ app.post('/addItem', (req,res) =>{
 
 app.post('/getItems', (req,res) =>{
     const { id } = req.body;
-    items.find({
-        id: id
-    })
-    .then((data) => res.send(data))
-    .catch((err)=> console.log(err))
+    if (id == 'all') {
+        items.find()
+        .then((data) => res.send(data))
+        .catch((err)=> console.log(err))
+    } else {
+        items.find({ id: id })
+        .then((data) => res.send(data))
+        .catch((err)=> console.log(err))
+    }
 })
 
 app.get('/getCollection', (req,res) => {

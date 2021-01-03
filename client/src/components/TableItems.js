@@ -7,20 +7,22 @@ import {  MarkdownPreview  } from 'react-marked-markdown';
 
 export default function TabelItems() {
     const [dataItems, setDataItems] = useState([]);
-    const { user } = useAuth0();
+    const { user, isAuthenticated } = useAuth0();
 
     useEffect(() => {
+        let id;
+        (isAuthenticated)? id = user.sub : id = 'all';
         Axios.post('/getItems', {
-            id: user.sub
+            id: id
         })
         .then((res) => {
             setDataItems(res.data);
         });
     },[]);
 
-    const makeItems = dataItems.map((el, idx) => {
+    const makeItems = dataItems.reverse().map((el, idx) => {
         return (
-            <Card style={{ width: '18rem' }} key={idx}>
+            <Card style={{ width: '15rem' }} key={idx}>
                 <Card.Img variant="top" src={el.url} />
                 <Card.Body>
                     <Card.Title>{el.name}</Card.Title>

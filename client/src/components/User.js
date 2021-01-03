@@ -9,7 +9,7 @@ const User = () => {
      <>
         <img src={user.picture} alt={user.name} />
         <span>{user.name}</span>
-    </>
+     </>
     )
   )
 }

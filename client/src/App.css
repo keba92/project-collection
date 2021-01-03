@@ -48,3 +48,17 @@ img {
   align-items: center;
   justify-content: center;
 }
+
+.table-items {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.card{
+  margin-right: 15px;
+}
+
+.user-logo {
+  cursor: pointer;
+}

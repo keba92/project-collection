@@ -51,15 +51,17 @@ export default function CreateCollection() {
         <div className='create-block'>
             <h1 className='create'>Создать коллекцию</h1>
             <div className='create-collection create'>
-                <label>Название коллекции: </label>
-                <input 
-                    className='input-collection'
-                    onChange={(e)=>setCollection(e.target.value)}
-                    placeholder='Введите название коллекции' 
-                />
-                <Button variant="primary" type="submit"onClick={createCollection}>
-                    Создать коллекцию
-                </Button>
+                <Form inline>
+                    <Form.Label>Название коллекции: </Form.Label>
+                    <Form.Control type="text"  
+                                placeholder='Введите название коллекции' 
+                                onChange={(e)=>setCollection(e.target.value)} 
+                                className=" mr-sm-2" 
+                    />
+                    <Button variant="primary" type="submit"onClick={createCollection}>
+                        Создать коллекцию
+                    </Button>
+                </Form>
             </div>
             <h1 className='create'>Создать элемент коллекции</h1>
             <div className='create-item create'>
