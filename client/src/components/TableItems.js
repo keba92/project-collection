@@ -18,6 +18,7 @@ export default function TabelItems() {
         .then((res) => {
             setDataItems(res.data);
         });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     const makeItems = dataItems.reverse().map((el, idx) => {
