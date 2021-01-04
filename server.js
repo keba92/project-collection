@@ -51,26 +51,24 @@ app.post('/addCollection', (req,res) =>{
 })
 
 app.post('/addItem', (req,res) =>{
-    const { id, collect, name, description, teg,url } = req.body;
+    const { idUser, idCollect, dataItem, poleItem } = req.body;
     items.create({
-        id: id,
-        collections: collect,
-        name: name,
-        description: description,
-        teg: teg,
-        url: url
+        idUser: idUser,
+        idCollect: idCollect,
+        dataItem: dataItem,
+        poleItem: poleItem
     })
     .catch((err)=> console.log(err))
 })
 
 app.post('/getItems', (req,res) =>{
-    const { id } = req.body;
-    if (id == 'all') {
+    const { idCollect } = req.body;
+    if (idCollect == 'all') {
         items.find()
         .then((data) => res.send(data))
         .catch((err)=> console.log(err))
     } else {
-        items.find({ id: id })
+        items.find({ idCollect: idCollect })
         .then((data) => res.send(data))
         .catch((err)=> console.log(err))
     }

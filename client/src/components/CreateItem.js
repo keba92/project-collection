@@ -3,6 +3,7 @@ import Axios from 'axios';
 import { Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
+import TabelItems from './TableItems';
 
 export default function CreateItem(props) {
     const [collection, setCollection] = useState([]);
@@ -19,7 +20,12 @@ export default function CreateItem(props) {
 
     const addItem = (e) => {
         e.preventDefault();
-        console.log(itemData)
+        Axios.post('/addItem', {
+            idUser: user.sub,
+            idCollect: props.location.pathname.slice(12),
+            dataItem: JSON.stringify(itemData),
+            poleItem: collection[0].poleItem
+        })
     }
 
     return (
@@ -50,6 +56,7 @@ export default function CreateItem(props) {
                 </Form>
             </div>
         </div>
+        <TabelItems idCollect={props.location.pathname.slice(12)} />  
     </div>
     )
 }

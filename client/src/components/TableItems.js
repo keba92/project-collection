@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Button } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import Axios from 'axios';
 import { useAuth0 } from "@auth0/auth0-react";
 import {  MarkdownPreview  } from 'react-marked-markdown';
-import ItemInfo from './ItemInfo';
 import { Link } from 'react-router-dom';
 
 
-export default function TabelItems() {
+export default function TabelItems(props) {
     const [dataItems, setDataItems] = useState([]);
-    const { user, isAuthenticated } = useAuth0();
+    const { isAuthenticated } = useAuth0();
 
     useEffect(() => {
         let id;
-        (isAuthenticated)? id = user.sub : id = 'all';
+        (isAuthenticated)? id = props.idCollect : id = 'all';
         Axios.post('/getItems', {
-            id: id
+            idCollect: id
         })
         .then((res) => {
             setDataItems(res.data);
@@ -23,16 +22,29 @@ export default function TabelItems() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
-    const makeItems = dataItems.reverse().map((el, idx) => {
+    const makeItems = dataItems.map((el, idx) => {
+        const data = JSON.parse(el.dataItem);
+        const pole = JSON.parse(el.poleItem);
         return (
             <Card style={{ width: '15rem' }} key={idx}>
-                <Card.Img variant="top" src={el.url} />
                 <Card.Body>
-                    <Card.Title>{el.name}</Card.Title>
-                    <Card.Text>{el.collections}</Card.Text>
-                    <MarkdownPreview value={el.description} />
-                    <Link to={`/item/${el._id}`}> Посмотреть </Link>
+                    {Object.keys(data).map((keyName, idx) => {
+                        // eslint-disable-next-line default-case
+                        switch (pole[keyName]) {
+                            case 'number':
+                            return <Card.Text>{data[keyName]}</Card.Text>;
+                            case 'text':
+                            return <Card.Text>{data[keyName]}</Card.Text>;
+                            case 'textarea':
+                            return <MarkdownPreview value={data[keyName]} />;
+                            case 'date':
+                            return <Card.Text>{data[keyName]}</Card.Text>;
+                            case 'checkbox':
+                            return <Card.Text>{data[keyName]}</Card.Text>;
+                        }
+                    })}
                 </Card.Body>
+                <Link to={`/item/${el._id}`}> Посмотреть </Link>
             </Card>
         )
     })

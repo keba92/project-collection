@@ -1,26 +1,18 @@
 const mongoose = require('mongoose');
 const ItemSchema = new mongoose.Schema({
-    id: {
+    idUser: {
         type: String,
         require: true
     },
-    collections: {
+    idCollect: {
         type: String,
         require: true
     },
-    name: {
+    dataItem: {
         type: String,
         require: true
     },
-    description: {
-        type: String,
-        require: true
-    },
-    teg: {
-        type: String,
-        require: true
-    },
-    url: {
+    poleItem: {
         type: String,
         require: true
     }

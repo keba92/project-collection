@@ -14,19 +14,38 @@ export default function ItemInfo(props) {
         .then((res) => setItem(res.data))
         .catch((e) => console.log(e))
     }, [])
+    const makeItem = item.map((el, idx) => {
+        const data = JSON.parse(el.dataItem);
+        const pole = JSON.parse(el.poleItem);
+        return (
+            <Card style={{ width: '15rem' }} key={idx}>
+                <Card.Body>
+                    {Object.keys(data).map((keyName, idx) => {
+                        // eslint-disable-next-line default-case
+                        switch (pole[keyName]) {
+                            case 'number':
+                            return <Card.Text>{data[keyName]}</Card.Text>;
+                            case 'text':
+                            return <Card.Text>{data[keyName]}</Card.Text>;
+                            case 'textarea':
+                            return <MarkdownPreview value={data[keyName]} />;
+                            case 'date':
+                            return <Card.Text>{data[keyName]}</Card.Text>;
+                            case 'checkbox':
+                            return <Card.Text>{data[keyName]}</Card.Text>;
+                        }
+                    })}
+                </Card.Body>
+                <Link to={`/item/${el._id}`}> Посмотреть </Link>
+            </Card>
+        )
+    })
 
     return (
         (item.length!==0)&&(
             <div>
                 <Link to='/'>На главную страницу</Link>
-                <Card style={{ width: '30rem' }}>
-                    <Card.Img variant="top" src={item[0].url} />
-                    <Card.Body>
-                        <Card.Title>{item[0].name}</Card.Title>
-                        <Card.Text>{item[0].collections}</Card.Text>
-                        <MarkdownPreview value={item[0].description} />
-                    </Card.Body>
-                </Card>
+                {makeItem}
             </div>
         )
     )
