@@ -1,92 +1,58 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Axios from 'axios';
 import { useAuth0 } from "@auth0/auth0-react";
 import { Form, Button } from 'react-bootstrap';
-import TabelItems from './TableItems';
+import TableCollection from './TableCollection';
 
 export default function CreateCollection() {
-    const [collection, setCollection] = useState('');
-    const [collections, setCollections] = useState([]);
-    const [nameItem, setNameItem] = useState('');
-    const [shortNameItem, setShortNameItem] = useState('');
+    const [nameCollection, setNameCollection] = useState('');
+    const [shortNameCollection, setShortNameCollection] = useState('');
     const [urlPicture, setUrlPicture] = useState('');
-    const [collectionItem, setCollectionItem] = useState('');
-    const [optionItem, setOptionItem] = useState('');
+    const [optionCollection, setOptionCollection] = useState('');
+    const [poleItem, setPoleItem] = useState({ 'name': 'text', 'teg': 'text'});
+    const [namePole, setNamePole] = useState('');
+    const [typePole, setTypePole] = useState('');
     const { user } = useAuth0();
 
-    useEffect(() =>{
-        Axios.get('/getCollection')
-        .then((res) => {
-            setCollections(res.data);
-        });
-    },[])
-
-    const createCollection = ()=>{
-        Axios.post('/addCollection', {
+    const addCollection = (e) =>{
+        e.preventDefault();
+        Axios.post('/addCollection',{
             id: user.sub,
-            collect: collection
+            name: nameCollection,
+            description: shortNameCollection,
+            teg: optionCollection,
+            url: urlPicture,
+            poleItem: JSON.stringify(poleItem)
         })
     }
 
-    const createOptions = collections.map((el,idx) => {
-        return (
-            <option key={idx} value={el.collections}>{el.collections}</option>
-        )
-    })
-    
-
-    const createItem = (e) =>{
+    const addPoleItem = (e) =>{
         e.preventDefault();
-        Axios.post('/addItem',{
-            id: user.sub,
-            collect: collectionItem,
-            name: nameItem,
-            description: shortNameItem,
-            teg: optionItem,
-            url: urlPicture
-        })
+        if(namePole !=='' && typePole !==''){
+            poleItem[`${namePole}`] = typePole;
+            setPoleItem(poleItem);
+        }
     }
 
     return(
         <div className='create-block'>
             <h1 className='create'>Создать коллекцию</h1>
-            <div className='create-collection create'>
-                <Form inline>
-                    <Form.Label>Название коллекции: </Form.Label>
-                    <Form.Control type="text"  
-                                placeholder='Введите название коллекции' 
-                                onChange={(e)=>setCollection(e.target.value)} 
-                                className=" mr-sm-2" 
-                    />
-                    <Button variant="primary" type="submit"onClick={createCollection}>
-                        Создать коллекцию
-                    </Button>
-                </Form>
-            </div>
-            <h1 className='create'>Создать элемент коллекции</h1>
             <div className='create-item create'>
             <Form>
-                <Form.Group controlId="exampleForm.ControlInput1">
-                    <Form.Label>Выберите коллекцию: </Form.Label>
-                    <Form.Control as="select" onInput={(e)=>setCollectionItem(e.target.value)}>
-                        <option></option>
-                        {createOptions}
-                    </Form.Control>
-                </Form.Group>
                 <Form.Group controlId="exampleForm.ControlInput2">
                     <Form.Label>Введите название: </Form.Label>
-                    <Form.Control type="text" onChange={(e)=>setNameItem(e.target.value)} placeholder='Введите название' />
+                    <Form.Control type="text" onChange={(e)=>setNameCollection(e.target.value)} placeholder='Введите название' />
                 </Form.Group>
                 <Form.Group controlId="exampleForm.ControlTextarea1">
                     <Form.Label>Введите краткое описание: </Form.Label>
                     <Form.Control as="textarea" rows={3} 
-                                    onChange={(e)=>setShortNameItem(e.target.value)}
+                                    onChange={(e)=>setShortNameCollection(e.target.value)}
                                     placeholder='Введите краткое описание' 
                     />
                 </Form.Group>
                 <Form.Group controlId="exampleForm.ControlInput3">
                     <Form.Label>Выберите тематику: </Form.Label>
-                    <Form.Control as="select" onInput={(e)=>setOptionItem(e.target.value)}>
+                    <Form.Control as="select" onInput={(e)=>setOptionCollection(e.target.value)}>
                         <option></option>
                         <option value='alcohol'>Алкоголь</option>
                         <option value='book'>Книга</option>
@@ -96,12 +62,32 @@ export default function CreateCollection() {
                     <Form.Label>Введите название: </Form.Label>
                     <Form.Control type="text" onChange={(e)=>setUrlPicture(e.target.value)} placeholder='Введите URL'/>
                 </Form.Group>
-                <Button variant="primary" type="submit" onClick={createItem}>
-                    Создать Элемент
+                <Form>
+                  <Form.Label><b>Создать поля для Item</b></Form.Label>
+                  <Form.Group controlId="exampleForm.ControlInput4">
+                    <Form.Label>Поля Item: </Form.Label>
+                    <Form.Control type="text" onChange={(e)=>setNamePole(e.target.value)} placeholder='Имя поля'/>
+                    <Form.Label>Выберите тип поля: </Form.Label>
+                    <Form.Control as="select" onInput={(e)=>setTypePole(e.target.value)}>
+                        <option></option>
+                        <option value='number'>Числовое</option>
+                        <option value='text'>Текстовое(однострочное)</option>
+                        <option value='textarea'>Текстовое(многострочное)</option>
+                        <option value='date'>Дата</option>
+                        <option value='checkbox'>Булевое</option>
+                    </Form.Control>
+                    <Button variant="primary" type="submit" onClick={addPoleItem}>
+                        Добавить
+                    </Button>
+                  </Form.Group>
+                </Form>
+                <Button variant="primary" type="submit" onClick={addCollection}>
+                    Создать Коллекцию
                 </Button>
             </Form>
             </div>
-            <TabelItems />
+            <h1 className='create'>Мои коллекции</h1>
+            <TableCollection />
         </div>
     )
 }

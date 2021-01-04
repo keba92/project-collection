@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from './Home';
 import PrivateRoute from './privateRoute';
 import ItemInfo from './ItemInfo';
+import CreateItem from './CreateItem';
 
 function Body() {
 
@@ -13,7 +14,8 @@ function Body() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/item/:id" component={ItemInfo} />
-          <PrivateRoute exact path="/user" component={UserPage} />
+          <PrivateRoute exact path="/user/:id" component={UserPage} />
+          <PrivateRoute exact path="/collection/:id" component={CreateItem} />
         </Switch>
       </BrowserRouter>
     </div>

@@ -4,7 +4,23 @@ const CollectionSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    collections: {
+    name: {
+        type: String,
+        require: true
+    },
+    description: {
+        type: String,
+        require: true
+    },
+    teg: {
+        type: String,
+        require: true
+    },
+    url: {
+        type: String,
+        require: true
+    },
+    poleItem: {
         type: String,
         require: true
     }

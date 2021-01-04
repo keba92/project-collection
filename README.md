@@ -1,6 +1,6 @@
 # Final-Progect-Collection
 
-v.1.3.0
+v.1.4.0
 
 ### Итоговый проект Itransition.
 

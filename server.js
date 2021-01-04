@@ -38,10 +38,14 @@ mongoose
     .catch((e) => console.log(e))
 
 app.post('/addCollection', (req,res) =>{
-    const { id, collect } = req.body;
+    const { id, name, description, teg, url, poleItem } = req.body;
     collections.create({
         id: id,
-        collections: collect,
+        name: name,
+        description: description,
+        teg: teg,
+        url: url,
+        poleItem: poleItem
     })
     .catch((err)=> console.log(err))
 })
@@ -82,8 +86,22 @@ app.post('/getItemInfo', (req,res) => {
     .catch((err) => console.log(err))
 })
 
-app.get('/getCollection', (req,res) => {
-    collections.find()
+app.post('/getCollectionInfo', (req,res) => {
+    const { _id } = req.body;
+    collections.find({
+        _id: _id
+    })
+    .then((data) =>{
+        return res.send(data);
+    })
+    .catch((err) => console.log(err))
+})
+
+app.post('/getCollection', (req,res) => {
+    const { id } = req.body;
+    collections.find({
+        id: id
+    })
     .then((data) =>{
         return res.send(data);
     })
