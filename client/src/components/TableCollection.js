@@ -1,27 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Card } from 'react-bootstrap';
-import Axios from 'axios';
-import { useAuth0 } from "@auth0/auth0-react";
 import {  MarkdownPreview  } from 'react-marked-markdown';
 import { Link } from 'react-router-dom';
 
-export default function TableCollection() {
-    const [dataCollection, setDataCollection] = useState([]);
-    const { user, isAuthenticated } = useAuth0();
+export default function TableCollection(props) {
+    const { dataCollect } = props;
 
-    useEffect(() => {
-        let id;
-        (isAuthenticated)? id = user.sub : id = 'all';
-        Axios.post('/getCollection', {
-            id: id
-        })
-        .then((res) => {
-            setDataCollection(res.data);
-        });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[]);
-
-    const makeCollection = dataCollection.map((el, idx) => {
+    const makeCollection = dataCollect.map((el, idx) => {
         return (
             <Card style={{ width: '15rem' }} key={idx}>
                 <Card.Img variant="top" src={el.url} />

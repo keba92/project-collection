@@ -5,6 +5,7 @@ import Home from './Home';
 import PrivateRoute from './privateRoute';
 import ItemInfo from './ItemInfo';
 import CreateItem from './CreateItem';
+import EditItem from './EditItem';
 
 function Body() {
 
@@ -16,6 +17,7 @@ function Body() {
           <Route exact path="/item/:id" component={ItemInfo} />
           <PrivateRoute exact path="/user/:id" component={UserPage} />
           <PrivateRoute exact path="/collection/:id" component={CreateItem} />
+          <PrivateRoute exact path="/editItem/:id" component={EditItem} />
         </Switch>
       </BrowserRouter>
     </div>

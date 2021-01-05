@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import Axios from 'axios';
-import { Card, Button } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import {  MarkdownPreview  } from 'react-marked-markdown';
 import { Link } from 'react-router-dom';
+import io from 'socket.io-client';
+import DeleteButtonItem from './DeleteButtonItem';
+import { useAuth0 } from '@auth0/auth0-react';
 
 export default function ItemInfo(props) {
+    const socket = io();
+    const { user, isAuthenticated } = useAuth0();
     const [item, setItem] = useState([])
 
     useEffect(()=>{
-        Axios.post('/getItemInfo',{
+        socket.emit('getItemInfo',{
             _id: props.location.pathname.slice(6)
         })
-        .then((res) => setItem(res.data))
-        .catch((e) => console.log(e))
+        socket.on('getItemDataInfo', (data) => setItem(data))
     }, [])
     const makeItem = item.map((el, idx) => {
         const data = JSON.parse(el.dataItem);
@@ -24,19 +27,24 @@ export default function ItemInfo(props) {
                         // eslint-disable-next-line default-case
                         switch (pole[keyName]) {
                             case 'number':
-                            return <Card.Text>{data[keyName]}</Card.Text>;
+                            return <Card.Text key={idx}>{`${keyName}: ${data[keyName]}`}</Card.Text>;
                             case 'text':
-                            return <Card.Text>{data[keyName]}</Card.Text>;
+                            return <Card.Text key={idx}>{`${keyName}: ${data[keyName]}`}</Card.Text>;
                             case 'textarea':
                             return <MarkdownPreview value={data[keyName]} />;
                             case 'date':
-                            return <Card.Text>{data[keyName]}</Card.Text>;
+                            return <Card.Text key={idx}>{`${keyName}: ${data[keyName]}`}</Card.Text>;
                             case 'checkbox':
-                            return <Card.Text>{data[keyName]}</Card.Text>;
+                            return <Card.Text key={idx}>{`${keyName}: ${data[keyName]}`}</Card.Text>;
                         }
                     })}
                 </Card.Body>
-                <Link to={`/item/${el._id}`}> Посмотреть </Link>
+                {(isAuthenticated && user.sub == el.idUser)&&(
+                    <div>
+                        <DeleteButtonItem id={props.location.pathname.slice(6)} />
+                        <Link to={`/editItem/${props.location.pathname.slice(6)}`}>Редактировать</Link>
+                    </div>
+                )}
             </Card>
         )
     })

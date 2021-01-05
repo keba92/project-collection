@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import Axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
 import { Form, Button } from 'react-bootstrap';
 import TableCollection from './TableCollection';
+import io from 'socket.io-client';
 
 export default function CreateCollection() {
+    const socket = io();
     const [nameCollection, setNameCollection] = useState('');
     const [shortNameCollection, setShortNameCollection] = useState('');
     const [urlPicture, setUrlPicture] = useState('');
@@ -12,11 +13,21 @@ export default function CreateCollection() {
     const [poleItem, setPoleItem] = useState({ 'name': 'text', 'teg': 'text'});
     const [namePole, setNamePole] = useState('');
     const [typePole, setTypePole] = useState('');
-    const { user } = useAuth0();
+    const [dataCollect, setDataCollect] = useState([]);
+    const { user, isAuthenticated } = useAuth0();
+
+    useEffect(() => {
+        socket.emit('getCollection', {
+            id: (isAuthenticated)? user.sub : 'all'
+        })
+        socket.on('getDataCollect',(data) => {
+            setDataCollect(data);
+        })
+    },[]);
 
     const addCollection = (e) =>{
         e.preventDefault();
-        Axios.post('/addCollection',{
+        socket.emit('addCollection', {
             id: user.sub,
             name: nameCollection,
             description: shortNameCollection,
@@ -24,14 +35,18 @@ export default function CreateCollection() {
             url: urlPicture,
             poleItem: JSON.stringify(poleItem)
         })
+        socket.on('getDataCollect',(data) => {
+            setDataCollect(data);
+        },[])
     }
 
     const addPoleItem = (e) =>{
         e.preventDefault();
         if(namePole !=='' && typePole !==''){
             poleItem[`${namePole}`] = typePole;
-            setPoleItem(poleItem);
         }
+        setPoleItem(poleItem);
+        console.log(poleItem)
     }
 
     return(
@@ -87,7 +102,7 @@ export default function CreateCollection() {
             </Form>
             </div>
             <h1 className='create'>Мои коллекции</h1>
-            <TableCollection />
+            <TableCollection dataCollect={dataCollect}/>
         </div>
     )
 }
