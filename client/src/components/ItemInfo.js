@@ -6,6 +6,7 @@ import io from 'socket.io-client';
 import DeleteButtonItem from './DeleteButtonItem';
 import { useAuth0 } from '@auth0/auth0-react';
 import LikeButton from './LikeButton';
+import BoxComment from './BoxComment';
 
 export default function ItemInfo(props) {
     const socket = io();
@@ -55,7 +56,10 @@ export default function ItemInfo(props) {
         (item.length!==0)&&(
             <div>
                 <Link to='/'>На главную страницу</Link>
-                {makeItem}
+                <div className='content-item'>
+                    {makeItem}
+                    {(isAuthenticated)&&(<BoxComment id={props.location.pathname.slice(6)} />)}
+                </div>
             </div>
         )
     )

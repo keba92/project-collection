@@ -15,6 +15,7 @@ const PORT = process.env.PORT || 3001;
 const collections = require('./config/collectionSchema');
 const items = require('./config/itemSchema');
 const likes = require('./config/likeSchema');
+const comments = require('./config/commentSchema');
 
 app.use(cors());
 app.use(express.json());
@@ -193,6 +194,46 @@ io.on("connection", function(socket) {
                 $set: {
                     countLike: countLike,
                     idUsers: idUsers
+                }
+            },
+            (err, result) => {
+                if(err) console.log(err);
+            }
+        )
+    })
+
+    socket.on('getComment', (data) => {
+        const { idItem } = data;
+        comments.find({
+            idItem: idItem
+        })
+        .then( async (data)=>{
+            if(data.length == 0){
+                await comments.create({
+                    idItem: idItem
+                })
+                .catch((err)=> console.log(err))
+                await comments.find({
+                    idItem: idItem
+                })
+                .then((data) => socket.emit('getCommentData', data))
+                .catch((err)=> console.log(err))
+            } else {
+                socket.emit('getCommentData', data)
+            }
+        })
+        .catch((err)=> console.log(err))
+    })
+
+    socket.on('updateComment', (data) => {
+        const { idItem, arrComment } = data;
+        comments.updateOne(
+            {
+                idItem: idItem
+            },
+            {
+                $set: {
+                    arrComment: arrComment
                 }
             },
             (err, result) => {
