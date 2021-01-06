@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import io from 'socket.io-client';
 import DeleteButtonItem from './DeleteButtonItem';
 import { useAuth0 } from '@auth0/auth0-react';
+import LikeButton from './LikeButton';
 
 export default function ItemInfo(props) {
     const socket = io();
@@ -39,6 +40,7 @@ export default function ItemInfo(props) {
                         }
                     })}
                 </Card.Body>
+                {(isAuthenticated)&&(<LikeButton id={props.location.pathname.slice(6)}/>)}
                 {(isAuthenticated && user.sub == el.idUser)&&(
                     <div>
                         <DeleteButtonItem id={props.location.pathname.slice(6)} />

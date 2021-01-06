@@ -1,11 +1,14 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import React from 'react';
 import { Card } from 'react-bootstrap';
 import {  MarkdownPreview  } from 'react-marked-markdown';
 import { Link } from 'react-router-dom';
+import LikeButton from './LikeButton';
 
 
 export default function TabelItems(props) {
     const {dataItems, idCollect} = props;
+    const { isAuthenticated } = useAuth0();
     const collectItems = dataItems.map((el) => {
         if(el.idCollect == idCollect && idCollect !== '') {
             return el;
@@ -35,6 +38,7 @@ export default function TabelItems(props) {
                         }
                     })}
                 </Card.Body>
+                {(isAuthenticated)&&(<LikeButton id={el._id}/>)}
                 <Link to={`/item/${el._id}`}> Посмотреть </Link>
             </Card>
         )

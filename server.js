@@ -13,7 +13,8 @@ const io = require('socket.io')(http, {
 const PORT = process.env.PORT || 3001;
 
 const collections = require('./config/collectionSchema');
-const items = require('./config/itemSchema')
+const items = require('./config/itemSchema');
+const likes = require('./config/likeSchema');
 
 app.use(cors());
 app.use(express.json());
@@ -148,4 +149,56 @@ io.on("connection", function(socket) {
         }
         )
     })
+
+    socket.on('addLikeItem', (data) => {
+        const { idItem, countLike, idUsers } = data;
+        likes.create({
+            idItem: idItem,
+            countLike: countLike,
+            idUsers: idUsers
+        })
+        .catch((err)=> console.log(err))
+    })
+
+    socket.on('getLike', (data) => {
+        const { idItem } = data;
+        likes.find({
+            idItem: idItem
+        })
+        .then( async (data)=>{
+            if(data.length == 0){
+                await likes.create({
+                    idItem: idItem
+                })
+                .catch((err)=> console.log(err))
+                await likes.find({
+                    idItem: idItem
+                })
+                .then((data) => socket.emit('getLikeInfo', data))
+                .catch((err)=> console.log(err))
+            } else {
+                socket.emit('getLikeInfo', data)
+            }
+        })
+        .catch((err)=> console.log(err))
+    })
+
+    socket.on('updateLike', (data) => {
+        const { idItem, countLike, idUsers } = data;
+        likes.updateOne(
+            {
+                idItem: idItem
+            },
+            {
+                $set: {
+                    countLike: countLike,
+                    idUsers: idUsers
+                }
+            },
+            (err, result) => {
+                if(err) console.log(err);
+            }
+        )
+    })
+
 })
