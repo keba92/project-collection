@@ -154,7 +154,7 @@ function AdminPage() {
     
     return(
         <div className='admin-page'>
-            <Link to='/'>На главную страницу</Link>
+            <Link className='back' to='/'>На главную страницу</Link>
             <div className = 'users'>
                 <h1>Users</h1>
                 <span className = 'toolBar'>

@@ -8,7 +8,7 @@ const AdminProfileButton = () => {
 
   return (
     (isAuthenticated && admin.length !=0 && admin.includes(user.sub)) && (
-      <Link to={`/admin/${user.sub}`}>
+      <Link className='back' to={`/admin/${user.sub}`}>
         Кабинет Admin
       </Link>
     )

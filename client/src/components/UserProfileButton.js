@@ -7,7 +7,7 @@ const UserProfileButton = () => {
 
   return (
     isAuthenticated && (
-      <Link to={`/user/${user.sub}`}>
+      <Link className='back' to={`/user/${user.sub}`}>
         Кабинет профиля
       </Link>
     )

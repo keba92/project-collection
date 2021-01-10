@@ -50,7 +50,7 @@ export default function CreateItem(props) {
 
     return (
     <div>
-        <Link to={`/user/${id}`}>Вернуться к коллекциям</Link>
+        <Link className='back' to={`/user/${id}`}>Вернуться к коллекциям</Link>
         <div className='create'>
             <div className='create-block'>
                 <h1 className='create'>Создать Items</h1>

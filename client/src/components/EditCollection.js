@@ -58,7 +58,7 @@ export default function EditCollection(props) {
     return(
         (collectionData.length != 0) && (
         <div>
-          <Link to={`/user/${newId}`}>Вернуться к коллекциям</Link>
+          <Link className='back' to={`/user/${newId}`}>Вернуться к коллекциям</Link>
           <Form>
              <Form.Group controlId="exampleForm.ControlInput2">
                     <Form.Label>Введите название: </Form.Label>

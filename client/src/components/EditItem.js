@@ -28,7 +28,7 @@ export default function EditItem(props) {
 
     return(
         <div>
-          <Link to={`/item/${id}`}>Вернуться к Item</Link>
+          <Link className='back' to={`/item/${id}`}>Вернуться к Item</Link>
           <Form>
             {(itemData.length != 0)&&(
                 Object.keys(JSON.parse(itemData[0].poleItem)).map((keyName, idx) => {

@@ -9,7 +9,7 @@ function UserPage(props) {
     isAuthenticated && (
       <div className='user-page'>
           <div className='navigation'>
-              <Link to='/'>Перейти на главную страницу</Link>
+              <Link className='back' to='/'>Перейти на главную страницу</Link>
           </div>
           <div className='body-user'>
               <CreateCollection idLink={props.location.pathname.slice(6)} />

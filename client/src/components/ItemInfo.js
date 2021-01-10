@@ -55,7 +55,7 @@ export default function ItemInfo(props) {
     return (
         (item.length!==0)&&(
             <div>
-                <Link to='/'>На главную страницу</Link>
+                <Link className='back' to='/'>На главную страницу</Link>
                 <div className='content-item'>
                     {makeItem}
                     {(isAuthenticated)&&(<BoxComment id={props.location.pathname.slice(6)} />)}

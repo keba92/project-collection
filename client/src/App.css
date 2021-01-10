@@ -13,8 +13,9 @@
 }
 
 .search-block {
+  display: flex;
   margin-top: 10px;
-  margin-left: 5%;
+  margin-left: 1.5%;
 }
 
 .input-search {
@@ -24,20 +25,19 @@
 .log-block {
   padding-top: 10px;
   padding-bottom: 10px;
-  padding-right: 50px;
+  margin-right: 1%;
 }
 
 button {
-  width: 100px;
   height: 35px;
+  width: 90px;
   background-color: white;
   margin-right: 10px;
   cursor: pointer;
 }
 
 .user-img {
-  max-width: 40px;
-  margin-right: 5px;
+  max-width: 30px;
 }
 
 .create {
@@ -135,4 +135,10 @@ th, td {
 
 .toolBar {
   display: inline
+ }
+
+ .back {
+   color: rgb(151, 13, 13);
+   -webkit-text-stroke-width: 1px;
+   -webkit-text-stroke-color: #000000;
  }
