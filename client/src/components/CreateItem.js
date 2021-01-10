@@ -11,8 +11,10 @@ export default function CreateItem(props) {
     const [itemData, setItemData] = useState({});
     const [dataItems, setDataItems] = useState([]);
     const { user, isAuthenticated } = useAuth0();
+    const [id, setId] = useState('');
 
     useEffect(()=>{
+        let idUser;
         socket.emit('getCollectionInfo',{
             _id: props.location.pathname.slice(12)
         })
@@ -25,12 +27,18 @@ export default function CreateItem(props) {
         socket.on('getDataItems',(data) => {
             setDataItems(data);
         })
+        if(localStorage.getItem('admin')) {
+            idUser = localStorage.getItem('admin');
+        } else {
+            idUser = user.sub
+        }
+        setId(idUser)
     },[])
 
     const addItem = (e) => {
         e.preventDefault();
         socket.emit('addItem', {
-            idUser: user.sub,
+            idUser: id,
             idCollect: props.location.pathname.slice(12),
             dataItem: JSON.stringify(itemData),
             poleItem: collection[0].poleItem
@@ -42,7 +50,7 @@ export default function CreateItem(props) {
 
     return (
     <div>
-        <Link to={`/user/${user.sub}`}>Вернуться к коллекциям</Link>
+        <Link to={`/user/${id}`}>Вернуться к коллекциям</Link>
         <div className='create'>
             <div className='create-block'>
                 <h1 className='create'>Создать Items</h1>

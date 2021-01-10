@@ -42,7 +42,7 @@ export default function ItemInfo(props) {
                     })}
                 </Card.Body>
                 {(isAuthenticated)&&(<LikeButton id={props.location.pathname.slice(6)}/>)}
-                {(isAuthenticated && user.sub == el.idUser)&&(
+                {(isAuthenticated && user.sub == el.idUser || localStorage.getItem('admin'))&&(
                     <div>
                         <DeleteButtonItem id={props.location.pathname.slice(6)} />
                         <Link to={`/editItem/${props.location.pathname.slice(6)}`}>Редактировать</Link>

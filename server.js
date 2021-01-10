@@ -10,6 +10,7 @@ const io = require('socket.io')(http, {
       origin: '*',
     }
   });
+const axios = require("axios").default;
 const PORT = process.env.PORT || 3001;
 
 const collections = require('./config/collectionSchema');
@@ -44,7 +45,30 @@ mongoose
     .then(() => console.log('MongoDb connected'))
     .catch((e) => console.log(e))
 
+    let clients = {};
 
+    const addClient = socket => {
+    clients[socket.id] = socket;
+    };
+    const removeClient = socket => {
+    delete clients[socket.id];
+    };
+
+    io.on("connection", socket => {
+        let id = socket.id;
+        
+        addClient(socket);
+      
+        socket.on("mousemove", data => {
+          data.id = id;
+          socket.broadcast.emit("moving", data);
+        });
+      
+        socket.on("disconnect", () => {
+          removeClient(socket);
+          socket.broadcast.emit("clientdisconnect", id);
+        });
+      });
 
 io.on("connection", function(socket) {
     socket.on('addItem', async (data)=>{
@@ -242,4 +266,111 @@ io.on("connection", function(socket) {
         )
     })
 
+    socket.on('makeAdmin', (data) => {
+        const { message, adminList } = data;
+        const options = {
+            method: 'POST',
+            url: 'https://dev-lma8p4gy.eu.auth0.com/api/v2/roles/rol_T31Z6EKjiFLeoH0T/users',
+            headers: {
+              'content-type': 'application/json',
+              authorization: 'Bearer '+ message,
+              'cache-control': 'no-cache'
+            },
+            data: {
+                users: adminList
+            },
+            scope: "update:roles",
+          };
+        
+        axios.request(options).then(function (response) {
+          }).catch(function (error) {
+            console.error(error);
+          });
+    })
+
+    socket.on('deleteUser', (data) => {
+        const { message, idUser } = data;
+        const options = {
+            method: 'DELETE',
+            url: `https://dev-lma8p4gy.eu.auth0.com/api/v2/users/${idUser}`,
+            headers: {
+              'content-type': 'application/json',
+              authorization: 'Bearer '+ message,
+              'cache-control': 'no-cache'
+            },
+            scope: "delete:users",
+          };
+        
+        axios.request(options).then(function (response) {
+          }).catch(function (error) {
+            console.error(error);
+          });
+    })
+
+    socket.on('blockUser', (data) => {
+        const { message, idUser, block } = data;
+        const options = {
+            method: 'PATCH',
+            url: `https://dev-lma8p4gy.eu.auth0.com/api/v2/users/${idUser}`,
+            headers: {
+              'content-type': 'application/json',
+              authorization: 'Bearer '+ message,
+              'cache-control': 'no-cache'
+            },
+            data: {
+                blocked: block
+            },
+            scope: "update:users",
+          };
+        
+        axios.request(options).then(function (response) {
+          }).catch(function (error) {
+            console.error(error);
+          });
+    })
+
+    socket.on('deleteCollection', (data) => {
+        const { _id } = data;
+        collections.deleteOne({
+            _id: _id
+        })
+        .catch((err) => console.log(err))
+        items.deleteOne({
+            idCollect: _id
+        })
+        .catch((err) => console.log(err))
+    })
+
+    socket.on('getCollectionInfo', (data) => {
+        const { _id } = data;
+        collections.find({
+            _id: _id
+        })
+        .then((data) =>{
+            return socket.emit('getCollectionDataInfo', data);
+        })
+        .catch((err) => console.log(err))
+    })
+
+    socket.on('editCollection', (data) =>{
+        const { _id, name, description, teg, url, poleItem } = data;
+        collections.updateOne(
+        {
+            _id: _id
+        },
+        {
+            $set: {
+                name: name,
+                description: description,
+                teg: teg,
+                url: url,
+                poleItem: poleItem
+            }
+        },
+        (err, result) => {
+            if(err) console.log(err);
+        }
+        )
+    })
+    
 })

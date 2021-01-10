@@ -10,7 +10,9 @@ ReactDOM.render(
   <Auth0Provider
     domain={domain}
     clientId={clientId}
-    redirectUri={window.location.origin}>
+    redirectUri={window.location.origin}
+    audience="https://dev-lma8p4gy.eu.auth0.com/api/v2/"
+    scope="read:current_user update:current_user_metadata">
     <App />
   </Auth0Provider>,
   document.getElementById('root')

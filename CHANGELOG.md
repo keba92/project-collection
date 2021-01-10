@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on forthetraveler.netlify.app(https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## [1.7.0] - 2021-01-10
+### Added
+
+- Added the ability to comment items.
+- Added Admin page, with the ability to block, unblock, delete and assign users Admin rights.
+- Added the ability to edit and delete collections.
+
 ## [1.6.0] - 2021-01-06
 ### Added
 

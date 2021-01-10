@@ -16,7 +16,7 @@ export default function TabelItems(props) {
             return el;
         }
     })
-    const makeItems = collectItems.map((el, idx) => {
+    const makeItems = collectItems.reverse().map((el, idx) => {
         const data = JSON.parse(el.dataItem);
         const pole = JSON.parse(el.poleItem);
         return (

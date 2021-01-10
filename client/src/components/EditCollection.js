@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth0 } from "@auth0/auth0-react";
 import { Form, Button } from 'react-bootstrap';
-import TableCollection from './TableCollection';
+import { Link } from 'react-router-dom';
 import io from 'socket.io-client';
+import { useAuth0 } from '@auth0/auth0-react';
 
-export default function CreateCollection(props) {
+export default function EditCollection(props) {
+    const id = props.location.pathname.slice(16);
     const socket = io();
+    const [collectionData, setCollectionData] = useState([]);
     const [nameCollection, setNameCollection] = useState('');
     const [shortNameCollection, setShortNameCollection] = useState('');
     const [urlPicture, setUrlPicture] = useState('');
@@ -13,65 +15,35 @@ export default function CreateCollection(props) {
     const [poleItem, setPoleItem] = useState({ 'name': 'text', 'teg': 'text'});
     const [namePole, setNamePole] = useState('');
     const [typePole, setTypePole] = useState('');
-    const [dataCollect, setDataCollect] = useState([]);
-    const { user, isAuthenticated } = useAuth0();
-    const [idUser, setIdUser] = useState('');
-    const { idLink } = props;
+    const [newId, setNewId] = useState('');
+    const { user } = useAuth0();
 
     useEffect(() => {
-        const getUserMetadata = async () => {
-            try {
-                const admindataResponse = await fetch('https://dev-lma8p4gy.eu.auth0.com/api/v2/roles/rol_T31Z6EKjiFLeoH0T/users',{
-                    method: 'GET',
-                    headers: {
-                        Authorization: `Bearer ${process.env.REACT_APP_AUTH0_TOKEN}`,
-                      },
-                    scope: "read:users",
-                }
-              );
-              const adminsInfo = await admindataResponse.json();
-              const admins = await adminsInfo.map(el => el.user_id);
-              let admin;
-              if (admins.includes(user.sub)){
-                admin = true;
-              }
-              let id;
-              if (isAuthenticated && !admin) {
-                  id = user.sub;
-                  setIdUser(id)
-              } else if (isAuthenticated && admin) {
-                  id = idLink;
-                  localStorage.setItem('admin', id)
-                  setIdUser(id)
-              } else {
-                  id = 'all';
-              }
-              await socket.emit('getCollection', {
-                  id: id
-              })
-              await socket.on('getDataCollect',(data) => {
-                  setDataCollect(data);
-              })
-            } catch (e) {
-              console.log(e.message);
-            }
-        };
-        getUserMetadata();
-    },[]);
+        let idUser;
+        socket.emit('getCollectionInfo', {
+            _id: id
+        })
+        socket.on('getCollectionDataInfo',(data) => {
+            setCollectionData(data);
+        })
+        if(localStorage.getItem('admin')) {
+            idUser = localStorage.getItem('admin');
+        } else {
+            idUser = user.sub
+        }
+        setNewId(idUser)
+    },[])
 
-    const addCollection = (e) =>{
+    const editCollection = (e) => {
         e.preventDefault();
-        socket.emit('addCollection', {
-            id: idUser,
-            name: nameCollection,
-            description: shortNameCollection,
-            teg: optionCollection,
-            url: urlPicture,
+        socket.emit('editCollection', {
+            _id: id,
+            name:  (nameCollection!='')? nameCollection: collectionData[0].name,
+            description: (shortNameCollection!='')? shortNameCollection: collectionData[0].description,
+            teg: (optionCollection!='')? optionCollection: collectionData[0].teg,
+            url: (urlPicture!='')? urlPicture: collectionData[0].url,
             poleItem: JSON.stringify(poleItem)
         })
-        socket.on('getDataCollect',(data) => {
-            setDataCollect(data);
-        },[])
     }
 
     const addPoleItem = (e) =>{
@@ -84,19 +56,19 @@ export default function CreateCollection(props) {
     }
 
     return(
-        <div className='create-block'>
-            <h1 className='create'>Создать коллекцию</h1>
-            <div className='create-item create'>
-            <Form>
-                <Form.Group controlId="exampleForm.ControlInput2">
+        (collectionData.length != 0) && (
+        <div>
+          <Link to={`/user/${newId}`}>Вернуться к коллекциям</Link>
+          <Form>
+             <Form.Group controlId="exampleForm.ControlInput2">
                     <Form.Label>Введите название: </Form.Label>
-                    <Form.Control type="text" onChange={(e)=>setNameCollection(e.target.value)} placeholder='Введите название' />
+                    <Form.Control type="text" onChange={(e)=>setNameCollection(e.target.value)} placeholder={`${collectionData[0].name}`} />
                 </Form.Group>
                 <Form.Group controlId="exampleForm.ControlTextarea1">
                     <Form.Label>Введите краткое описание: </Form.Label>
                     <Form.Control as="textarea" rows={3} 
                                     onChange={(e)=>setShortNameCollection(e.target.value)}
-                                    placeholder='Введите краткое описание' 
+                                    placeholder={`${collectionData[0].description}`} 
                     />
                 </Form.Group>
                 <Form.Group controlId="exampleForm.ControlInput3">
@@ -109,7 +81,7 @@ export default function CreateCollection(props) {
                 </Form.Group>
                 <Form.Group controlId="exampleForm.ControlInput4">
                     <Form.Label>Введите название: </Form.Label>
-                    <Form.Control type="text" onChange={(e)=>setUrlPicture(e.target.value)} placeholder='Введите URL'/>
+                    <Form.Control type="text" onChange={(e)=>setUrlPicture(e.target.value)} placeholder={`${collectionData[0].url}`}/>
                 </Form.Group>
                 <Form>
                   <Form.Label><b>Создать поля для Item</b></Form.Label>
@@ -130,13 +102,11 @@ export default function CreateCollection(props) {
                     </Button>
                   </Form.Group>
                 </Form>
-                <Button variant="primary" type="submit" onClick={addCollection}>
-                    Создать Коллекцию
+                <Button variant="primary" type="submit" onClick={editCollection}>
+                    Редактировать
                 </Button>
             </Form>
-            </div>
-            <h1 className='create'>Мои коллекции</h1>
-            <TableCollection dataCollect={dataCollect}/>
         </div>
+        )
     )
 }
