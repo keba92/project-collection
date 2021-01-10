@@ -7,7 +7,7 @@ import AdminProfileButton from './AdminProfileButton';
 export default function Home() {
     const [items, setItems] = useState([]); 
     const socket = io();
-    useEffect(() => {
+     useEffect(() => {
         socket.emit('getItems', {
             idCollect: 'all'
         })
