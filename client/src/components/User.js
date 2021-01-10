@@ -11,7 +11,7 @@ const User = () => {
   return (
     isAuthenticated && ( 
      <>
-        <img src={user.picture} alt={user.name} />
+        <img className='user-img' src={user.picture} alt={user.name} />
         {saveLocalStorage}
      </>
     )
