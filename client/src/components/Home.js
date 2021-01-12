@@ -3,10 +3,15 @@ import TabelItems from './TableItems';
 import UserProfileButton from './UserProfileButton';
 import io from 'socket.io-client';
 import AdminProfileButton from './AdminProfileButton';
+import Search from './Search';
+import TableCollection from './TableCollection';
+import { TagCloud } from 'react-tagcloud';
+import { Link } from 'react-router-dom';
 
 export default function Home() {
-    const [items, setItems] = useState([]); 
-    const socket = io();
+    const [items, setItems] = useState([]);
+    const [dataCollect, setDataCollect] = useState([]);
+    const socket = io("http://localhost:3001/");
      useEffect(() => {
         socket.emit('getItems', {
             idCollect: 'all'
@@ -30,14 +35,87 @@ export default function Home() {
             }catch (e) {
                   console.log(e.message);
                 }
-            };
-            getUserMetadata();
+        };
+        getUserMetadata();
+        socket.emit('getCollection', {
+            id: 'all'
+        })
+        socket.on('getDataCollect', (data)=> {
+            setDataCollect(data)
+        })
     },[])
+
+    const countEl = items.reduce((acc, el) => {
+        acc[el.idCollect] = (acc[el.idCollect] || 0) + 1;
+        return acc;
+        }, {})
+
+    const collect = () => {
+        const sortable = [];
+        for (const cont in countEl) {
+            sortable.push([cont, countEl[cont]]);
+        }
+        sortable.sort((a, b)=> {
+            return a[1] - b[1];
+        });
+        const newSort = sortable.map(el=>el[0]).reverse();
+        const newCollect = [];
+        newSort.forEach((el,idx)=>{
+            const colect = dataCollect.find((elem)=>{
+                if(elem._id== el) return elem;
+            })
+            newCollect[idx] = colect
+        })
+
+        return(<TableCollection dataCollect={newCollect}/>)
+    }
+
+    const customRenderer = (tag, size, color) => (
+        <span
+          key={tag.value}
+          style={{
+            animation: 'blinker 3s linear infinite',
+            animationDelay: `${Math.random() * 2}s`,
+            fontSize: `${size / 2}em`,
+            border: `2px solid ${color}`,
+            margin: '3px',
+            padding: '3px',
+            display: 'inline-block',
+            color: 'white',
+          }}
+        >
+          <Link to={`/collection/${tag.link}`}> {tag.value} </Link>
+        </span>
+      )
+
+      const makedataCloud = () => {
+        const arrCollect = dataCollect.map((el) => {
+            return {
+                value: el.name,
+                count: countEl[el._id],
+                link: el._id
+            }
+        })
+        console.log(arrCollect)
+
+        return(<TagCloud tags={arrCollect} minSize={1} maxSize={5} renderer={customRenderer} />)
+    }
+
+      //if(items.length>5) items.reverse().splice(5);
+    
     return (
-        <div className='home-page'>
+        <div className='home-page'>     
+            <Search />
             <AdminProfileButton />
             <UserProfileButton />
+            <h4>Новые Items</h4>
             <TabelItems dataItems={items} idCollect=''/>
+            <h4>Самые большие коллекции</h4>
+            {collect()}
+            <h4>Облоко тегов</h4>
+            <div className='cloud-div'>
+                {makedataCloud()}
+            </div>
         </div>
     )
 }

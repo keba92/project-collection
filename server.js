@@ -45,6 +45,8 @@ mongoose
     .then(() => console.log('MongoDb connected'))
     .catch((e) => console.log(e))
 
+mongoose.set('useCreateIndex', true);
+
     let clients = {};
 
     const addClient = socket => {
@@ -72,10 +74,11 @@ mongoose
 
 io.on("connection", function(socket) {
     socket.on('addItem', async (data)=>{
-        const { idUser, idCollect, dataItem, poleItem } = data;
+        const { idUser, idCollect, tag, dataItem, poleItem } = data;
         await items.create({
             idUser: idUser,
             idCollect: idCollect,
+            tag: tag,
             dataItem: dataItem,
             poleItem: poleItem
         })
@@ -112,22 +115,30 @@ io.on("connection", function(socket) {
 
     socket.on('getCollection', (data) => {
         const { id } = data;
-        collections.find({
-            id: id
-        })
-        .then((data) =>{
-            return socket.emit('getDataCollect', data);
-        })
-        .catch((err) => console.log(err))
+        if(id == 'all'){
+            collections.find()
+            .then((data) =>{
+                return socket.emit('getDataCollect', data);
+            })
+            .catch((err) => console.log(err))
+        } else {
+            collections.find({
+                id: id
+            })
+            .then((data) =>{
+                return socket.emit('getDataCollect', data);
+            })
+            .catch((err) => console.log(err))
+        }
     })
 
     socket.on('addCollection', async (data) =>{
-        const { id, name, description, teg, url, poleItem } = data;
+        const { id, name, description, tema, url, poleItem } = data;
         await collections.create({
             id: id,
             name: name,
             description: description,
-            teg: teg,
+            tema: tema,
             url: url,
             poleItem: poleItem
         })
@@ -353,7 +364,7 @@ io.on("connection", function(socket) {
     })
 
     socket.on('editCollection', (data) =>{
-        const { _id, name, description, teg, url, poleItem } = data;
+        const { _id, name, description, tema, url, poleItem } = data;
         collections.updateOne(
         {
             _id: _id
@@ -362,7 +373,7 @@ io.on("connection", function(socket) {
             $set: {
                 name: name,
                 description: description,
-                teg: teg,
+                tema: tema,
                 url: url,
                 poleItem: poleItem
             }
@@ -371,6 +382,21 @@ io.on("connection", function(socket) {
             if(err) console.log(err);
         }
         )
+    })
+
+    socket.on('searchFT', (data) => {
+        const { word } = data;
+        items.find({
+            $text: {$search: word}
+        })
+        .then(res => socket.emit('dataItem', res))
+        .catch(e=> console.log(e))
+
+        comments.find({
+            $text: {$search: word}
+        })
+        .then(res => socket.emit('dataComment', res))
+        .catch(e=> console.log(e))
     })
     
 })

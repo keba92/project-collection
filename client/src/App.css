@@ -4,8 +4,6 @@
 }
 
 .header{
-  display: flex;
-  justify-content: space-between;
   height: 60px;
   width: 100%;
   border-bottom: 2px solid gray;
@@ -23,9 +21,10 @@
 }
 
 .log-block {
+  float: right;
   padding-top: 10px;
   padding-bottom: 10px;
-  margin-right: 1%;
+  margin-right: 3%;
 }
 
 button {
@@ -82,10 +81,18 @@ span i {
 }
 
 a {
-  margin-left: 20px;
-  margin-bottom: 20px;
+  margin-left: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  max-width: 50%;
+  padding-left: 5px;
+  padding-right: 5px;
+  border: 1px solid rgb(207, 207, 207);
+  border-radius: 3px;
   text-decoration: none;
   color: rgb(0, 0, 0);
+  text-align: center;
+  background-color: rgb(253, 238, 154);
 }
 
 .comment-box {
@@ -138,7 +145,24 @@ th, td {
  }
 
  .back {
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-bottom: 20px;
    color: rgb(151, 13, 13);
    -webkit-text-stroke-width: 1px;
    -webkit-text-stroke-color: #000000;
+ }
+
+ h4 {
+   text-align: center;
+ }
+
+ .user-name {
+   padding-left: 10px;
+   font-weight: bold;
+ }
+
+ .cloud-div {
+  display: flex;
+  justify-content: center;
  }

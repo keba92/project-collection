@@ -5,12 +5,12 @@ import TableCollection from './TableCollection';
 import io from 'socket.io-client';
 
 export default function CreateCollection(props) {
-    const socket = io();
+    const socket = io("http://localhost:3001/");
     const [nameCollection, setNameCollection] = useState('');
     const [shortNameCollection, setShortNameCollection] = useState('');
     const [urlPicture, setUrlPicture] = useState('');
-    const [optionCollection, setOptionCollection] = useState('');
-    const [poleItem, setPoleItem] = useState({ 'name': 'text', 'teg': 'text'});
+    const [temaCollection, setTemaCollection] = useState('');
+    const [poleItem, setPoleItem] = useState({ 'name': 'text', 'tag': 'text'});
     const [namePole, setNamePole] = useState('');
     const [typePole, setTypePole] = useState('');
     const [dataCollect, setDataCollect] = useState([]);
@@ -65,7 +65,7 @@ export default function CreateCollection(props) {
             id: idUser,
             name: nameCollection,
             description: shortNameCollection,
-            teg: optionCollection,
+            tema: temaCollection,
             url: urlPicture,
             poleItem: JSON.stringify(poleItem)
         })
@@ -101,10 +101,12 @@ export default function CreateCollection(props) {
                 </Form.Group>
                 <Form.Group controlId="exampleForm.ControlInput3">
                     <Form.Label>Выберите тематику: </Form.Label>
-                    <Form.Control as="select" onInput={(e)=>setOptionCollection(e.target.value)}>
+                    <Form.Control as="select" onInput={(e)=>setTemaCollection(e.target.value)}>
                         <option></option>
                         <option value='alcohol'>Алкоголь</option>
-                        <option value='book'>Книга</option>
+                        <option value='book'>Книги</option>
+                        <option value='marks'>Марки</option>
+                        <option value='znak'>Значки</option>
                     </Form.Control>
                 </Form.Group>
                 <Form.Group controlId="exampleForm.ControlInput4">
@@ -128,6 +130,7 @@ export default function CreateCollection(props) {
                     <Button variant="primary" type="submit" onClick={addPoleItem}>
                         Добавить
                     </Button>
+                    <Form.Label>Выбранные поля: {JSON.stringify(poleItem)} </Form.Label>
                   </Form.Group>
                 </Form>
                 <Button variant="primary" type="submit" onClick={addCollection}>

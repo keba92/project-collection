@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 
 export default function EditItem(props) {
     const id = props.location.pathname.slice(10);
-    const socket = io();
+    const socket = io("http://localhost:3001/");
     const [itemData, setItemData] = useState([]);
     const [newItemData, setNewItemData] = useState({})
 
@@ -33,11 +33,11 @@ export default function EditItem(props) {
             {(itemData.length != 0)&&(
                 Object.keys(JSON.parse(itemData[0].poleItem)).map((keyName, idx) => {
                     const data = JSON.parse(itemData[0].dataItem)
-                    if (JSON.parse(itemData[0].poleItem)[keyName] == 'checkbox' ) {
+                    if (JSON.parse(itemData[0].poleItem)[keyName] == 'checkbox' && keyName != 'tag') {
                         return (
                             <Form.Check type="checkbox" id="autoSizingCheck2" label={keyName} />
                         )
-                    } else if(JSON.parse(itemData[0].poleItem)[keyName] == 'textarea') {
+                    } else if(JSON.parse(itemData[0].poleItem)[keyName] == 'textarea'&& keyName != 'tag') {
                         return (
                             <Form.Group key={idx} controlId={`ControlInput${idx}`}>
                                 <Form.Label>Введите {`${keyName}`}: </Form.Label>
@@ -47,7 +47,7 @@ export default function EditItem(props) {
                                 }} placeholder={data[keyName]} />
                             </Form.Group>
                         )
-                    } else {
+                    } else if (keyName != 'tag') {
                         return (
                             <Form.Group key={idx} controlId={`ControlInput${idx}`}>
                                 <Form.Label>Введите {`${keyName}`}: </Form.Label>

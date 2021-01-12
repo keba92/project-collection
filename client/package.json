@@ -7,6 +7,12 @@
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.6.0",
+    "@uiw/react-search-select": "^4.7.5",
+    "@uiw/react-tag": "^4.7.5",
+    "@welcome-ui/tag": "^2.0.2",
+    "@xstyled/styled-components": "^2.1.0",
+    "@xstyled/system": "^2.1.0",
+    "@yaireo/tagify": "^3.22.0",
     "bootstrap": "^4.5.3",
     "font-awesome": "^4.7.0",
     "js-sha256": "^0.9.0",
@@ -16,7 +22,10 @@
     "react-marked-markdown": "^1.4.6",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
+    "react-select-search": "^2.2.4",
+    "react-tagcloud": "^2.0.0",
     "socket.io-client": "^3.0.4",
+    "styled-components": "^5.2.1",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
@@ -26,7 +35,7 @@
     "eject": "react-scripts eject"
   },
   "proxy": "http://localhost:3001/",
-  "secure":false,
+  "secure": false,
   "eslintConfig": {
     "extends": [
       "react-app",

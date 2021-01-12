@@ -1,19 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useCallback, useRef} from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import TabelItems from './TableItems';
 import io from 'socket.io-client';
+import Tags from "@yaireo/tagify/dist/react.tagify"
+import '@yaireo/tagify/dist/tagify.css';
+import ResultSearch from './ResultSearch';
+import Search from './Search';
 
 export default function CreateItem(props) {
-    const socket = io();
+    const socket = io("http://localhost:3001/");
     const [collection, setCollection] = useState([]);
     const [itemData, setItemData] = useState({});
     const [dataItems, setDataItems] = useState([]);
     const { user, isAuthenticated } = useAuth0();
     const [id, setId] = useState('');
+    const tagifyRef = useRef();
+    const [tags, setTags] = useState();
+    const [tagifyProps, setTagifyProps] = useState({})
 
     useEffect(()=>{
+        setTagifyProps({loading: true})
         let idUser;
         socket.emit('getCollectionInfo',{
             _id: props.location.pathname.slice(12)
@@ -32,14 +40,47 @@ export default function CreateItem(props) {
         } else {
             idUser = user.sub
         }
+        //get all items from tags
+        socket.emit('getItems', {
+            idCollect: 'all'
+        })
+        socket.on('getDataItems',(data) => {
+            const arrTags = data.map(el=>el.tag);
+            const newArrTags = arrTags.flat();
+            const uniqTags =newArrTags.filter((item, idx) => newArrTags.indexOf(item) === idx);
+            setTagifyProps((lastProps) => ({
+                ...lastProps,
+                whitelist: uniqTags,
+                loading: false
+            }))
+        })
         setId(idUser)
     },[])
 
+    const baseTagifySettings = {
+        maxTags: 6,
+        placeholder: "type something",
+        dropdown: {
+          enabled: 0 
+        }
+    }
+
+    const onChange = useCallback((e) => {
+        e.persist();
+        setTags(e.target.value);
+      },[]);
+
+    const settings = {
+        ...baseTagifySettings
+    }
+
     const addItem = (e) => {
         e.preventDefault();
+        const onlyTags = JSON.parse(tags).map(el=>el.value);
         socket.emit('addItem', {
             idUser: id,
             idCollect: props.location.pathname.slice(12),
+            tag: onlyTags,
             dataItem: JSON.stringify(itemData),
             poleItem: collection[0].poleItem
         })
@@ -50,8 +91,10 @@ export default function CreateItem(props) {
 
     return (
     <div>
-        <Link className='back' to={`/user/${id}`}>Вернуться к коллекциям</Link>
-        <div className='create'>
+        <Search />
+        {(!isAuthenticated)&&(<Link className='back' to={`/`}>На главную страницу</Link>)}
+        {(isAuthenticated)&&(<Link className='back' to={`/user/${id}`}>Вернуться к коллекциям</Link>)}
+        {(isAuthenticated)&&(<div className='create'>
             <div className='create-block'>
                 <h1 className='create'>Создать Items</h1>
                 <Form>
@@ -69,6 +112,18 @@ export default function CreateItem(props) {
                                            itemData[e.target.title] = e.target.value;
                                            setItemData(itemData);
                                        }} />
+                                </Form.Group>
+                                )
+                            } else if( keyName == 'tag') {
+                                return (
+                                <Form.Group key={idx} controlId={`ControlInput${idx}`}>
+                                       <Form.Label>Введите {`${keyName}`}: </Form.Label>
+                                       <Tags
+                                        tagifyRef={tagifyRef}
+                                        settings={settings} 
+                                        {...tagifyProps}
+                                        onChange={onChange}
+                                        />
                                 </Form.Group>
                                 )
                             } else {
@@ -89,7 +144,7 @@ export default function CreateItem(props) {
                     </Button>
                 </Form>
             </div>
-        </div>
+        </div>)}
         <TabelItems dataItems={dataItems} idCollect={props.location.pathname.slice(12)} />  
     </div>
     )

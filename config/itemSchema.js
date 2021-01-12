@@ -8,6 +8,10 @@ const ItemSchema = new mongoose.Schema({
         type: String,
         require: true
     },
+    tag:{
+        type: [String],
+        require: true
+    },
     dataItem: {
         type: String,
         require: true
@@ -17,5 +21,5 @@ const ItemSchema = new mongoose.Schema({
         require: true
     }
 });
-
+ItemSchema.index({'$**': 'text'});
 module.exports = mongoose.model('item', ItemSchema);

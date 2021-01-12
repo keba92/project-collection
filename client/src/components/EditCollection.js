@@ -6,7 +6,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 export default function EditCollection(props) {
     const id = props.location.pathname.slice(16);
-    const socket = io();
+    const socket = io("http://localhost:3001/");
     const [collectionData, setCollectionData] = useState([]);
     const [nameCollection, setNameCollection] = useState('');
     const [shortNameCollection, setShortNameCollection] = useState('');
@@ -40,9 +40,9 @@ export default function EditCollection(props) {
             _id: id,
             name:  (nameCollection!='')? nameCollection: collectionData[0].name,
             description: (shortNameCollection!='')? shortNameCollection: collectionData[0].description,
-            teg: (optionCollection!='')? optionCollection: collectionData[0].teg,
+            tema: (optionCollection!='')? optionCollection: collectionData[0].tema,
             url: (urlPicture!='')? urlPicture: collectionData[0].url,
-            poleItem: JSON.stringify(poleItem)
+            poleItem: (Object.keys(poleItem).length==3)?(collectionData[0].poleItem):(JSON.stringify(poleItem))
         })
     }
 
@@ -100,6 +100,7 @@ export default function EditCollection(props) {
                     <Button variant="primary" type="submit" onClick={addPoleItem}>
                         Добавить
                     </Button>
+                    <Form.Label>Выбранные поля: {JSON.stringify(poleItem)} </Form.Label>
                   </Form.Group>
                 </Form>
                 <Button variant="primary" type="submit" onClick={editCollection}>

@@ -12,7 +12,7 @@ const CollectionSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    teg: {
+    tema: {
         type: String,
         require: true
     },
@@ -25,5 +25,5 @@ const CollectionSchema = new mongoose.Schema({
         require: true
     }
 });
-
+CollectionSchema.index({'$**': 'text'});
 module.exports = mongoose.model('collection', CollectionSchema);

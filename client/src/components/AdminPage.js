@@ -13,7 +13,7 @@ function AdminPage() {
     const [checkedItems, setCheckedItems] = useState({});
     const [checkedAll, setCheckedAll] = useState(false);
     const [adminList, setAdminList] = useState([]);
-    const socket = io();
+    const socket = io("http://localhost:3001/");
     const idUsers = []
 
     useEffect(() =>{

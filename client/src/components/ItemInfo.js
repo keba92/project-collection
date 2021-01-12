@@ -7,9 +7,10 @@ import DeleteButtonItem from './DeleteButtonItem';
 import { useAuth0 } from '@auth0/auth0-react';
 import LikeButton from './LikeButton';
 import BoxComment from './BoxComment';
+import Tag from '@uiw/react-tag';
 
 export default function ItemInfo(props) {
-    const socket = io();
+    const socket = io("http://localhost:3001/");
     const { user, isAuthenticated } = useAuth0();
     const [item, setItem] = useState([])
 
@@ -39,6 +40,11 @@ export default function ItemInfo(props) {
                             case 'checkbox':
                             return <Card.Text key={idx}>{`${keyName}: ${data[keyName]}`}</Card.Text>;
                         }
+                    })}
+                    {el.tag.map((teg,indx)=>{
+                        return (
+                            <Tag key={`${indx}`} light disabled color="#28a745">{teg}</Tag>
+                        )
                     })}
                 </Card.Body>
                 {(isAuthenticated)&&(<LikeButton id={props.location.pathname.slice(6)}/>)}
