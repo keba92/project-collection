@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 
 export default function EditItem(props) {
     const id = props.location.pathname.slice(10);
-    const socket = io("http://localhost:3001/");
+    const socket = io();
     const [itemData, setItemData] = useState([]);
     const [newItemData, setNewItemData] = useState({})
 

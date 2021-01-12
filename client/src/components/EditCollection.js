@@ -6,7 +6,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 export default function EditCollection(props) {
     const id = props.location.pathname.slice(16);
-    const socket = io("http://localhost:3001/");
+    const socket = io();
     const [collectionData, setCollectionData] = useState([]);
     const [nameCollection, setNameCollection] = useState('');
     const [shortNameCollection, setShortNameCollection] = useState('');

@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 export default function Home() {
     const [items, setItems] = useState([]);
     const [dataCollect, setDataCollect] = useState([]);
-    const socket = io("http://localhost:3001/");
+    const socket = io();
      useEffect(() => {
         socket.emit('getItems', {
             idCollect: 'all'

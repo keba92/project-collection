@@ -5,7 +5,7 @@ import TableCollection from './TableCollection';
 import io from 'socket.io-client';
 
 export default function CreateCollection(props) {
-    const socket = io("http://localhost:3001/");
+    const socket = io();
     const [nameCollection, setNameCollection] = useState('');
     const [shortNameCollection, setShortNameCollection] = useState('');
     const [urlPicture, setUrlPicture] = useState('');

@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import CreateCollection from './CreateCollection';
 import { useAuth0 } from "@auth0/auth0-react";
-import ResultSearch from './ResultSearch';
 import Search from './Search';
 
 function UserPage(props) {

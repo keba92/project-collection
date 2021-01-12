@@ -6,11 +6,10 @@ import TabelItems from './TableItems';
 import io from 'socket.io-client';
 import Tags from "@yaireo/tagify/dist/react.tagify"
 import '@yaireo/tagify/dist/tagify.css';
-import ResultSearch from './ResultSearch';
 import Search from './Search';
 
 export default function CreateItem(props) {
-    const socket = io("http://localhost:3001/");
+    const socket = io();
     const [collection, setCollection] = useState([]);
     const [itemData, setItemData] = useState({});
     const [dataItems, setDataItems] = useState([]);

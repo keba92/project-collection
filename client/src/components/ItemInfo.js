@@ -10,7 +10,7 @@ import BoxComment from './BoxComment';
 import Tag from '@uiw/react-tag';
 
 export default function ItemInfo(props) {
-    const socket = io("http://localhost:3001/");
+    const socket = io();
     const { user, isAuthenticated } = useAuth0();
     const [item, setItem] = useState([])
 

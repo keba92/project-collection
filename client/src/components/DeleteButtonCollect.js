@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 
 export default function DeleteButtonCollect(props) {
     const { id } = props;
-    const socket = io("http://localhost:3001/");
+    const socket = io();
     const deleteCollection = (e) => {
         // eslint-disable-next-line no-restricted-globals
         const answer = confirm('Вы уверены что хотите удалить?');

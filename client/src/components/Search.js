@@ -4,7 +4,7 @@ import ResultSearch from './ResultSearch';
 
 
 export default function Search() {
-    const socket = io("http://localhost:3001/");
+    const socket = io();
 
     const [option, setOption] = useState([]);
     const [word, setWord] = useState('');

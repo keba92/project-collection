@@ -8,7 +8,7 @@ export default function BoxComment(props){
     const [newArrComment, setNewArrComment] = useState([]);
     const { user } = useAuth0();
     const { id } = props;
-    const socket = io("http://localhost:3001/");
+    const socket = io();
 
     useEffect(()=>{
         socket.emit('getComment',{
