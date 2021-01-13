@@ -3,6 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Form, Button } from 'react-bootstrap';
 import TableCollection from './TableCollection';
 import io from 'socket.io-client';
+import { useTranslation } from 'react-i18next';
 
 export default function CreateCollection(props) {
     const socket = io();
@@ -17,6 +18,7 @@ export default function CreateCollection(props) {
     const { user, isAuthenticated } = useAuth0();
     const [idUser, setIdUser] = useState('');
     const { idLink } = props;
+    const { t, i18n } = useTranslation();
 
     useEffect(() => {
         const getUserMetadata = async () => {
@@ -85,22 +87,22 @@ export default function CreateCollection(props) {
 
     return(
         <div className='create-block'>
-            <h1 className='create'>Создать коллекцию</h1>
+            <h1 className='create'>{t('createCollectionH')}</h1>
             <div className='create-item create'>
             <Form>
                 <Form.Group controlId="exampleForm.ControlInput2">
-                    <Form.Label>Введите название: </Form.Label>
-                    <Form.Control type="text" onChange={(e)=>setNameCollection(e.target.value)} placeholder='Введите название' />
+                    <Form.Label>{t('nameCreateF')} </Form.Label>
+                    <Form.Control type="text" onChange={(e)=>setNameCollection(e.target.value)} placeholder={t('enterNameP')} />
                 </Form.Group>
                 <Form.Group controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Введите краткое описание: </Form.Label>
+                    <Form.Label>{t('descriptCreateF')} </Form.Label>
                     <Form.Control as="textarea" rows={3} 
                                     onChange={(e)=>setShortNameCollection(e.target.value)}
-                                    placeholder='Введите краткое описание' 
+                                    placeholder={t('descriptCreateF')} 
                     />
                 </Form.Group>
                 <Form.Group controlId="exampleForm.ControlInput3">
-                    <Form.Label>Выберите тематику: </Form.Label>
+                    <Form.Label>{t('temaCreateF')} </Form.Label>
                     <Form.Control as="select" onInput={(e)=>setTemaCollection(e.target.value)}>
                         <option></option>
                         <option value='alcohol'>Алкоголь</option>
@@ -110,15 +112,15 @@ export default function CreateCollection(props) {
                     </Form.Control>
                 </Form.Group>
                 <Form.Group controlId="exampleForm.ControlInput4">
-                    <Form.Label>Введите название: </Form.Label>
-                    <Form.Control type="text" onChange={(e)=>setUrlPicture(e.target.value)} placeholder='Введите URL'/>
+                    <Form.Label>{t('urlCreateF')} </Form.Label>
+                    <Form.Control type="text" onChange={(e)=>setUrlPicture(e.target.value)} placeholder={t('enterUrlP')}/>
                 </Form.Group>
                 <Form>
-                  <Form.Label><b>Создать поля для Item</b></Form.Label>
+                  <Form.Label><b>{t('polesCreateF')}</b></Form.Label>
                   <Form.Group controlId="exampleForm.ControlInput4">
-                    <Form.Label>Поля Item: </Form.Label>
-                    <Form.Control type="text" onChange={(e)=>setNamePole(e.target.value)} placeholder='Имя поля'/>
-                    <Form.Label>Выберите тип поля: </Form.Label>
+                    <Form.Label>{t('poleItemF')} </Form.Label>
+                    <Form.Control type="text" onChange={(e)=>setNamePole(e.target.value)} placeholder={t('poleItemF')}/>
+                    <Form.Label>{t('typePoleF')} </Form.Label>
                     <Form.Control as="select" onInput={(e)=>setTypePole(e.target.value)}>
                         <option></option>
                         <option value='number'>Числовое</option>
@@ -128,17 +130,17 @@ export default function CreateCollection(props) {
                         <option value='checkbox'>Булевое</option>
                     </Form.Control>
                     <Button variant="primary" type="submit" onClick={addPoleItem}>
-                        Добавить
+                        {t('addB')}
                     </Button>
-                    <Form.Label>Выбранные поля: {JSON.stringify(poleItem)} </Form.Label>
+                    <Form.Label>{t('choisePoleF')} {JSON.stringify(poleItem)} </Form.Label>
                   </Form.Group>
                 </Form>
                 <Button variant="primary" type="submit" onClick={addCollection}>
-                    Создать Коллекцию
+                    {t('createB')}
                 </Button>
             </Form>
             </div>
-            <h1 className='create'>Мои коллекции</h1>
+            <h1 className='create'>{t('myCollectionH')}</h1>
             <TableCollection dataCollect={dataCollect}/>
         </div>
     )

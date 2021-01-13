@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import io from 'socket.io-client';
 import ResultSearch from './ResultSearch';
+import { useTranslation } from 'react-i18next';
 
 
 export default function Search() {
     const socket = io();
-
+    const { t, i18n } = useTranslation();
     const [option, setOption] = useState([]);
     const [word, setWord] = useState('');
 
@@ -41,8 +42,8 @@ return (
     <div>
         <div className = "search-block">
             <input className='search' onChange={(e)=>{setWord(e.target.value)}}
-                    placeholder='Поиск'/>
-            <button onClick={searchFT}>Поиск</button>
+                    placeholder={t('searchP')}/>
+            <button onClick={searchFT}>{t('searchB')}</button>
         </div>
         {(option)&&(<ResultSearch data = {option}/>)}
     </div>

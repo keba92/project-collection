@@ -3,6 +3,7 @@ import { Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import io from 'socket.io-client';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useTranslation } from 'react-i18next';
 
 export default function EditCollection(props) {
     const id = props.location.pathname.slice(16);
@@ -17,6 +18,7 @@ export default function EditCollection(props) {
     const [typePole, setTypePole] = useState('');
     const [newId, setNewId] = useState('');
     const { user } = useAuth0();
+    const { t, i18n } = useTranslation();
 
     useEffect(() => {
         let idUser;
@@ -58,21 +60,21 @@ export default function EditCollection(props) {
     return(
         (collectionData.length != 0) && (
         <div>
-          <Link className='back' to={`/user/${newId}`}>Вернуться к коллекциям</Link>
+          <Link className='back' to={`/user/${newId}`}>{t('backCollectL')}</Link>
           <Form>
              <Form.Group controlId="exampleForm.ControlInput2">
-                    <Form.Label>Введите название: </Form.Label>
+                    <Form.Label>{t('nameCreateF')} </Form.Label>
                     <Form.Control type="text" onChange={(e)=>setNameCollection(e.target.value)} placeholder={`${collectionData[0].name}`} />
                 </Form.Group>
                 <Form.Group controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Введите краткое описание: </Form.Label>
+                    <Form.Label>{t('descriptCreateF')} </Form.Label>
                     <Form.Control as="textarea" rows={3} 
                                     onChange={(e)=>setShortNameCollection(e.target.value)}
                                     placeholder={`${collectionData[0].description}`} 
                     />
                 </Form.Group>
                 <Form.Group controlId="exampleForm.ControlInput3">
-                    <Form.Label>Выберите тематику: </Form.Label>
+                    <Form.Label>{t('temaCreateF')} </Form.Label>
                     <Form.Control as="select" onInput={(e)=>setOptionCollection(e.target.value)}>
                         <option></option>
                         <option value='alcohol'>Алкоголь</option>
@@ -80,15 +82,15 @@ export default function EditCollection(props) {
                     </Form.Control>
                 </Form.Group>
                 <Form.Group controlId="exampleForm.ControlInput4">
-                    <Form.Label>Введите название: </Form.Label>
+                    <Form.Label>{t('urlCreateF')} </Form.Label>
                     <Form.Control type="text" onChange={(e)=>setUrlPicture(e.target.value)} placeholder={`${collectionData[0].url}`}/>
                 </Form.Group>
                 <Form>
-                  <Form.Label><b>Создать поля для Item</b></Form.Label>
+                  <Form.Label><b>{t('polesCreateF')}</b></Form.Label>
                   <Form.Group controlId="exampleForm.ControlInput4">
-                    <Form.Label>Поля Item: </Form.Label>
-                    <Form.Control type="text" onChange={(e)=>setNamePole(e.target.value)} placeholder='Имя поля'/>
-                    <Form.Label>Выберите тип поля: </Form.Label>
+                    <Form.Label>{t('poleItemF')} </Form.Label>
+                    <Form.Control type="text" onChange={(e)=>setNamePole(e.target.value)} placeholder={t('poleItemF')}/>
+                    <Form.Label>{t('typePoleF')} </Form.Label>
                     <Form.Control as="select" onInput={(e)=>setTypePole(e.target.value)}>
                         <option></option>
                         <option value='number'>Числовое</option>
@@ -98,13 +100,13 @@ export default function EditCollection(props) {
                         <option value='checkbox'>Булевое</option>
                     </Form.Control>
                     <Button variant="primary" type="submit" onClick={addPoleItem}>
-                        Добавить
+                        {t('addB')}
                     </Button>
-                    <Form.Label>Выбранные поля: {JSON.stringify(poleItem)} </Form.Label>
+                    <Form.Label>{t('choisePoleF')} {JSON.stringify(poleItem)} </Form.Label>
                   </Form.Group>
                 </Form>
                 <Button variant="primary" type="submit" onClick={editCollection}>
-                    Редактировать
+                    {t('saveB')}
                 </Button>
             </Form>
         </div>

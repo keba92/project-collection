@@ -7,6 +7,7 @@ import io from 'socket.io-client';
 import Tags from "@yaireo/tagify/dist/react.tagify"
 import '@yaireo/tagify/dist/tagify.css';
 import Search from './Search';
+import { useTranslation } from 'react-i18next';
 
 export default function CreateItem(props) {
     const socket = io();
@@ -17,7 +18,8 @@ export default function CreateItem(props) {
     const [id, setId] = useState('');
     const tagifyRef = useRef();
     const [tags, setTags] = useState();
-    const [tagifyProps, setTagifyProps] = useState({})
+    const [tagifyProps, setTagifyProps] = useState({});
+    const { t, i18n } = useTranslation();
 
     useEffect(()=>{
         setTagifyProps({loading: true})
@@ -91,11 +93,11 @@ export default function CreateItem(props) {
     return (
     <div>
         <Search />
-        {(!isAuthenticated)&&(<Link className='back' to={`/`}>На главную страницу</Link>)}
-        {(isAuthenticated)&&(<Link className='back' to={`/user/${id}`}>Вернуться к коллекциям</Link>)}
+        {(!isAuthenticated)&&(<Link className='back' to={`/`}>{t('adminPageL')}</Link>)}
+        {(isAuthenticated)&&(<Link className='back' to={`/user/${id}`}>{t('backCollectL')}</Link>)}
         {(isAuthenticated)&&(<div className='create'>
             <div className='create-block'>
-                <h1 className='create'>Создать Items</h1>
+                <h1 className='create'>{t('createItemH')}</h1>
                 <Form>
                     {(collection.length != 0)&&(
                         Object.keys(JSON.parse(collection[0].poleItem)).map((keyName, idx) => {
@@ -106,7 +108,7 @@ export default function CreateItem(props) {
                             } else if(JSON.parse(collection[0].poleItem)[keyName] == 'textarea') {
                                 return (
                                 <Form.Group key={idx} controlId={`ControlInput${idx}`}>
-                                       <Form.Label>Введите {`${keyName}`}: </Form.Label>
+                                       <Form.Label>{t('enterC')} {`${keyName}`}: </Form.Label>
                                        <Form.Control as={`${JSON.parse(collection[0].poleItem)[keyName]}`} rows={3} title={keyName} onChange={(e)=>{
                                            itemData[e.target.title] = e.target.value;
                                            setItemData(itemData);
@@ -116,7 +118,7 @@ export default function CreateItem(props) {
                             } else if( keyName == 'tag') {
                                 return (
                                 <Form.Group key={idx} controlId={`ControlInput${idx}`}>
-                                       <Form.Label>Введите {`${keyName}`}: </Form.Label>
+                                       <Form.Label>{t('enterC')} {`${keyName}`}: </Form.Label>
                                        <Tags
                                         tagifyRef={tagifyRef}
                                         settings={settings} 
@@ -128,7 +130,7 @@ export default function CreateItem(props) {
                             } else {
                                 return (
                                     <Form.Group key={idx} controlId={`ControlInput${idx}`}>
-                                        <Form.Label>Введите {`${keyName}`}: </Form.Label>
+                                        <Form.Label>{t('enterC')} {`${keyName}`}: </Form.Label>
                                         <Form.Control type={`${JSON.parse(collection[0].poleItem)[keyName]}`} title={keyName} onChange={(e)=>{
                                             itemData[e.target.title] = e.target.value;
                                             setItemData(itemData);
@@ -139,7 +141,7 @@ export default function CreateItem(props) {
                         })
                     )}
                     <Button variant="primary" type="submit" onClick={addItem}>
-                        Создать
+                        {t('createB')}
                     </Button>
                 </Form>
             </div>

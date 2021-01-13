@@ -2,6 +2,7 @@ import React, { useState, useEffect} from 'react';
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
 import io from 'socket.io-client';
+import { useTranslation } from 'react-i18next';
 
 export default function BoxComment(props){
     const [textComment, setTextComment] = useState('');
@@ -9,6 +10,7 @@ export default function BoxComment(props){
     const { user } = useAuth0();
     const { id } = props;
     const socket = io();
+    const { t, i18n } = useTranslation();
 
     useEffect(()=>{
         socket.emit('getComment',{
@@ -50,14 +52,14 @@ export default function BoxComment(props){
 
     return(
         <div className='comment-box'>
-            <h4>Комментарии</h4>
+            <h4>{t('commentH')}</h4>
             <div className='comment-body'>
-                {(newArrComment.length == 0)?(<p>Пока комментариев нет!</p>):(makeComment)}
+                {(newArrComment.length == 0)?(<p>{t('nonCommentP')}</p>):(makeComment)}
             </div>
             <div className='comment-footer'>
                 <InputGroup className="mb-3">
                     <FormControl
-                    placeholder="Введите сообщение"
+                    placeholder={t('enterMessageP')}
                     aria-describedby="basic-addon2"
                     onChange={(e)=>setTextComment(e.target.value)}
                     />
@@ -65,7 +67,7 @@ export default function BoxComment(props){
                         <Button 
                         variant="outline-secondary"
                         onClick={addComment}
-                        >Отправить</Button>
+                        >{t('sendB')}</Button>
                     </InputGroup.Append>
                 </InputGroup>
             </div>

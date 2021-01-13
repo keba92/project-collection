@@ -5,11 +5,13 @@ import {  MarkdownPreview  } from 'react-marked-markdown';
 import { Link } from 'react-router-dom';
 import LikeButton from './LikeButton';
 import Tag from '@uiw/react-tag';
+import { useTranslation } from 'react-i18next';
 
 
 export default function TabelItems(props) {
     const {dataItems, idCollect} = props;
     const { isAuthenticated } = useAuth0();
+    const { t, i18n } = useTranslation();
     const collectItems = [];
 
     if(idCollect == ''){
@@ -27,7 +29,7 @@ export default function TabelItems(props) {
                 const data = JSON.parse(el.dataItem);
                 const pole = JSON.parse(el.poleItem);
                 return (
-                    <Card style={{ width: '15rem' }} key={idx}>
+                    <Card style={{ width: '15rem' }} className='item' key={idx}>
                         <Card.Body>
                             {Object.keys(data).map((keyName, idx) => {
                                 // eslint-disable-next-line default-case
@@ -51,7 +53,7 @@ export default function TabelItems(props) {
                             })}
                         </Card.Body>
                         {(isAuthenticated)&&(<LikeButton id={el._id}/>)}
-                        <Link to={`/item/${el._id}`}> Посмотреть </Link>
+                        <Link to={`/item/${el._id}`}> {t('openL')} </Link>
                     </Card>
                 )
             })

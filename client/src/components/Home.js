@@ -7,11 +7,13 @@ import Search from './Search';
 import TableCollection from './TableCollection';
 import { TagCloud } from 'react-tagcloud';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export default function Home() {
     const [items, setItems] = useState([]);
     const [dataCollect, setDataCollect] = useState([]);
     const socket = io();
+    const { t, i18n } = useTranslation();
      useEffect(() => {
         socket.emit('getItems', {
             idCollect: 'all'
@@ -96,7 +98,6 @@ export default function Home() {
                 link: el._id
             }
         })
-        console.log(arrCollect)
 
         return(<TagCloud tags={arrCollect} minSize={1} maxSize={5} renderer={customRenderer} />)
     }
@@ -108,11 +109,11 @@ export default function Home() {
             <Search />
             <AdminProfileButton />
             <UserProfileButton />
-            <h4>Новые Items</h4>
+            <h4>{t('newItemsH')}</h4>
             <TabelItems dataItems={items} idCollect=''/>
-            <h4>Самые большие коллекции</h4>
+            <h4>{t('bigCollectionH')}</h4>
             {collect()}
-            <h4>Облоко тегов</h4>
+            <h4>{t('cloudTagsH')}</h4>
             <div className='cloud-div'>
                 {makedataCloud()}
             </div>

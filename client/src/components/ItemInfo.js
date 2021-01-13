@@ -8,11 +8,13 @@ import { useAuth0 } from '@auth0/auth0-react';
 import LikeButton from './LikeButton';
 import BoxComment from './BoxComment';
 import Tag from '@uiw/react-tag';
+import { useTranslation } from 'react-i18next';
 
 export default function ItemInfo(props) {
     const socket = io();
     const { user, isAuthenticated } = useAuth0();
-    const [item, setItem] = useState([])
+    const [item, setItem] = useState([]);
+    const { t, i18n } = useTranslation();
 
     useEffect(()=>{
         socket.emit('getItemInfo',{
@@ -51,7 +53,7 @@ export default function ItemInfo(props) {
                 {(isAuthenticated && user.sub == el.idUser || localStorage.getItem('admin'))&&(
                     <div>
                         <DeleteButtonItem id={props.location.pathname.slice(6)} />
-                        <Link to={`/editItem/${props.location.pathname.slice(6)}`}>Редактировать</Link>
+                        <Link to={`/editItem/${props.location.pathname.slice(6)}`}>{t('editL')}</Link>
                     </div>
                 )}
             </Card>
@@ -61,7 +63,7 @@ export default function ItemInfo(props) {
     return (
         (item.length!==0)&&(
             <div>
-                <Link className='back' to='/'>На главную страницу</Link>
+                <Link className='back' to='/'>{t('backMainL')}</Link>
                 <div className='content-item'>
                     {makeItem}
                     {(isAuthenticated)&&(<BoxComment id={props.location.pathname.slice(6)} />)}

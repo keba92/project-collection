@@ -4,11 +4,12 @@ import {  MarkdownPreview  } from 'react-marked-markdown';
 import { Link } from 'react-router-dom';
 import DeleteButtonCollect from './DeleteButtonCollect';
 import { useAuth0 } from "@auth0/auth0-react";
+import { useTranslation } from 'react-i18next';
 
 export default function TableCollection(props) {
     const { dataCollect } = props;
     const { user, isAuthenticated} = useAuth0();
-
+    const { t, i18n } = useTranslation();
 
     const makeCollection = dataCollect.map((el, idx) => {
         if(el) {
@@ -19,8 +20,8 @@ export default function TableCollection(props) {
                         <Card.Title>{el.name}</Card.Title>
                         <Card.Text>{el.collections}</Card.Text>
                         <MarkdownPreview value={el.description} />
-                        {(isAuthenticated&&user.sub==el.id)&&(<Link to={`/collection/${el._id}`} > Посмотреть </Link>)}
-                        {(isAuthenticated&&user.sub==el.id)&&(<Link to={`/editCollection/${el._id}`} > Редактировать </Link>)}
+                        {(isAuthenticated&&user.sub==el.id)&&(<Link to={`/collection/${el._id}`} > {t('openL')} </Link>)}
+                        {(isAuthenticated&&user.sub==el.id)&&(<Link to={`/editCollection/${el._id}`} > {t('editL')} </Link>)}
                         {(isAuthenticated&&user.sub==el.id)&&(<DeleteButtonCollect id={el._id} />)}
                     </Card.Body>
                 </Card>

@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from "react";
 import io from 'socket.io-client';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const Checkbox = ({ type = "checkbox", checked = false, onChange, title, value }) => {
     return (
@@ -14,6 +15,7 @@ function AdminPage() {
     const [checkedAll, setCheckedAll] = useState(false);
     const [adminList, setAdminList] = useState([]);
     const socket = io();
+    const { t, i18n } = useTranslation();
     const idUsers = []
 
     useEffect(() =>{
@@ -134,10 +136,6 @@ function AdminPage() {
         })
     }
 
-   const _refreshPage = () => {
-        window.location.reload();
-    }
-
     const selectAll = (value) => {
         idUsers.forEach((el) => {
             checkedItems[el] = false;
@@ -154,14 +152,14 @@ function AdminPage() {
     
     return(
         <div className='admin-page'>
-            <Link className='back' to='/'>На главную страницу</Link>
+            <Link className='back' to='/'>{t('backMainL')}</Link>
             <div className = 'users'>
-                <h1>Users</h1>
+                <h1>{t('usersH')}</h1>
                 <span className = 'toolBar'>
-                    <button className = 'btn' title='block' onClick={blockUser}><i className='fa fa-close'>Block</i></button>
-                    <button className = 'btn' onClick={deleteUsers}><i className='fa fa-trash'>Delete</i></button>
-                    <button className = 'btn' title='unblock' onClick={blockUser}><i className='fa fa-check'>Unblock</i></button>
-                    <button className = 'btn' onClick={makeAdmin}><i className='fa fa-check'>Admin</i></button>
+                    <button className = 'btn' title='block' onClick={blockUser}><i className='fa fa-close'>{t('blockI')}</i></button>
+                    <button className = 'btn' onClick={deleteUsers}><i className='fa fa-trash'>{t('deleteI')}</i></button>
+                    <button className = 'btn' title='unblock' onClick={blockUser}><i className='fa fa-check'>{t('unblockI')}</i></button>
+                    <button className = 'btn' onClick={makeAdmin}><i className='fa fa-check'>{t('adminI')}</i></button>
                 </span>
                 <table className ='table-light'>
                     <tr>
@@ -169,12 +167,12 @@ function AdminPage() {
                             <input type='checkbox' className ='form-check-input' onChange={(event) => selectAll(event.target.checked)} checked={checkedAll}/>
                         </th>
                         <th>ID</th>
-                        <th>Name(Login)</th>
-                        <th>Email</th>
-                        <th>Date Registration</th>
-                        <th>Date Last Login</th>
-                        <th>Status</th>
-                        <th>Admin</th>
+                        <th>{t('nameT')}</th>
+                        <th>{t('emailT')}</th>
+                        <th>{t('dateRegT')}</th>
+                        <th>{t('dateLastT')}</th>
+                        <th>{t('statusT')}</th>
+                        <th>{t('adminT')}</th>
                     </tr>
                     {tableTemplate}
                 </table>

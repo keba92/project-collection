@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import io from 'socket.io-client';
+import { useTranslation } from 'react-i18next';
 
 export default function EditItem(props) {
     const id = props.location.pathname.slice(10);
     const socket = io();
     const [itemData, setItemData] = useState([]);
-    const [newItemData, setNewItemData] = useState({})
+    const [newItemData, setNewItemData] = useState({});
+    const { t, i18n } = useTranslation();
 
     useEffect(() => {
         socket.emit('getItemInfo', {
@@ -28,7 +30,7 @@ export default function EditItem(props) {
 
     return(
         <div>
-          <Link className='back' to={`/item/${id}`}>Вернуться к Item</Link>
+          <Link className='back' to={`/item/${id}`}>{t('backItemL')}</Link>
           <Form>
             {(itemData.length != 0)&&(
                 Object.keys(JSON.parse(itemData[0].poleItem)).map((keyName, idx) => {
@@ -40,7 +42,7 @@ export default function EditItem(props) {
                     } else if(JSON.parse(itemData[0].poleItem)[keyName] == 'textarea'&& keyName != 'tag') {
                         return (
                             <Form.Group key={idx} controlId={`ControlInput${idx}`}>
-                                <Form.Label>Введите {`${keyName}`}: </Form.Label>
+                                <Form.Label>{t('enterC')} {`${keyName}`}: </Form.Label>
                                 <Form.Control as={`${JSON.parse(itemData[0].poleItem)[keyName]}`} rows={3} title={keyName} onChange={(e)=>{
                                     newItemData[e.target.title] = e.target.value;
                                     setNewItemData(newItemData);
@@ -50,7 +52,7 @@ export default function EditItem(props) {
                     } else if (keyName != 'tag') {
                         return (
                             <Form.Group key={idx} controlId={`ControlInput${idx}`}>
-                                <Form.Label>Введите {`${keyName}`}: </Form.Label>
+                                <Form.Label>{t('enterC')} {`${keyName}`}: </Form.Label>
                                 <Form.Control type={`${JSON.parse(itemData[0].poleItem)[keyName]}`} title={keyName} onChange={(e)=>{
                                     newItemData[e.target.title] = e.target.value;
                                     setNewItemData(newItemData);
@@ -61,7 +63,7 @@ export default function EditItem(props) {
                 })
             )}
             <Button variant="primary" type="submit" onClick={editItem}>
-                Сохранить
+                {t('saveB')}
             </Button>
           </Form>
         </div>

@@ -1,9 +1,11 @@
-* {
+/** {
   margin: 0;
   padding: 0;
 }
 
 .header{
+  display: flex;
+  justify-content: space-between;
   height: 60px;
   width: 100%;
   border-bottom: 2px solid gray;
@@ -30,7 +32,7 @@
 button {
   height: 35px;
   width: 90px;
-  background-color: white;
+  background-color: rgb(163, 162, 162);
   margin-right: 10px;
   cursor: pointer;
 }
@@ -57,6 +59,7 @@ button {
   margin-left: 1%;
   margin-bottom: 1%;
   min-width: 7%;
+  border: 1px solid gray;
 }
 
 .table-collection {
@@ -75,7 +78,6 @@ form {
 }
 
 span i {
-  float: right;
   margin-bottom: 10px;
   margin-right: 30px;
   cursor: pointer;
@@ -168,3 +170,11 @@ th, td {
   flex-wrap: wrap;
   justify-content: center;
  }
+
+ .lang {
+   margin-top: 1%;
+   margin-left: 10px;
+   border-radius: 2px;
+   cursor: pointer;
+ } */
+
