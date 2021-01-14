@@ -12,7 +12,7 @@ function Header() {
   const { i18n } = useTranslation();
   const [theame, setTheme] = useState(null);
   const [language, setLanguage] = useState(null)
-  const socket = io('https://project-collections.herokuapp.com/',{ reconnect: true, transports: ['websocket', 'polling'] });
+  const socket = io();
   const { user, isAuthenticated} = useAuth0();
 
   useEffect(()=>{

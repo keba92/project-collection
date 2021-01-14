@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const http = require('http').createServer(app);
 const path = require('path');
 const cors = require('cors');
+const expressStatusMonitor = require('express-status-monitor');
 const io = require('socket.io')(http, {
     cors: {
       origin: '*',
@@ -27,6 +28,11 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+app.use(expressStatusMonitor({
+  websocket: io,
+  port: app.get('port')
+}));
+
 if (process.env.NODE_ENV === 'production'|| process.env.NODE_ENV === 'staging') {
     app.use(express.static(path.join(__dirname,'client/build')));
     app.get('*', function(req, res){
@@ -47,8 +53,6 @@ mongoose
     .catch((e) => console.log(e))
 
 mongoose.set('useCreateIndex', true);
-
-io.set('transports', ['websocket', 'polling']);
 
 const clients = {};
 

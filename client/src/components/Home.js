@@ -14,7 +14,7 @@ export default function Home() {
     const [items, setItems] = useState([]);
     const [dataCollect, setDataCollect] = useState([]);
     const [choiseTag, setChoiseTag] = useState(null)
-    const socket = io('https://project-collections.herokuapp.com/',{ reconnect: true, transports: ['websocket', 'polling'] });
+    const socket = io();
     const { t, i18n } = useTranslation();
      useEffect(() => {
         socket.emit('getItems', {

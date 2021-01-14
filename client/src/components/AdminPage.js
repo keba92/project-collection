@@ -14,7 +14,7 @@ function AdminPage() {
     const [checkedItems, setCheckedItems] = useState({});
     const [checkedAll, setCheckedAll] = useState(false);
     const [adminList, setAdminList] = useState([]);
-    const socket = io('https://project-collections.herokuapp.com/',{ reconnect: true, transports: ['websocket', 'polling'] });
+    const socket = io();
     const { t, i18n } = useTranslation();
     const idUsers = []
 

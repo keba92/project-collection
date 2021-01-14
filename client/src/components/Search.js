@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 
 export default function Search() {
-    const socket = io('https://project-collections.herokuapp.com/',{ reconnect: true, transports: ['websocket', 'polling'] });
+    const socket = io();
     const { t, i18n } = useTranslation();
     const [option, setOption] = useState([]);
     const [word, setWord] = useState('');

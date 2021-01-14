@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import { useAuth0 } from '@auth0/auth0-react';
 
 export default function LikeButton(props) {
-    const socket = io('https://project-collections.herokuapp.com/',{ reconnect: true, transports: ['websocket', 'polling'] });
+    const socket = io();
     const { id } = props;
     const [like, setLike] = useState([]);
     const [arrUsers, setArrUsers] = useState([]);
