@@ -9,7 +9,8 @@ const expressStatusMonitor = require('express-status-monitor');
 const io = require('socket.io')(http, {
     cors: {
       origin: '*',
-    }
+    },
+    transports: ['polling']
   });
 const axios = require("axios").default;
 const PORT = process.env.PORT || 3001;
