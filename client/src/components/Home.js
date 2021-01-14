@@ -6,7 +6,6 @@ import AdminProfileButton from './AdminProfileButton';
 import Search from './Search';
 import TableCollection from './TableCollection';
 import { TagCloud } from 'react-tagcloud';
-import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import ResultSearch from './ResultSearch';
 
@@ -38,7 +37,7 @@ export default function Home() {
                 localStorage.setItem('arrAdmins', JSON.stringify(admins))
             }catch (e) {
                   console.log(e.message);
-                }
+            }
         };
         getUserMetadata();
         socket.emit('getCollection', {
