@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 
 export default function Search() {
-    const socket = io();
+    const socket = io({transports: ['websocket']});
     const { t, i18n } = useTranslation();
     const [option, setOption] = useState([]);
     const [word, setWord] = useState('');

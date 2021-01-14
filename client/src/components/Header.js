@@ -12,7 +12,7 @@ function Header() {
   const { i18n } = useTranslation();
   const [theame, setTheme] = useState(null);
   const [language, setLanguage] = useState(null)
-  const socket = io();
+  const socket = io({transports: ['websocket']});
   const { user, isAuthenticated} = useAuth0();
 
   useEffect(()=>{
