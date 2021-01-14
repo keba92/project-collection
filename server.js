@@ -87,7 +87,8 @@ io.on("connection", function(socket) {
             _id: _id
         })
         .then((data) =>{
-            return socket.emit('getCollectionDataInfo', data);
+            socket.emit('getCollectionDataInfo', data);
+            socket.broadcast.emit('getCollectionDataInfo', data);
         })
         .catch((err) => console.log(err))
     })
@@ -97,7 +98,8 @@ io.on("connection", function(socket) {
         if(id == 'all'){
             collections.find()
             .then((data) =>{
-                return socket.emit('getDataCollect', data);
+                socket.emit('getDataCollect', data);
+                socket.broadcast.emit('getDataCollect', data)
             })
             .catch((err) => console.log(err))
         } else {
@@ -105,7 +107,8 @@ io.on("connection", function(socket) {
                 id: id
             })
             .then((data) =>{
-                return socket.emit('getDataCollect', data);
+                socket.emit('getDataCollect', data);
+                socket.broadcast.emit('getDataCollect', data)
             })
             .catch((err) => console.log(err))
         }
@@ -138,7 +141,8 @@ io.on("connection", function(socket) {
             _id: _id
         })
         .then((data) =>{
-            return socket.emit('getItemDataInfo', data);
+            socket.emit('getItemDataInfo', data);
+            socket.broadcast.emit('getItemDataInfo', data)
         })
         .catch((err) => console.log(err))
     })
@@ -190,10 +194,14 @@ io.on("connection", function(socket) {
                 await likes.find({
                     idItem: idItem
                 })
-                .then((data) => socket.emit('getLikeInfo', data))
+                .then((data) => {
+                    socket.emit('getLikeInfo', data)
+                    socket.broadcast.emit('getLikeInfo', data)
+                })
                 .catch((err)=> console.log(err))
             } else {
-                socket.emit('getLikeInfo', data)
+                socket.emit('getLikeInfo', data);
+                socket.broadcast.emit('getLikeInfo', data)
             }
         })
         .catch((err)=> console.log(err))
@@ -231,10 +239,14 @@ io.on("connection", function(socket) {
                 await comments.find({
                     idItem: idItem
                 })
-                .then((data) => socket.emit('getCommentData', data))
+                .then((data) =>{ 
+                    socket.emit('getCommentData', data)
+                    socket.broadcast.emit('getCommentData', data);
+                })
                 .catch((err)=> console.log(err))
             } else {
                 socket.emit('getCommentData', data)
+                socket.broadcast.emit('getCommentData', data);
             }
         })
         .catch((err)=> console.log(err))
@@ -349,7 +361,8 @@ io.on("connection", function(socket) {
             _id: _id
         })
         .then((data) =>{
-            return socket.emit('getCollectionDataInfo', data);
+            socket.emit('getCollectionDataInfo', data);
+            socket.broadcast.emit('getCollectionDataInfo', data);
         })
         .catch((err) => console.log(err))
     })
