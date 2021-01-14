@@ -48,7 +48,10 @@ mongoose
 
 mongoose.set('useCreateIndex', true);
 
+const clients = {};
+
 io.on("connection", function(socket) {
+    clients[socket.id] = true;
     socket.on('addItem', async (data)=>{
         const { idUser, idCollect, tag, dataItem, poleItem } = data;
         await items.create({
@@ -447,5 +450,7 @@ io.on("connection", function(socket) {
         })
         .catch((err) => console.log(err))
     })
-
+    socket.on('disconnect', function() {
+        delete clients[socket.id];
+    });
 })
