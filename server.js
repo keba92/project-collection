@@ -48,6 +48,8 @@ mongoose
 
 mongoose.set('useCreateIndex', true);
 
+io.set('transports', ['websocket', 'polling']);
+
 const clients = {};
 
 io.on("connection", function(socket) {

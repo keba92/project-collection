@@ -6,7 +6,7 @@ import io from 'socket.io-client';
 import { useTranslation } from 'react-i18next';
 
 export default function CreateCollection(props) {
-    const socket = io();
+    const socket = io('https://project-collections.herokuapp.com/',{ reconnect: true, transports: ['websocket', 'polling'] });
     const [nameCollection, setNameCollection] = useState('');
     const [shortNameCollection, setShortNameCollection] = useState('');
     const [urlPicture, setUrlPicture] = useState('');

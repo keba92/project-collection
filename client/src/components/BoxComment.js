@@ -11,7 +11,7 @@ export default function BoxComment(props){
     const [newArrComment, setNewArrComment] = useState([]);
     const { user } = useAuth0();
     const { id } = props;
-    const socket = io();
+    const socket = io('https://project-collections.herokuapp.com/',{ reconnect: true, transports: ['websocket', 'polling'] });
     const { t, i18n } = useTranslation();
 
     useEffect(()=>{
@@ -22,16 +22,6 @@ export default function BoxComment(props){
             setNewArrComment(data[0].arrComment);
         })
     },[])
-
-    /*const makeComment = newArrComment.map((el,idx)=>{
-        const obj = JSON.parse(el);
-        return(
-            <div className='comment' key={idx}>
-                <span> <b>{obj.nameUser}</b> </span>
-                <p> {obj.message} </p>
-            </div>
-        )
-    })*/
 
     const addComment = () =>{
         newArrComment.push(JSON.stringify({
@@ -62,6 +52,7 @@ export default function BoxComment(props){
             <div className='comment-footer'>
                 <input className='message' placeholder={t('enterMessageP')} onChange={(e)=>setTextComment(e.target.value)}/>
                 <Button 
+                        style={{color:'black'}}
                         variant="primary"
                         onClick={()=>setTimeout(addComment,1500)}
                         >{t('sendB')}
