@@ -18,21 +18,20 @@ export default function LikeButton(props) {
         })
     },[])
 
-    const makeLike = (e) => {
-        e.preventDefault();
+    const makeLike = async () => {
         if(!like[0].idUsers.includes(user.sub)) {
             const newArrUser = like[0].idUsers.concat();
             newArrUser.push(user.sub);
             setArrUsers(newArrUser);
-            socket.emit('updateLike', {
+            await socket.emit('updateLike', {
                 idItem: id,
                 countLike: like[0].countLike + 1,
                 idUsers: arrUsers
             })
-            socket.emit('getLike', {
+            await socket.emit('getLike', {
                 idItem: id
             })
-            socket.on('getLikeInfo', (data)=> {
+            await socket.on('getLikeInfo', (data)=> {
                 setLike(data)
             })
         }
@@ -41,7 +40,7 @@ export default function LikeButton(props) {
     return(
         <>
             <span>
-                <i className="fa fa-heart" aria-hidden="true" onClick={makeLike}> {(like.length!=0)&&(like[0].countLike)} </i>
+                <i className="fa fa-heart" aria-hidden="true" name={id} onClick={()=>makeLike()}> {(like.length!=0)&&(like[0].countLike)} </i>
             </span>
         </>
     )

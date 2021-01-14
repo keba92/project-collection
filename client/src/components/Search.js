@@ -39,7 +39,7 @@ export default function Search() {
 return (
     <div>
         <div className = "search-block">
-            <input className='search' onChange={(e)=>{setWord(e.target.value)}}
+            <input className='search' style={{color: 'black', backgroundColor: 'white'}} onChange={(e)=>{setWord(e.target.value)}}
                     placeholder={t('searchP')}/>
             <button onClick={searchFT}>{t('searchB')}</button>
         </div>

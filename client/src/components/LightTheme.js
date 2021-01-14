@@ -203,6 +203,14 @@ const LightTheme = () => {
              cursor: pointer;
            }
            
+           span .tagify__input {
+             background-color: white;
+           }
+
+           select {
+             background-color: white;
+             color: black;
+           }
            
         `
 }

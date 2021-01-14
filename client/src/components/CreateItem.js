@@ -94,7 +94,7 @@ export default function CreateItem(props) {
     return (
     <div>
         <Search />
-        {(!isAuthenticated)&&(<Link className='back' to={`/`}>{t('adminPageL')}</Link>)}
+        {(isAuthenticated)&&(<Link className='back' to={`/`}>{t('backMainL')}</Link>)}
         {(isAuthenticated&&id==localStorage.getItem('userId'))&&(<Link className='back' to={`/user/${id}`}>{t('backCollectL')}</Link>)}
         {(isAuthenticated&&id==localStorage.getItem('userId'))&&(<div className='create'>
             <div className='create-block'>
@@ -104,7 +104,10 @@ export default function CreateItem(props) {
                         Object.keys(JSON.parse(collection[0].poleItem)).map((keyName, idx) => {
                             if (JSON.parse(collection[0].poleItem)[keyName] == 'checkbox' ) {
                                 return(
-                                    <Form.Check type="checkbox" id="autoSizingCheck2" label={keyName} />
+                                    <Form.Check type="checkbox" id="autoSizingCheck2" name={keyName} onChange={(e) =>{
+                                        itemData[e.target.name] = e.target.checked
+                                        setItemData(itemData)
+                                    }}/>
                                 )
                             } else if(JSON.parse(collection[0].poleItem)[keyName] == 'textarea') {
                                 return (
@@ -121,6 +124,7 @@ export default function CreateItem(props) {
                                 <Form.Group key={idx} controlId={`ControlInput${idx}`}>
                                        <Form.Label>{t('enterC')} {`${keyName}`}: </Form.Label>
                                        <Tags
+                                        style={{backgroundColor: 'white'}}
                                         tagifyRef={tagifyRef}
                                         settings={settings} 
                                         {...tagifyProps}

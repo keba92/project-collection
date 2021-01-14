@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { Card } from 'react-bootstrap';
 import {  MarkdownPreview  } from 'react-marked-markdown';
 import { Link } from 'react-router-dom';
@@ -10,8 +10,17 @@ export default function TableCollection(props) {
     const { dataCollect } = props;
     const { user, isAuthenticated} = useAuth0();
     const { t, i18n } = useTranslation();
+    let id = null;
 
+    
     const makeCollection = dataCollect.map((el, idx) => {
+        if(isAuthenticated){
+            if(JSON.parse(localStorage.getItem('arrAdmins')).includes(user.sub)) {
+                id = user.sub;
+            } else if (user.sub==el.id) {
+                id = user.sub;
+            }
+        }
         if(el) {
             return (
                 <Card style={{ width: '15rem' }} key={el._id}>
@@ -20,9 +29,9 @@ export default function TableCollection(props) {
                         <Card.Title>{el.name}</Card.Title>
                         <Card.Text>{el.collections}</Card.Text>
                         <MarkdownPreview value={el.description} />
-                        {(isAuthenticated&&user.sub==el.id)&&(<Link to={`/collection/${el._id}`} > {t('openL')} </Link>)}
-                        {(isAuthenticated&&user.sub==el.id)&&(<Link to={`/editCollection/${el._id}`} > {t('editL')} </Link>)}
-                        {(isAuthenticated&&user.sub==el.id)&&(<DeleteButtonCollect id={el._id} />)}
+                        {(isAuthenticated&&id)&&(<Link to={`/collection/${el._id}`} > {t('openL')} </Link>)}
+                        {(isAuthenticated&&id)&&(<Link to={`/editCollection/${el._id}`} > {t('editL')} </Link>)}
+                        {(isAuthenticated&&id)&&(<DeleteButtonCollect id={el._id} />)}
                     </Card.Body>
                 </Card>
             )

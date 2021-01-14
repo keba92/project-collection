@@ -37,7 +37,10 @@ export default function EditItem(props) {
                     const data = JSON.parse(itemData[0].dataItem)
                     if (JSON.parse(itemData[0].poleItem)[keyName] == 'checkbox' && keyName != 'tag') {
                         return (
-                            <Form.Check type="checkbox" id="autoSizingCheck2" label={keyName} />
+                            <Form.Check type="checkbox" id="autoSizingCheck2" name={keyName} onChange={(e) =>{
+                                newItemData[e.target.name] = e.target.checked
+                                setNewItemData(newItemData)
+                            }}/>
                         )
                     } else if(JSON.parse(itemData[0].poleItem)[keyName] == 'textarea'&& keyName != 'tag') {
                         return (
