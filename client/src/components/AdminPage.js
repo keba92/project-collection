@@ -14,7 +14,7 @@ function AdminPage() {
     const [checkedItems, setCheckedItems] = useState({});
     const [checkedAll, setCheckedAll] = useState(false);
     const [adminList, setAdminList] = useState([]);
-    const socket = io({transports: ['websocket']});
+    const socket = io({transports: ['polling', 'websocket']});
     const { t, i18n } = useTranslation();
     const idUsers = []
 

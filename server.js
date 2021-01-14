@@ -11,7 +11,7 @@ const io = require('socket.io')(http, {
       origin: '*',
       methods: ["GET", "POST"]
     },
-    transports: ['websocket']
+    transports: ['polling', 'websocket']
   });
 const axios = require("axios").default;
 const PORT = process.env.PORT || 3001;

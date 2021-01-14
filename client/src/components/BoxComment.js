@@ -11,7 +11,7 @@ export default function BoxComment(props){
     const [newArrComment, setNewArrComment] = useState([]);
     const { user } = useAuth0();
     const { id } = props;
-    const socket = io({transports: ['websocket']});
+    const socket = io({transports: ['polling', 'websocket']});
     const { t, i18n } = useTranslation();
 
     useEffect(()=>{
