@@ -435,7 +435,4 @@ io.on("connection", function(socket) {
         .catch((err) => console.log(err))
     })
 
-    socket.on('disconnect', function () {
-        console.log('A user disconnected');
-     });
 })
