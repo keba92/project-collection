@@ -8,10 +8,12 @@ import TableCollection from './TableCollection';
 import { TagCloud } from 'react-tagcloud';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import ResultSearch from './ResultSearch';
 
 export default function Home() {
     const [items, setItems] = useState([]);
     const [dataCollect, setDataCollect] = useState([]);
+    const [choiseTag, setChoiseTag] = useState(null)
     const socket = io();
     const { t, i18n } = useTranslation();
      useEffect(() => {
@@ -83,40 +85,57 @@ export default function Home() {
             margin: '3px',
             padding: '3px',
             display: 'inline-block',
-            color: 'white',
+            color: {color},
           }}
-        >
-          <Link to={`/collection/${tag.link}`}> {tag.value} </Link>
-        </span>
+          > 
+          <p style={{cursor: 'pointer'}} onClick={(e)=>setChoiseTag(e.target.innerHTML)}>{tag.value}</p> 
+          </span>
       )
 
       const makedataCloud = () => {
-        const arrCollect = dataCollect.map((el) => {
-            return {
-                value: el.name,
-                count: countEl[el._id],
-                link: el._id
-            }
-        })
-
-        return(<TagCloud tags={arrCollect} minSize={1} maxSize={5} renderer={customRenderer} />)
+          const itemsTag = items.map((el)=>el.tag)
+          const countTag = itemsTag.flat().reduce((acc,el)=>{
+              acc[el] = (acc[el] || 0) + 1;
+              return acc;
+          },{})
+          const arrTags = Object.keys(countTag).map(el=>{
+              return {
+                  value: el,
+                  count: countTag[el]
+                }
+            })
+        return(<TagCloud tags={arrTags} minSize={3} maxSize={10} renderer={customRenderer} />)
     }
 
-      //if(items.length>5) items.reverse().splice(5);
+    const makeResult = () => {
+        const tegsItems=[];
+        items.forEach((el) =>{
+            if(el.tag.includes(choiseTag)) tegsItems.push(el);
+        })
+        console.log(tegsItems)
+        return (
+            (tegsItems)&&(<div>
+                <button style={{float:'right', backgroundColor: 'tomato'}} onClick={()=>setChoiseTag(null)}>Close</button>
+                <ResultSearch data={tegsItems}/>
+            </div>)
+        )
+    }
+
     
     return (
         <div className='home-page'>     
             <Search />
             <AdminProfileButton />
             <UserProfileButton />
-            <h4>{t('newItemsH')}</h4>
-            <TabelItems dataItems={items} idCollect=''/>
-            <h4>{t('bigCollectionH')}</h4>
-            {collect()}
-            <h4>{t('cloudTagsH')}</h4>
+            {(choiseTag)&&(makeResult())}
+            <h3>{t('cloudTagsH')}</h3>
             <div className='cloud-div'>
                 {makedataCloud()}
             </div>
+            <h3>{t('newItemsH')}</h3>
+            <TabelItems dataItems={items} idCollect=''/>
+            <h3>{t('bigCollectionH')}</h3>
+            {collect()}
         </div>
     )
 }

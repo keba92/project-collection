@@ -17,6 +17,7 @@ const collections = require('./config/collectionSchema');
 const items = require('./config/itemSchema');
 const likes = require('./config/likeSchema');
 const comments = require('./config/commentSchema');
+const users = require('./config/usersSchema');
 
 app.use(cors());
 app.use(express.json());
@@ -47,31 +48,6 @@ mongoose
 
 mongoose.set('useCreateIndex', true);
 
-    let clients = {};
-
-    const addClient = socket => {
-    clients[socket.id] = socket;
-    };
-    const removeClient = socket => {
-    delete clients[socket.id];
-    };
-
-    io.on("connection", socket => {
-        let id = socket.id;
-        
-        addClient(socket);
-      
-        socket.on("mousemove", data => {
-          data.id = id;
-          socket.broadcast.emit("moving", data);
-        });
-      
-        socket.on("disconnect", () => {
-          removeClient(socket);
-          socket.broadcast.emit("clientdisconnect", id);
-        });
-      });
-
 io.on("connection", function(socket) {
     socket.on('addItem', async (data)=>{
         const { idUser, idCollect, tag, dataItem, poleItem } = data;
@@ -85,7 +61,10 @@ io.on("connection", function(socket) {
         .catch((err)=> console.log(err))
 
         await items.find({ idCollect: idCollect })
-            .then((data) => socket.emit('getDataItems', data))
+            .then((data) => {
+                socket.emit('getDataItems', data);
+                socket.broadcast.emit('getDataItems', data);
+            })
             .catch((err)=> console.log(err))
     })
 
@@ -147,7 +126,8 @@ io.on("connection", function(socket) {
             id: id
         })
         .then((data) =>{
-            return socket.emit('getDataCollect', data);
+            socket.emit('getDataCollect', data);
+            socket.broadcast.emit('getDataCollect', data)
         })
         .catch((err) => console.log(err))
     })
@@ -192,7 +172,7 @@ io.on("connection", function(socket) {
             idItem: idItem,
             countLike: countLike,
             idUsers: idUsers
-        })
+        }).then((data)=>socket.broadcast.emit('getLikeInfo', data))
         .catch((err)=> console.log(err))
     })
 
@@ -273,6 +253,17 @@ io.on("connection", function(socket) {
             },
             (err, result) => {
                 if(err) console.log(err);
+                socket.on('getComment', (data) => {
+                    const { idItem } = data;
+                    comments.find({
+                        idItem: idItem
+                    })
+                    .then( (data)=>{
+                        socket.emit('getCommentData', data);
+                        socket.broadcast.emit('getCommentData', data);
+                    })
+                    .catch((err)=> console.log(err))
+                })
             }
         )
     })
@@ -398,5 +389,53 @@ io.on("connection", function(socket) {
         .then(res => socket.emit('dataComment', res))
         .catch(e=> console.log(e))
     })
+
+    socket.on('userData', (data) => {
+        const { id, theme, lang } = data;
+        console.log(data)
+        users.find({
+            id: id
+        })
+        .then( (data)=>{
+            if(data.length == 0){
+                users.create({
+                    id: id,
+                    theme: theme,
+                    lang: lang
+                })
+                .catch((err)=> console.log(err))
+            } else {
+                users.updateOne(
+                    {
+                        id: id
+                    },
+                    {
+                        $set: {
+                            theme: theme,
+                            lang: lang
+                        }
+                    },
+                    (err, result) => {
+                        if(err) console.log(err);
+                    }
+                )
+            }
+        })
+        .catch((err)=> console.log(err))
+    })
     
+    socket.on('getUser', (data) => {
+        const { id } = data;
+        users.find({
+            id: id
+        })
+        .then((data) =>{
+            return socket.emit('getUserData', data);
+        })
+        .catch((err) => console.log(err))
+    })
+
+    socket.on('disconnect', function () {
+        console.log('A user disconnected');
+     });
 })

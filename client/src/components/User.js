@@ -6,13 +6,13 @@ const User = () => {
 
   const saveLocalStorage = () => {
     localStorage.setItem('auth', 'true');
+    if(isAuthenticated) localStorage.setItem('userId', user.sub);
   }
 
   return (
     isAuthenticated && ( 
      <>
         <img className='user-img' src={user.picture} alt={user.name} />
-        <span className='user-name'>{user.name}</span>
         {saveLocalStorage}
      </>
     )

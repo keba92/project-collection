@@ -12,9 +12,7 @@ export default function Search() {
 
     const searchFT = async(e)=> {
         e.preventDefault();
-        if(option){
-            setOption(null)
-        }
+        if(option) setOption(null);
         setWord('');
         if(word!=''){
             await socket.emit('searchFT', {

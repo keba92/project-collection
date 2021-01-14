@@ -34,6 +34,7 @@ export default function CreateItem(props) {
             idCollect: (isAuthenticated) ? props.location.pathname.slice(12) : 'all'
         })
         socket.on('getDataItems',(data) => {
+
             setDataItems(data);
         })
         if(localStorage.getItem('admin')) {
@@ -94,8 +95,8 @@ export default function CreateItem(props) {
     <div>
         <Search />
         {(!isAuthenticated)&&(<Link className='back' to={`/`}>{t('adminPageL')}</Link>)}
-        {(isAuthenticated)&&(<Link className='back' to={`/user/${id}`}>{t('backCollectL')}</Link>)}
-        {(isAuthenticated)&&(<div className='create'>
+        {(isAuthenticated&&id==localStorage.getItem('userId'))&&(<Link className='back' to={`/user/${id}`}>{t('backCollectL')}</Link>)}
+        {(isAuthenticated&&id==localStorage.getItem('userId'))&&(<div className='create'>
             <div className='create-block'>
                 <h1 className='create'>{t('createItemH')}</h1>
                 <Form>

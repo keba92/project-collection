@@ -6,7 +6,18 @@ const DarkTheme = () => {
         const style = document.createElement('style');
         style.setAttribute('class', 'theme-head')
         document.head.appendChild(style);
-        style.innerHTML = `    
+        style.innerHTML = ` 
+        @media (min-width:600px){
+            .user-name{
+                display:none;
+            }
+         }
+
+         .fa-sun-o .fa-moon-o {
+            width: 50px;
+            margin-left: 10px;
+          }
+
         * {
             margin: 0;
             padding: 0;
@@ -96,6 +107,7 @@ const DarkTheme = () => {
             margin-bottom: 10px;
             margin-right: 30px;
             cursor: pointer;
+            float: right;
         }
         
         a {
@@ -176,6 +188,10 @@ const DarkTheme = () => {
         h4 {
             text-align: center;
         }
+
+        h3 {
+            text-align: center;
+          }
         
         .user-name {
             padding-left: 10px;
@@ -194,6 +210,7 @@ const DarkTheme = () => {
             border-radius: 2px;
             cursor: pointer;
         }
+
         `
     
 }

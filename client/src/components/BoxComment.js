@@ -3,6 +3,8 @@ import { InputGroup, FormControl, Button } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
 import io from 'socket.io-client';
 import { useTranslation } from 'react-i18next';
+import Comment from './Comment';
+import { set } from 'mongoose';
 
 export default function BoxComment(props){
     const [textComment, setTextComment] = useState('');
@@ -21,7 +23,7 @@ export default function BoxComment(props){
         })
     },[])
 
-    const makeComment = newArrComment.map((el,idx)=>{
+    /*const makeComment = newArrComment.map((el,idx)=>{
         const obj = JSON.parse(el);
         return(
             <div className='comment' key={idx}>
@@ -29,15 +31,13 @@ export default function BoxComment(props){
                 <p> {obj.message} </p>
             </div>
         )
-    })
+    })*/
 
-    const addComment = (e) =>{
-        e.preventDefault();
+    const addComment = () =>{
         newArrComment.push(JSON.stringify({
             nameUser: user.name,
             message: textComment
         }));
-        setNewArrComment(newArrComment)
         socket.emit('updateComment', {
             idItem: id,
             arrComment: newArrComment 
@@ -45,8 +45,11 @@ export default function BoxComment(props){
         socket.emit('getComment',{
             idItem: id
         })
+        setNewArrComment(newArrComment)
         socket.on('getCommentData', (data)=> {
             setNewArrComment(data[0].arrComment);
+            setTextComment(null)
+            document.querySelector('.message').value=null;
         },[])
     }
 
@@ -54,22 +57,15 @@ export default function BoxComment(props){
         <div className='comment-box'>
             <h4>{t('commentH')}</h4>
             <div className='comment-body'>
-                {(newArrComment.length == 0)?(<p>{t('nonCommentP')}</p>):(makeComment)}
+                <Comment data={newArrComment}/>
             </div>
             <div className='comment-footer'>
-                <InputGroup className="mb-3">
-                    <FormControl
-                    placeholder={t('enterMessageP')}
-                    aria-describedby="basic-addon2"
-                    onChange={(e)=>setTextComment(e.target.value)}
-                    />
-                    <InputGroup.Append>
-                        <Button 
-                        variant="outline-secondary"
-                        onClick={addComment}
-                        >{t('sendB')}</Button>
-                    </InputGroup.Append>
-                </InputGroup>
+                <input className='message' placeholder={t('enterMessageP')} onChange={(e)=>setTextComment(e.target.value)}/>
+                <Button 
+                        variant="primary"
+                        onClick={()=>setTimeout(addComment,1500)}
+                        >{t('sendB')}
+                </Button>
             </div>
         </div>
     )
