@@ -39,7 +39,9 @@ export default function Home() {
                   console.log(e.message);
             }
         };
-        getUserMetadata();
+        if (!localStorage.getItem('arrAdmins')){
+            getUserMetadata();
+        }
         socket.emit('getCollection', {
             id: 'all'
         })

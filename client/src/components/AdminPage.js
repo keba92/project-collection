@@ -52,7 +52,9 @@ function AdminPage() {
               console.log(e.message);
             }
           };
-          getUserMetadata();  
+          if(adminList.length==0||data.length==0) {
+            getUserMetadata(); 
+          } 
     },[])
 
     const handleChange = (event) => {

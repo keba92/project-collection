@@ -40,7 +40,7 @@ export default function ItemInfo(props) {
                             case 'date':
                             return <Card.Text key={idx}>{`${keyName}: ${data[keyName]}`}</Card.Text>;
                             case 'checkbox':
-                            return <Card.Text key={idx}>{`${keyName}: ${data[keyName]}`}</Card.Text>;
+                            return <Card.Text key = {idx}>{`${data['name']}: ${(data[keyName])?('Да'):('Нет')}`}</Card.Text>;
                         }
                     })}
                     {el.tag.map((teg,indx)=>{

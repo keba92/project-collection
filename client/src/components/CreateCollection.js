@@ -58,7 +58,9 @@ export default function CreateCollection(props) {
               console.log(e.message);
             }
         };
-        getUserMetadata();
+        if(idUser==''||dataCollect.length==0) {
+            getUserMetadata();
+        }
     },[]);
 
     const addCollection = (e) =>{
