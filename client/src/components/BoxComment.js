@@ -10,7 +10,7 @@ export default function BoxComment(props){
     const [newArrComment, setNewArrComment] = useState([]);
     const { user } = useAuth0();
     const { id } = props;
-    const socket = io("http://localhost:3001/", { reconnect: true });
+    const socket = io({ reconnect: true });
     const { t, i18n } = useTranslation();
 
     useEffect(()=>{

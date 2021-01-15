@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 export default function EditCollection(props) {
     const id = props.location.pathname.slice(16);
-    const socket = io("http://localhost:3001/", { reconnect: true });
+    const socket = io({ reconnect: true });
     const [collectionData, setCollectionData] = useState([]);
     const [nameCollection, setNameCollection] = useState('');
     const [shortNameCollection, setShortNameCollection] = useState('');
