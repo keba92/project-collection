@@ -10,17 +10,14 @@ export default function TableCollection(props) {
     const { dataCollect } = props;
     const { user, isAuthenticated} = useAuth0();
     const { t, i18n } = useTranslation();
-    const [id, setId] = useState(null)
+    const [id, setId] = useState(null);
+    
+    if(isAuthenticated && JSON.parse(localStorage.getItem('arrAdmins')).includes(user.sub)){
+        setId(user.sub);
+    }
 
     
     const makeCollection = dataCollect.map((el, idx) => {
-        if(isAuthenticated){
-            if(JSON.parse(localStorage.getItem('arrAdmins')).includes(user.sub)) {
-                setId(user.sub);
-            } else if (user.sub==el.id) {
-                setId(user.sub);
-            }
-        }
         if(el) {
             return (
                 <Card style={{ width: '15rem' }} key={el._id}>
@@ -29,9 +26,9 @@ export default function TableCollection(props) {
                         <Card.Title>{el.name}</Card.Title>
                         <Card.Text>{el.collections}</Card.Text>
                         <MarkdownPreview value={el.description} />
-                        {(isAuthenticated&&id)&&(<Link to={`/collection/${el._id}`} > {t('openL')} </Link>)}
-                        {(isAuthenticated&&id)&&(<Link to={`/editCollection/${el._id}`} > {t('editL')} </Link>)}
-                        {(isAuthenticated&&id)&&(<DeleteButtonCollect id={el._id} />)}
+                        {(isAuthenticated&&user.sub==el.id||id)&&(<Link to={`/collection/${el._id}`} > {t('openL')} </Link>)}
+                        {(isAuthenticated&&user.sub==el.id||id)&&(<Link to={`/editCollection/${el._id}`} > {t('editL')} </Link>)}
+                        {(isAuthenticated&&user.sub==el.id||id)&&(<DeleteButtonCollect id={el._id} />)}
                     </Card.Body>
                 </Card>
             )
