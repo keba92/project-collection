@@ -11,7 +11,7 @@ export default function BoxComment(props){
     const [newArrComment, setNewArrComment] = useState([]);
     const { user } = useAuth0();
     const { id } = props;
-    const socket = io(`${window.location.origin}/`,{transports: ['websocket']});
+    const socket = io(`${window.location.origin}/`,{transports: ['websocket'], rejectUnauthorized: false});
     const { t, i18n } = useTranslation();
 
     useEffect(()=>{

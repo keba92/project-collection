@@ -13,7 +13,7 @@ export default function Home() {
     const [items, setItems] = useState([]);
     const [dataCollect, setDataCollect] = useState([]);
     const [choiseTag, setChoiseTag] = useState(null)
-    const socket = io(`${window.location.origin}/`,{transports: ['websocket']});
+    const socket = io(`${window.location.origin}/`,{transports: ['websocket'], rejectUnauthorized: false});
     const { t, i18n } = useTranslation();
      useEffect(() => {
         socket.emit('getItems', {

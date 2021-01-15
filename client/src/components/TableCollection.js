@@ -10,10 +10,10 @@ export default function TableCollection(props) {
     const { dataCollect } = props;
     const { user, isAuthenticated} = useAuth0();
     const { t, i18n } = useTranslation();
-    let id = null;
 
     
     const makeCollection = dataCollect.map((el, idx) => {
+        let id;
         if(isAuthenticated){
             if(JSON.parse(localStorage.getItem('arrAdmins')).includes(user.sub)) {
                 id = user.sub;
