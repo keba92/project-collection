@@ -254,7 +254,6 @@ io.on("connection", function(socket) {
                 })
                 .then((data) =>{ 
                     socket.emit('getCommentData', data)
-                    socket.broadcast.emit('getCommentData', data);
                 })
                 .catch((err)=> console.log(err))
             } else {
