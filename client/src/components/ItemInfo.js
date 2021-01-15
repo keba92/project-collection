@@ -11,7 +11,7 @@ import Tag from '@uiw/react-tag';
 import { useTranslation } from 'react-i18next';
 
 export default function ItemInfo(props) {
-    const socket = io({transports: ['websocket'], rejectUnauthorized: false});
+    const socket = io('wss://project-collections.herokuapp.com/',{transports: ['websocket'], rejectUnauthorized: false});
     const { user, isAuthenticated } = useAuth0();
     const [item, setItem] = useState([]);
     const { t, i18n } = useTranslation();

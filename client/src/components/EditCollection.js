@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 export default function EditCollection(props) {
     const id = props.location.pathname.slice(16);
-    const socket = io({transports: ['websocket'], rejectUnauthorized: false});
+    const socket = io('wss://project-collections.herokuapp.com/',{transports: ['websocket'], rejectUnauthorized: false});
     const [collectionData, setCollectionData] = useState([]);
     const [nameCollection, setNameCollection] = useState('');
     const [shortNameCollection, setShortNameCollection] = useState('');

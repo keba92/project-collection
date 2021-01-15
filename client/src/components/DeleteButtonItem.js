@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 export default function DeleteButtonItem(props) {
     const { id } = props;
-    const socket = io({transports: ['websocket'], rejectUnauthorized: false});
+    const socket = io('wss://project-collections.herokuapp.com/',{transports: ['websocket'], rejectUnauthorized: false});
     const { t, i18n } = useTranslation();
     const deleteItem = (e) => {
         // eslint-disable-next-line no-restricted-globals
