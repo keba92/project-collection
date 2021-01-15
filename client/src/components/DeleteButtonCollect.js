@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 export default function DeleteButtonCollect(props) {
     const { id } = props;
-    const socket = io(`${window.location.origin}/`,{transports: ['websocket'], rejectUnauthorized: false});
+    const socket = io({transports: ['websocket'], rejectUnauthorized: false});
     const { t, i18n } = useTranslation();
 
     const deleteCollection = (e) => {

@@ -14,19 +14,19 @@ function AdminPage() {
     const [checkedItems, setCheckedItems] = useState({});
     const [checkedAll, setCheckedAll] = useState(false);
     const [adminList, setAdminList] = useState([]);
-    const socket = io(`${window.location.origin}/`,{transports: ['websocket'], rejectUnauthorized: false});
+    const socket = io({transports: ['websocket'], rejectUnauthorized: false});
     const { t, i18n } = useTranslation();
     const idUsers = []
 
     useEffect(() =>{
-        socket.emit('getUsers', { message: process.env.REACT_APP_AUTH0_TOKEN});
-        socket.on('getUsersData', (data)=>{
-            setData(data);
-        })
-        socket.emit('getAdmins', { message: process.env.REACT_APP_AUTH0_TOKEN});
-        socket.on('getAdminsData', (data)=>{
-            setAdminList(data);
-        })
+            socket.emit('getUsers', { message: process.env.REACT_APP_AUTH0_TOKEN});
+            socket.on('getUsersData', (data)=>{
+                setData(data);
+            })
+            socket.emit('getAdmins', { message: process.env.REACT_APP_AUTH0_TOKEN});
+            socket.on('getAdminsData', (data)=>{
+                setAdminList(data);
+            })
     },[])
 
     const handleChange = (event) => {

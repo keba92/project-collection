@@ -10,7 +10,7 @@ import Search from './Search';
 import { useTranslation } from 'react-i18next';
 
 export default function CreateItem(props) {
-    const socket = io(`${window.location.origin}/`,{transports: ['websocket'], rejectUnauthorized: false});
+    const socket = io({transports: ['websocket'], rejectUnauthorized: false});
     const [collection, setCollection] = useState([]);
     const [itemData, setItemData] = useState({});
     const [dataItems, setDataItems] = useState([]);

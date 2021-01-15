@@ -13,7 +13,7 @@ export default function Home() {
     const [items, setItems] = useState([]);
     const [dataCollect, setDataCollect] = useState([]);
     const [choiseTag, setChoiseTag] = useState(null)
-    const socket = io(`${window.location.origin}/`,{transports: ['websocket'], rejectUnauthorized: false});
+    const socket = io({transports: ['websocket'], rejectUnauthorized: false});
     const { t, i18n } = useTranslation();
      useEffect(() => {
         socket.emit('getItems', {
@@ -23,12 +23,10 @@ export default function Home() {
             setItems(data);
         })
         socket.emit('getAdmins', { message: process.env.REACT_APP_AUTH0_TOKEN});
-        socket.on('getAdminsData', (data)=>data)
-        .then((adminsInfo)=>{
-            return adminsInfo.map(el => el.user_id);
-        })
-        .then((admins) => localStorage.setItem('arrAdmins', JSON.stringify(admins)))
-        .catch((e)=> console.log(e))
+        socket.on('getAdminsData', (async(adminsInfo)=>{
+            const admins = await adminsInfo.map(el => el.user_id);
+            localStorage.setItem('arrAdmins', JSON.stringify(admins))
+        }))
         socket.emit('getCollection', {
             id: 'all'
         })

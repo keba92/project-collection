@@ -4,14 +4,13 @@ import { useAuth0 } from '@auth0/auth0-react';
 import io from 'socket.io-client';
 import { useTranslation } from 'react-i18next';
 import Comment from './Comment';
-import { set } from 'mongoose';
 
 export default function BoxComment(props){
     const [textComment, setTextComment] = useState('');
     const [newArrComment, setNewArrComment] = useState([]);
     const { user } = useAuth0();
     const { id } = props;
-    const socket = io(`${window.location.origin}/`,{transports: ['websocket'], rejectUnauthorized: false});
+    const socket = io({transports: ['websocket'], rejectUnauthorized: false});
     const { t, i18n } = useTranslation();
 
     useEffect(()=>{

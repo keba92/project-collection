@@ -475,8 +475,8 @@ io.on("connection", function(socket) {
           };
         
         axios.request(options)
-            .then((res) => res.json())
-            .then((data)=> socket.emit('getUsersData'), data)
+            .then((res) => res.data)
+            .then((data)=> socket.emit('getUsersData', data))
             .catch(function (error) {
                 console.error(error);
             });
@@ -494,8 +494,8 @@ io.on("connection", function(socket) {
           };
         
         axios.request(options)
-            .then((res) => res.json())
-            .then((data)=> socket.emit('getAdminsData'), data)
+            .then((res) => res.data)
+            .then((data)=> socket.emit('getAdminsData', data))
             .catch(function (error) {
                 console.error(error);
             });

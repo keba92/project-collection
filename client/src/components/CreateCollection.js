@@ -6,7 +6,7 @@ import io from 'socket.io-client';
 import { useTranslation } from 'react-i18next';
 
 export default function CreateCollection(props) {
-    const socket = io(`${window.location.origin}/`,{transports: ['websocket'], rejectUnauthorized: false});
+    const socket = io({transports: ['websocket'], rejectUnauthorized: false});
     const [nameCollection, setNameCollection] = useState('');
     const [shortNameCollection, setShortNameCollection] = useState('');
     const [urlPicture, setUrlPicture] = useState('');
@@ -21,13 +21,11 @@ export default function CreateCollection(props) {
     const { t, i18n } = useTranslation();
 
     useEffect(() => {
+     if (idUser != '')   {
         socket.emit('getAdmins', { message: process.env.REACT_APP_AUTH0_TOKEN});
-        socket.on('getAdminsData', (data)=>data)
-            .then((adminsInfo)=>{
-                return adminsInfo.map(el => el.user_id);
-            })
-            .then((admins)=>{
-              let id;
+        socket.on('getAdminsData', (async(adminsInfo)=>{
+            const admins = await adminsInfo.map(el => el.user_id);
+            let id;
               if (isAuthenticated && !admins.includes(user.sub)) {
                   id = user.sub;
                   setIdUser(id)
@@ -44,8 +42,8 @@ export default function CreateCollection(props) {
               socket.on('getDataCollect',(data) => {
                   setDataCollect(data);
               })
-            })
-            .catch((e)=>console.log(e))
+        }))
+    }
     },[]);
 
     const addCollection = (e) =>{
