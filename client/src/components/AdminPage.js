@@ -19,42 +19,14 @@ function AdminPage() {
     const idUsers = []
 
     useEffect(() =>{
-        const getUserMetadata = async () => {
-      
-            try {
-
-              const metadataResponse = await fetch('https://dev-lma8p4gy.eu.auth0.com/api/v2/users',{
-                  method: 'GET',
-                  params: {q: 'logins_count:{0 TO *]', search_engine: 'v3'},
-                  headers: {
-                    Authorization: `Bearer ${process.env.REACT_APP_AUTH0_TOKEN}`,
-                  },
-                  scope: "read:user_idp_tokens",
-                }
-              );
-
-                const admindataResponse = await fetch('https://dev-lma8p4gy.eu.auth0.com/api/v2/roles/rol_T31Z6EKjiFLeoH0T/users',{
-                    method: 'GET',
-                    headers: {
-                        Authorization: `Bearer ${process.env.REACT_APP_AUTH0_TOKEN}`,
-                      },
-                    scope: "read:users",
-                }
-              );
-
-              const adminsInfo = await admindataResponse.json();
-              const admins = adminsInfo.map(el => el.user_id)
-              setAdminList(admins)
-        
-              const info = await metadataResponse.json();      
-              setData(info);
-            } catch (e) {
-              console.log(e.message);
-            }
-          };
-          if(adminList.length==0||data.length==0) {
-            getUserMetadata(); 
-          } 
+        socket.emit('getUsers', { message: process.env.REACT_APP_AUTH0_TOKEN});
+        socket.on('getUsersData', (data)=>{
+            setData(data);
+        })
+        socket.emit('getAdmins', { message: process.env.REACT_APP_AUTH0_TOKEN});
+        socket.on('getAdminsData', (data)=>{
+            setAdminList(data);
+        })
     },[])
 
     const handleChange = (event) => {

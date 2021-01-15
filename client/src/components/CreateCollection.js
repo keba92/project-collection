@@ -21,46 +21,31 @@ export default function CreateCollection(props) {
     const { t, i18n } = useTranslation();
 
     useEffect(() => {
-        const getUserMetadata = async () => {
-            try {
-                const admindataResponse = await fetch('https://dev-lma8p4gy.eu.auth0.com/api/v2/roles/rol_T31Z6EKjiFLeoH0T/users',{
-                    method: 'GET',
-                    headers: {
-                        Authorization: `Bearer ${process.env.REACT_APP_AUTH0_TOKEN}`,
-                      },
-                    scope: "read:users",
-                }
-              );
-              const adminsInfo = await admindataResponse.json();
-              const admins = await adminsInfo.map(el => el.user_id);
-              let admin;
-              if (admins.includes(user.sub)){
-                admin = true;
-              }
+        socket.emit('getAdmins', { message: process.env.REACT_APP_AUTH0_TOKEN});
+        socket.on('getAdminsData', (data)=>data)
+            .then((adminsInfo)=>{
+                return adminsInfo.map(el => el.user_id);
+            })
+            .then((admins)=>{
               let id;
-              if (isAuthenticated && !admin) {
+              if (isAuthenticated && !admins.includes(user.sub)) {
                   id = user.sub;
                   setIdUser(id)
-              } else if (isAuthenticated && admin) {
+              } else if (isAuthenticated && admins.includes(user.sub)) {
                   id = idLink;
                   localStorage.setItem('admin', id)
                   setIdUser(id)
               } else {
                   id = 'all';
               }
-              await socket.emit('getCollection', {
+              socket.emit('getCollection', {
                   id: id
               })
-              await socket.on('getDataCollect',(data) => {
+              socket.on('getDataCollect',(data) => {
                   setDataCollect(data);
               })
-            } catch (e) {
-              console.log(e.message);
-            }
-        };
-        if(idUser==''||dataCollect.length==0) {
-            getUserMetadata();
-        }
+            })
+            .catch((e)=>console.log(e))
     },[]);
 
     const addCollection = (e) =>{

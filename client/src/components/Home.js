@@ -22,26 +22,13 @@ export default function Home() {
         socket.on('getDataItems',(data) => {
             setItems(data);
         })
-        const getUserMetadata = async () => {
-            try {
-                const admindataResponse = await fetch('https://dev-lma8p4gy.eu.auth0.com/api/v2/roles/rol_T31Z6EKjiFLeoH0T/users',{
-                    method: 'GET',
-                    headers: {
-                        Authorization: `Bearer ${process.env.REACT_APP_AUTH0_TOKEN}`,
-                      },
-                    scope: "read:users",
-                  }
-                );
-                const adminsInfo = await admindataResponse.json();
-                const admins = await adminsInfo.map(el => el.user_id);
-                localStorage.setItem('arrAdmins', JSON.stringify(admins))
-            }catch (e) {
-                  console.log(e.message);
-            }
-        };
-        if (!localStorage.getItem('arrAdmins')){
-            getUserMetadata();
-        }
+        socket.emit('getAdmins', { message: process.env.REACT_APP_AUTH0_TOKEN});
+        socket.on('getAdminsData', (data)=>data)
+        .then((adminsInfo)=>{
+            return adminsInfo.map(el => el.user_id);
+        })
+        .then((admins) => localStorage.setItem('arrAdmins', JSON.stringify(admins)))
+        .catch((e)=> console.log(e))
         socket.emit('getCollection', {
             id: 'all'
         })

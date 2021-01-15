@@ -461,4 +461,45 @@ io.on("connection", function(socket) {
     socket.on('disconnect', function() {
         delete clients[socket.id];
     });
+
+    socket.on('getUsers', (data) => {
+        const { message } = data;
+        const options = {
+            method: 'GET',
+            params: {q: 'logins_count:{0 TO *]', search_engine: 'v3'},
+            url: 'https://dev-lma8p4gy.eu.auth0.com/api/v2/users',
+            headers: {
+                Authorization: `Bearer ${message}`,
+            },
+            scope: "read:user_idp_tokens",
+          };
+        
+        axios.request(options)
+            .then((res) => res.json())
+            .then((data)=> socket.emit('getUsersData'), data)
+            .catch(function (error) {
+                console.error(error);
+            });
+    })
+
+    socket.on('getAdmins', (data) => {
+        const { message } = data;
+        const options = {
+            method: 'GET',
+            url: 'https://dev-lma8p4gy.eu.auth0.com/api/v2/roles/rol_T31Z6EKjiFLeoH0T/users',
+            headers: {
+                Authorization: `Bearer ${message}`,
+            },
+            scope: "read:users",
+          };
+        
+        axios.request(options)
+            .then((res) => res.json())
+            .then((data)=> socket.emit('getAdminsData'), data)
+            .catch(function (error) {
+                console.error(error);
+            });
+    })
+
+
 })
