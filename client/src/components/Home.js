@@ -16,23 +16,26 @@ export default function Home() {
     const socket = io({ reconnect: true });
     const { t, i18n } = useTranslation();
      useEffect(() => {
-        socket.emit('getItems', {
-            idCollect: 'all'
-        })
-        socket.on('getDataItems',(data) => {
-            setItems(data);
-        })
-        socket.emit('getAdmins', { message: process.env.REACT_APP_AUTH0_TOKEN});
-        socket.on('getAdminsData', (async(adminsInfo)=>{
-            const admins = await adminsInfo.map(el => el.user_id);
-            localStorage.setItem('arrAdmins', JSON.stringify(admins))
-        }))
-        socket.emit('getCollection', {
-            id: 'all'
-        })
-        socket.on('getDataCollect', (data)=> {
-            setDataCollect(data)
-        })
+         const getData = async ()=>{
+            await socket.emit('getItems', {
+                idCollect: 'all'
+            })
+            await socket.on('getDataItems',(data) => {
+                setItems(data);
+            })
+            await socket.emit('getAdmins', { message: process.env.REACT_APP_AUTH0_TOKEN});
+            await socket.on('getAdminsData', (async(adminsInfo)=>{
+                const admins = await adminsInfo.map(el => el.user_id);
+                localStorage.setItem('arrAdmins', JSON.stringify(admins))
+            }))
+            await socket.emit('getCollection', {
+                id: 'all'
+            })
+            await socket.on('getDataCollect', (data)=> {
+                setDataCollect(data)
+            })
+         }
+         getData(); 
     },[])
 
     const countEl = items.reduce((acc, el) => {
@@ -98,7 +101,6 @@ export default function Home() {
         items.forEach((el) =>{
             if(el.tag.includes(choiseTag)) tegsItems.push(el);
         })
-        console.log(tegsItems)
         return (
             (tegsItems)&&(<div>
                 <button style={{float:'right', backgroundColor: 'tomato'}} onClick={()=>setChoiseTag(null)}>Close</button>

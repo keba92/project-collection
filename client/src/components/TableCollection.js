@@ -15,7 +15,7 @@ export default function TableCollection(props) {
         if(isAuthenticated && JSON.parse(localStorage.getItem('arrAdmins')).includes(user.sub)){
             setId(user.sub);
         }
-    },[])
+    })
         
     const makeCollection = dataCollect.map((el, idx) => {
         if(el) {

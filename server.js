@@ -12,6 +12,7 @@ const io = require('socket.io')(http, {
         methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
         credentials: true
       },
+      reconnect: true,
       transports: ['websocket', 'polling', 'flashsocket']
 });
 const axios = require("axios").default;
@@ -83,7 +84,6 @@ io.on("connection", function(socket) {
         await items.find({ idCollect: idCollect })
             .then((data) => {
                 socket.emit('getDataItems', data);
-                socket.broadcast.emit('getDataItems', data);
             })
             .catch((err)=> console.log(err))
     })
@@ -108,7 +108,6 @@ io.on("connection", function(socket) {
         })
         .then((data) =>{
             socket.emit('getCollectionDataInfo', data);
-            socket.broadcast.emit('getCollectionDataInfo', data);
         })
         .catch((err) => console.log(err))
     })
@@ -119,7 +118,6 @@ io.on("connection", function(socket) {
             collections.find()
             .then((data) =>{
                 socket.emit('getDataCollect', data);
-                socket.broadcast.emit('getDataCollect', data)
             })
             .catch((err) => console.log(err))
         } else {
@@ -128,7 +126,6 @@ io.on("connection", function(socket) {
             })
             .then((data) =>{
                 socket.emit('getDataCollect', data);
-                socket.broadcast.emit('getDataCollect', data)
             })
             .catch((err) => console.log(err))
         }
@@ -150,7 +147,6 @@ io.on("connection", function(socket) {
         })
         .then((data) =>{
             socket.emit('getDataCollect', data);
-            socket.broadcast.emit('getDataCollect', data)
         })
         .catch((err) => console.log(err))
     })
@@ -162,7 +158,6 @@ io.on("connection", function(socket) {
         })
         .then((data) =>{
             socket.emit('getItemDataInfo', data);
-            socket.broadcast.emit('getItemDataInfo', data)
         })
         .catch((err) => console.log(err))
     })
@@ -216,12 +211,10 @@ io.on("connection", function(socket) {
                 })
                 .then((data) => {
                     socket.emit('getLikeInfo', data)
-                    socket.broadcast.emit('getLikeInfo', data)
                 })
                 .catch((err)=> console.log(err))
             } else {
                 socket.emit('getLikeInfo', data);
-                socket.broadcast.emit('getLikeInfo', data)
             }
         })
         .catch((err)=> console.log(err))
@@ -261,12 +254,10 @@ io.on("connection", function(socket) {
                 })
                 .then((data) =>{ 
                     socket.emit('getCommentData', data)
-                    socket.broadcast.emit('getCommentData', data);
                 })
                 .catch((err)=> console.log(err))
             } else {
                 socket.emit('getCommentData', data)
-                socket.broadcast.emit('getCommentData', data);
             }
         })
         .catch((err)=> console.log(err))
@@ -382,7 +373,6 @@ io.on("connection", function(socket) {
         })
         .then((data) =>{
             socket.emit('getCollectionDataInfo', data);
-            socket.broadcast.emit('getCollectionDataInfo', data);
         })
         .catch((err) => console.log(err))
     })

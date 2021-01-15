@@ -17,13 +17,19 @@ export default function ItemInfo(props) {
     const { t, i18n } = useTranslation();
 
     useEffect(()=>{
-        if(item.length==0){
-            console.log('Comment!!!!!!!!!!!!!!!!')
-            socket.emit('getItemInfo',{
-                _id: props.location.pathname.slice(6)
-            })
-            socket.on('getItemDataInfo', (data) => setItem(data))
+        async function dataItem(){
+            if(item.length==0) {
+                await socket.emit('getItemInfo',{
+                    _id: props.location.pathname.slice(6)
+                })
+            }
+            await socket.on('getItemDataInfo', (data) => {
+                setItem(data)})
+            
         }
+        if(item.length==0){
+            dataItem()
+        }      
     })
     const makeItem = item.map((el, idx) => {
         const data = JSON.parse(el.dataItem);
@@ -64,7 +70,6 @@ export default function ItemInfo(props) {
     })
 
     return (
-        (item.length!==0)&&(
             <div>
                 <Link className='back' to='/'>{t('backMainL')}</Link>
                 <div className='content-item'>
@@ -72,6 +77,5 @@ export default function ItemInfo(props) {
                     {(isAuthenticated)&&(<BoxComment id={props.location.pathname.slice(6)} />)}
                 </div>
             </div>
-        )
     )
 }

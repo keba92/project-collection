@@ -25,7 +25,6 @@ export default function CreateCollection(props) {
         socket.emit('getAdmins', { message: process.env.REACT_APP_AUTH0_TOKEN});
         socket.on('getAdminsData', ((data)=>{
             const admins = data.map(el => el.user_id);
-            console.log(`Here!!!!!!!!!!!!!!!!!!!!!!1`)
             let id;
               if (isAuthenticated && !admins.includes(user.sub)) {
                   id = user.sub;

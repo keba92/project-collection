@@ -8,19 +8,24 @@ import Comment from './Comment';
 export default function BoxComment(props){
     const [textComment, setTextComment] = useState('');
     const [newArrComment, setNewArrComment] = useState([]);
-    const { user } = useAuth0();
+    const { user, isAuthenticated } = useAuth0();
     const { id } = props;
     const socket = io({ reconnect: true });
     const { t, i18n } = useTranslation();
 
     useEffect(()=>{
-        socket.emit('getComment',{
-            idItem: id
-        })
-        socket.on('getCommentData', (data)=> {
-            setNewArrComment(data[0].arrComment);
-        })
-    },[])
+        async function commentData() {
+            await socket.emit('getComment',{
+                idItem: id
+            })
+            await socket.on('getCommentData', (data)=> {
+                setNewArrComment(data[0].arrComment);
+            })
+        }
+        if(isAuthenticated){
+            commentData();  
+        }
+    }, [])
 
     const addComment = () =>{
         newArrComment.push(JSON.stringify({
