@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card } from 'react-bootstrap';
 import {  MarkdownPreview  } from 'react-marked-markdown';
 import { Link } from 'react-router-dom';
@@ -10,15 +10,15 @@ export default function TableCollection(props) {
     const { dataCollect } = props;
     const { user, isAuthenticated} = useAuth0();
     const { t, i18n } = useTranslation();
+    const [id, setId] = useState(null)
 
     
     const makeCollection = dataCollect.map((el, idx) => {
-        let id;
         if(isAuthenticated){
             if(JSON.parse(localStorage.getItem('arrAdmins')).includes(user.sub)) {
-                id = user.sub;
+                setId(user.sub);
             } else if (user.sub==el.id) {
-                id = user.sub;
+                setId(user.sub);
             }
         }
         if(el) {
