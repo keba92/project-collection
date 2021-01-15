@@ -10,7 +10,7 @@ import Search from './Search';
 import { useTranslation } from 'react-i18next';
 
 export default function CreateItem(props) {
-    const socket = io('wss://project-collections.herokuapp.com/',{transports: ['websocket'], rejectUnauthorized: false});
+    const socket = io("http://localhost:3001/", { reconnect: true });
     const [collection, setCollection] = useState([]);
     const [itemData, setItemData] = useState({});
     const [dataItems, setDataItems] = useState([]);

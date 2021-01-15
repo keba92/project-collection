@@ -5,14 +5,15 @@ const bodyParser = require('body-parser');
 const http = require('http').createServer(app);
 const path = require('path');
 const cors = require('cors');
-const expressStatusMonitor = require('express-status-monitor');
+//const expressStatusMonitor = require('express-status-monitor');
 const io = require('socket.io')(http, {
     cors: {
-      origin: '*',
-      methods: ["GET", "POST"]
-    },
-    transports: ['websocket']
-  });
+        origin: "*",
+        methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+        credentials: true
+      },
+      transports: ['websocket', 'polling', 'flashsocket']
+});
 const axios = require("axios").default;
 const PORT = process.env.PORT || 3001;
 
@@ -30,10 +31,18 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-app.use(expressStatusMonitor({
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
+    next();
+});
+
+/*app.use(expressStatusMonitor({
   websocket: io,
   port: app.get('port')
-}));
+}));*/
 
 if (process.env.NODE_ENV === 'production'|| process.env.NODE_ENV === 'staging') {
     app.use(express.static(path.join(__dirname,'client/build')));

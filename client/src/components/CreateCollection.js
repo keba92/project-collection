@@ -6,7 +6,7 @@ import io from 'socket.io-client';
 import { useTranslation } from 'react-i18next';
 
 export default function CreateCollection(props) {
-    const socket = io('wss://project-collections.herokuapp.com/',{transports: ['websocket'], rejectUnauthorized: false});
+    const socket = io("http://localhost:3001/", { reconnect: true });
     const [nameCollection, setNameCollection] = useState('');
     const [shortNameCollection, setShortNameCollection] = useState('');
     const [urlPicture, setUrlPicture] = useState('');
@@ -16,15 +16,16 @@ export default function CreateCollection(props) {
     const [typePole, setTypePole] = useState('');
     const [dataCollect, setDataCollect] = useState([]);
     const { user, isAuthenticated } = useAuth0();
-    const [idUser, setIdUser] = useState('');
+    const [idUser, setIdUser] = useState(null);
     const { idLink } = props;
     const { t, i18n } = useTranslation();
 
-    useEffect(() => {
-     if (idUser != '')   {
+    useEffect(() => {  
+       if(!idUser) {
         socket.emit('getAdmins', { message: process.env.REACT_APP_AUTH0_TOKEN});
-        socket.on('getAdminsData', (async(adminsInfo)=>{
-            const admins = await adminsInfo.map(el => el.user_id);
+        socket.on('getAdminsData', ((data)=>{
+            const admins = data.map(el => el.user_id);
+            console.log(`Here!!!!!!!!!!!!!!!!!!!!!!1`)
             let id;
               if (isAuthenticated && !admins.includes(user.sub)) {
                   id = user.sub;
@@ -43,8 +44,8 @@ export default function CreateCollection(props) {
                   setDataCollect(data);
               })
         }))
-    }
-    },[]);
+        }
+    });
 
     const addCollection = (e) =>{
         e.preventDefault();

@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 export default function EditItem(props) {
     const id = props.location.pathname.slice(10);
-    const socket = io('wss://project-collections.herokuapp.com/',{transports: ['websocket'], rejectUnauthorized: false});
+    const socket = io("http://localhost:3001/", { reconnect: true });
     const [itemData, setItemData] = useState([]);
     const [newItemData, setNewItemData] = useState({});
     const { t, i18n } = useTranslation();

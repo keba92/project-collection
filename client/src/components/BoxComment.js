@@ -10,7 +10,7 @@ export default function BoxComment(props){
     const [newArrComment, setNewArrComment] = useState([]);
     const { user } = useAuth0();
     const { id } = props;
-    const socket = io('wss://project-collections.herokuapp.com/',{transports: ['websocket'], rejectUnauthorized: false});
+    const socket = io("http://localhost:3001/", { reconnect: true });
     const { t, i18n } = useTranslation();
 
     useEffect(()=>{

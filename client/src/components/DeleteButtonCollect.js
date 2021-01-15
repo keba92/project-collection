@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 export default function DeleteButtonCollect(props) {
     const { id } = props;
-    const socket = io('wss://project-collections.herokuapp.com/',{transports: ['websocket'], rejectUnauthorized: false});
+    const socket = io("http://localhost:3001/", { reconnect: true });
     const { t, i18n } = useTranslation();
 
     const deleteCollection = (e) => {

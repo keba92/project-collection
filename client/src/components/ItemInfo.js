@@ -11,17 +11,20 @@ import Tag from '@uiw/react-tag';
 import { useTranslation } from 'react-i18next';
 
 export default function ItemInfo(props) {
-    const socket = io('wss://project-collections.herokuapp.com/',{transports: ['websocket'], rejectUnauthorized: false});
+    const socket = io("http://localhost:3001/", { reconnect: true });
     const { user, isAuthenticated } = useAuth0();
     const [item, setItem] = useState([]);
     const { t, i18n } = useTranslation();
 
     useEffect(()=>{
-        socket.emit('getItemInfo',{
-            _id: props.location.pathname.slice(6)
-        })
-        socket.on('getItemDataInfo', (data) => setItem(data))
-    }, [])
+        if(item.length==0){
+            console.log('Comment!!!!!!!!!!!!!!!!')
+            socket.emit('getItemInfo',{
+                _id: props.location.pathname.slice(6)
+            })
+            socket.on('getItemDataInfo', (data) => setItem(data))
+        }
+    })
     const makeItem = item.map((el, idx) => {
         const data = JSON.parse(el.dataItem);
         const pole = JSON.parse(el.poleItem);
