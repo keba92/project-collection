@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const http = require('http').createServer(app);
 const path = require('path');
 const cors = require('cors');
-//const expressStatusMonitor = require('express-status-monitor');
+const expressStatusMonitor = require('express-status-monitor');
 const io = require('socket.io')(http, {
     cors: {
         origin: "*",
@@ -40,10 +40,10 @@ app.use(function(req, res, next) {
     next();
 });
 
-/*app.use(expressStatusMonitor({
+app.use(expressStatusMonitor({
   websocket: io,
   port: app.get('port')
-}));*/
+}));
 
 if (process.env.NODE_ENV === 'production'|| process.env.NODE_ENV === 'staging') {
     app.use(express.static(path.join(__dirname,'client/build')));
@@ -254,10 +254,12 @@ io.on("connection", function(socket) {
                 })
                 .then((data) =>{ 
                     socket.emit('getCommentData', data)
+                    socket.broadcast.emit('getCommentData', data);
                 })
                 .catch((err)=> console.log(err))
             } else {
                 socket.emit('getCommentData', data)
+                socket.broadcast.emit('getCommentData', data);
             }
         })
         .catch((err)=> console.log(err))
