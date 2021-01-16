@@ -10,7 +10,7 @@ import Search from './Search';
 import { useTranslation } from 'react-i18next';
 
 export default function CreateItem(props) {
-    const socket = io({ reconnect: true });
+    const socket = io({ transports: [ 'websocket', 'polling' ], reconnect: true });
     const [collection, setCollection] = useState([]);
     const [itemData, setItemData] = useState({});
     const [dataItems, setDataItems] = useState([]);
@@ -104,10 +104,13 @@ export default function CreateItem(props) {
                         Object.keys(JSON.parse(collection[0].poleItem)).map((keyName, idx) => {
                             if (JSON.parse(collection[0].poleItem)[keyName] == 'checkbox' ) {
                                 return(
-                                    <Form.Check type="checkbox" id="autoSizingCheck2" name={keyName} onChange={(e) =>{
-                                        itemData[e.target.name] = e.target.checked
-                                        setItemData(itemData)
-                                    }}/>
+                                    <Form.Group key={idx} controlId={`ControlInput${idx}`}>
+                                        <Form.Label>{`${keyName}`}</Form.Label>
+                                        <Form.Check type="checkbox" id="autoSizingCheck2" name={keyName} onChange={(e) =>{
+                                            itemData[e.target.name] = e.target.checked
+                                            setItemData(itemData)
+                                        }}/>
+                                    </Form.Group>
                                 )
                             } else if(JSON.parse(collection[0].poleItem)[keyName] == 'textarea') {
                                 return (

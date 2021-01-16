@@ -416,7 +416,6 @@ io.on("connection", function(socket) {
 
     socket.on('userData', (data) => {
         const { id, theme, lang } = data;
-        console.log(data)
         users.find({
             id: id
         })

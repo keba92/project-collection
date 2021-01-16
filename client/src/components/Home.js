@@ -13,7 +13,7 @@ export default function Home() {
     const [items, setItems] = useState([]);
     const [dataCollect, setDataCollect] = useState([]);
     const [choiseTag, setChoiseTag] = useState(null)
-    const socket = io({ reconnect: true });
+    const socket = io({ transports: [ 'websocket', 'polling' ], reconnect: true });
     const { t, i18n } = useTranslation();
      useEffect(() => {
          const getData = async ()=>{

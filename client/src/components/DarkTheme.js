@@ -213,12 +213,33 @@ const DarkTheme = () => {
 
         span .tagify__input {
             background-color: white;
-          }
+        }
 
-          select {
+        select {
             background-color: white;
             color: black;
-          }
+        }
+
+        .dropzone {
+            height: 4rem;
+            margin: 1rem;
+            padding: 1rem;
+            border: 1px dashed salmon;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .active {
+            border: 2px solid rebeccapurple;
+        }
+
+        message-block {
+            background-color: white;
+            color: black;
+        }
 
         `
     

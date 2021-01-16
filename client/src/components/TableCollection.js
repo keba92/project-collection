@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import DeleteButtonCollect from './DeleteButtonCollect';
 import { useAuth0 } from "@auth0/auth0-react";
 import { useTranslation } from 'react-i18next';
+import { Image } from 'cloudinary-react';
 
 export default function TableCollection(props) {
     const { dataCollect } = props;
@@ -21,7 +22,7 @@ export default function TableCollection(props) {
         if(el) {
             return (
                 <Card style={{ width: '15rem' }} key={el._id}>
-                    <Card.Img variant="top" src={el.url} />
+                    <Image cloud_name='dgeev9d6l' publicId={el.url}/>
                     <Card.Body key={el._id}>
                         <Card.Title>{el.name}</Card.Title>
                         <Card.Text>{el.collections}</Card.Text>

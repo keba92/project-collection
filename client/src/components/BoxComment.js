@@ -10,7 +10,7 @@ export default function BoxComment(props){
     const [newArrComment, setNewArrComment] = useState([]);
     const { user, isAuthenticated } = useAuth0();
     const { id } = props;
-    const socket = io({ reconnect: true });
+    const socket = io({ transports: [ 'websocket', 'polling' ], reconnect: true });
     const { t, i18n } = useTranslation();
 
     useEffect(()=>{
@@ -54,7 +54,9 @@ export default function BoxComment(props){
                 <Comment data={newArrComment}/>
             </div>
             <div className='comment-footer'>
-                <input className='message' placeholder={t('enterMessageP')} onChange={(e)=>setTextComment(e.target.value)}/>
+                <input className='message-block' 
+                    placeholder={t('enterMessageP')} 
+                    onChange={(e)=>setTextComment(e.target.value)}/>
                 <Button 
                         style={{color:'black'}}
                         variant="primary"
