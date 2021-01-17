@@ -8,6 +8,7 @@ import Tags from "@yaireo/tagify/dist/react.tagify"
 import '@yaireo/tagify/dist/tagify.css';
 import Search from './Search';
 import { useTranslation } from 'react-i18next';
+import { CSVLink } from "react-csv";
 
 export default function CreateItem(props) {
     const socket = io({ transports: [ 'websocket', 'polling' ], reconnect: true });
@@ -20,6 +21,7 @@ export default function CreateItem(props) {
     const [tags, setTags] = useState();
     const [tagifyProps, setTagifyProps] = useState({});
     const { t, i18n } = useTranslation();
+    const [headersCSV, setHeadersCSV] = useState(null);
 
     useEffect(()=>{
         setTagifyProps({loading: true})
@@ -34,7 +36,29 @@ export default function CreateItem(props) {
             idCollect: (isAuthenticated) ? props.location.pathname.slice(12) : 'all'
         })
         socket.on('getDataItems',(data) => {
+            try {
+                const arrData = []
+                const newDataCSV = data.filter((el)=>{
+                    if (el.idCollect == props.location.pathname.slice(12)){
+                        return el;
+                    }
+                })
+                const dataCSV = newDataCSV.map(el=> {
+                    const arr = JSON.parse(el.dataItem)
+                    return Object.keys(arr);
+                })
 
+                const arrDataCSV = arrData.concat(dataCSV)
+
+                const newHeadersCSV = newDataCSV.map((el)=>{
+                    const arr = JSON.parse(el.dataItem)
+                    return Object.values(arr);
+                })
+                const newData = arrDataCSV.concat(newHeadersCSV)
+                setHeadersCSV(newData)
+            } catch (err) {
+                console.log(err)
+            }
             setDataItems(data);
         })
         if(localStorage.getItem('admin')) {
@@ -57,7 +81,7 @@ export default function CreateItem(props) {
             }))
         })
         setId(idUser)
-    },[])
+    }, [])
 
     const baseTagifySettings = {
         maxTags: 6,
@@ -91,12 +115,20 @@ export default function CreateItem(props) {
         },[])
     }
 
+     
+    
     return (
     <div>
+        {(headersCSV)&&(<div style={{float: 'right'}}>
+            <CSVLink data={headersCSV}>
+                 Download CSV Data Collection
+            </CSVLink>
+        </div>)}
         <Search />
         {(isAuthenticated)&&(<Link className='back' to={`/`}>{t('backMainL')}</Link>)}
         {(isAuthenticated&&id==localStorage.getItem('userId'))&&(<Link className='back' to={`/user/${id}`}>{t('backCollectL')}</Link>)}
-        {(isAuthenticated&&id==localStorage.getItem('userId'))&&(<div className='create'>
+        {(isAuthenticated&&id==localStorage.getItem('userId')||JSON.parse(localStorage.getItem('arrAdmins')).includes(user.sub))&&
+        (<div className='create'>
             <div className='create-block'>
                 <h1 className='create'>{t('createItemH')}</h1>
                 <Form>

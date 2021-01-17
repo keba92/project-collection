@@ -294,6 +294,7 @@ io.on("connection", function(socket) {
 
     socket.on('makeAdmin', (data) => {
         const { message, adminList } = data;
+        console.log(adminList)
         const options = {
             method: 'POST',
             url: 'https://dev-lma8p4gy.eu.auth0.com/api/v2/roles/rol_T31Z6EKjiFLeoH0T/users',

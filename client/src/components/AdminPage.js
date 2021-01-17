@@ -25,7 +25,8 @@ function AdminPage() {
             })
             socket.emit('getAdmins', { message: process.env.REACT_APP_AUTH0_TOKEN});
             socket.on('getAdminsData', (data)=>{
-                setAdminList(data);
+                const newData = data.map(el=>el.user_id)
+                setAdminList(newData);
             })
     },[])
 
@@ -53,7 +54,7 @@ function AdminPage() {
     const makeAdmin = (e) => {
         e.preventDefault();
         Object.keys(checkedItems).map((keyName) => {
-            if(checkedItems[keyName]) {
+            if(checkedItems[keyName] && !adminList.includes(keyName)) {
                 adminList.push(keyName);
                 setAdminList(adminList);
                 socket.emit('makeAdmin', {
@@ -83,9 +84,8 @@ function AdminPage() {
     });
 
     const blockUser = (e) =>{
-        e.preventDefault();
 		Object.keys(checkedItems).map((keyName) => {
-            if(e.target.title == 'block') {
+            if(e.target.attributes[1].value == 'block') {
                 // eslint-disable-next-line no-restricted-globals
                 const answer = confirm(`Вы уверены, что хотите заблокировать пользователя с id:'${keyName}'?`)
                 if(checkedItems[keyName] && answer) {
@@ -130,9 +130,9 @@ function AdminPage() {
             <div className = 'users'>
                 <h1>{t('usersH')}</h1>
                 <span className = 'toolBar'>
-                    <button className = 'btn' title='block' onClick={blockUser}><i className='fa fa-close'>{t('blockI')}</i></button>
-                    <button className = 'btn' onClick={deleteUsers}><i className='fa fa-trash'>{t('deleteI')}</i></button>
-                    <button className = 'btn' title='unblock' onClick={blockUser}><i className='fa fa-check'>{t('unblockI')}</i></button>
+                    <button className = 'btn' ><i className='fa fa-close' title='block' onClick={blockUser}>{t('blockI')}</i></button>
+                    <button className = 'btn' ><i className='fa fa-trash' onClick={deleteUsers}>{t('deleteI')}</i></button>
+                    <button className = 'btn' ><i className='fa fa-check' title='unblock' onClick={blockUser}>{t('unblockI')}</i></button>
                     <button className = 'btn' onClick={makeAdmin}><i className='fa fa-check'>{t('adminI')}</i></button>
                 </span>
                 <table className ='table-light'>
