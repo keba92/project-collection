@@ -22,6 +22,7 @@ export default function CreateItem(props) {
     const [tagifyProps, setTagifyProps] = useState({});
     const { t, i18n } = useTranslation();
     const [headersCSV, setHeadersCSV] = useState(null);
+    const [resultItems, setResultItems] = useState(null);
 
     useEffect(()=>{
         setTagifyProps({loading: true})
@@ -37,25 +38,15 @@ export default function CreateItem(props) {
         })
         socket.on('getDataItems',(data) => {
             try {
-                const arrData = []
                 const newDataCSV = data.filter((el)=>{
                     if (el.idCollect == props.location.pathname.slice(12)){
                         return el;
                     }
-                })
-                const dataCSV = newDataCSV.map(el=> {
+                }).map(el=> {
                     const arr = JSON.parse(el.dataItem)
-                    return Object.keys(arr);
+                    return arr;
                 })
-
-                const arrDataCSV = arrData.concat(dataCSV)
-
-                const newHeadersCSV = newDataCSV.map((el)=>{
-                    const arr = JSON.parse(el.dataItem)
-                    return Object.values(arr);
-                })
-                const newData = arrDataCSV.concat(newHeadersCSV)
-                setHeadersCSV(newData)
+                setHeadersCSV(newDataCSV)
             } catch (err) {
                 console.log(err)
             }
@@ -115,12 +106,85 @@ export default function CreateItem(props) {
         },[])
     }
 
-     
+    const findItem = (word) => {
+        if(word){
+            const itemsCollection = dataItems.filter((el)=>{
+                if (el.idCollect == props.location.pathname.slice(12)){
+                    return el;
+                }
+            }).map(el=> {
+                const obj = {};
+                const arr = JSON.parse(el.dataItem);
+                obj[el._id] = arr;
+                return obj;
+            })
+            const arrResult = [];
+            itemsCollection.forEach(el=> {
+                Object.keys(el).forEach(keyName =>{
+                    if (Object.values(el[keyName]).includes(word)) {
+                        const result = dataItems.filter(el=> el._id == keyName);
+                        arrResult.push(...result)
+                    }
+                })
+            })
+            setResultItems(arrResult)
+        } else {
+            setResultItems(dataItems)
+        }
+    }
+    let createOptions;
+
+    try {
+        createOptions = () => {
+            const obj = {};
+            const itemsCollection = dataItems.filter((el)=>{
+                if (el.idCollect == props.location.pathname.slice(12)){
+                    return el;
+                }
+            }).map(el=> {
+                const arr = JSON.parse(el.dataItem)
+                return arr;
+            })
+            let names = [];
+            if(itemsCollection.length!=0){
+                names = Object.keys(itemsCollection[0]);
+                names.forEach(el => { obj[el] = [] });
+                itemsCollection.forEach((el) => {
+                    Object.keys(el).forEach((keyName) => {
+                        obj[keyName].push(String(el[keyName]))
+                    })
+                })
+            }
+            if (names.length !=0){
+                return Object.keys(obj).map((keyName,idx) => {
+                    return (
+                        <select className='filter'
+                                style={{width:'10%', marginRight:'10px'}}
+                                key={idx}
+                                onInput={e=>findItem(e.target.value)}
+                            >
+                            <option value="" selected>{keyName}</option>
+                            {
+                                obj[keyName].map(el => {
+                                    return (
+                                        <option value={el}>{el}</option>
+                                    )
+                                })
+                            }
+                        </select>
+                    )
+                })
+            }
+        }    
+
+    } catch(e) {
+        console.log(e);
+    }
     
     return (
     <div>
         {(headersCSV)&&(<div style={{float: 'right'}}>
-            <CSVLink data={headersCSV}>
+            <CSVLink data={headersCSV} filename='collection.csv' separator={';'}>
                  Download CSV Data Collection
             </CSVLink>
         </div>)}
@@ -186,7 +250,11 @@ export default function CreateItem(props) {
                 </Form>
             </div>
         </div>)}
-        <TabelItems dataItems={dataItems} idCollect={props.location.pathname.slice(12)} />  
+        <h3>Filter</h3>
+        <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+            {createOptions()}
+        </div>
+        <TabelItems dataItems={(resultItems)?resultItems:dataItems} idCollect={props.location.pathname.slice(12)} />  
     </div>
     )
 }

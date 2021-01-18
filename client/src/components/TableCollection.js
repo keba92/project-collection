@@ -21,8 +21,8 @@ export default function TableCollection(props) {
     const makeCollection = dataCollect.map((el, idx) => {
         if(el) {
             return (
-                <Card style={{ width: '15rem' }} key={el._id}>
-                    <Image cloud_name='dgeev9d6l' publicId={el.url}/>
+                <Card style={{ width: '25rem' }} key={el._id}>
+                    <Image cloud_name='dgeev9d6l' publicId={el.url} height="220"/>
                     <Card.Body key={el._id}>
                         <Card.Title>{el.name}</Card.Title>
                         <Card.Text>{el.collections}</Card.Text>

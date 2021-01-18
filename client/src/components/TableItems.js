@@ -29,9 +29,12 @@ export default function TabelItems(props) {
                 const data = JSON.parse(el.dataItem);
                 const pole = JSON.parse(el.poleItem);
                 return (
-                    <Card style={{ width: '15rem' }} className='item' key={idx}>
+                    <Card style={{ width: '20rem' }} className='item' key={idx}>
                         <Card.Body>
                             {Object.keys(data).map((keyName, idx) => {
+                                if(keyName == 'name') {
+                                 return <Card.Title>{data[keyName]}</Card.Title>
+                                }
                                 // eslint-disable-next-line default-case
                                 switch (pole[keyName]) {
                                     case 'number':

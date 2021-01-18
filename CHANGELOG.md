@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on forthetraveler.netlify.app(https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.0] - 2021-01-18
+### Added
+
+- Added dark and white theame.
+- Added Russian and English language.
+- Added filter Items.
+- Added download csv file collection.
+
 ## [1.8.0] - 2021-01-12
 ### Added
 
