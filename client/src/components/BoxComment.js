@@ -56,6 +56,7 @@ export default function BoxComment(props){
             <div className='comment-footer'>
                 <input className='message-block' 
                     placeholder={t('enterMessageP')} 
+                    style={{color:'black'}}
                     onChange={(e)=>setTextComment(e.target.value)}/>
                 <Button 
                         style={{color:'black'}}

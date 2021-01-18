@@ -157,6 +157,8 @@ const LightTheme = () => {
           
           table {
             border-collapse: collapse;
+            width: 80%;
+            overflow: scroll;
           }
           
           th, td {

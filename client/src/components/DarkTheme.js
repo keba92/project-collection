@@ -165,6 +165,8 @@ const DarkTheme = () => {
         
         table {
             border-collapse: collapse;
+            width: 80%;
+            overflow: scroll;
         }
         
         th, td {
@@ -239,6 +241,18 @@ const DarkTheme = () => {
         message-block {
             background-color: white;
             color: black;
+        }
+
+        option {
+            color: black;
+        }
+
+        div tags input {
+            color: black;
+        }
+
+        .tagify__input {
+            background-color: white;
         }
 
         `

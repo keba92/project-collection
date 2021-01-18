@@ -85,7 +85,8 @@ export default function EditCollection(props) {
         (collectionData.length != 0) && (
         <div>
           <Link className='back' to={`/user/${newId}`}>{t('backCollectL')}</Link>
-          <Form>
+          <div className="create">
+            <Form>
              <Form.Group controlId="exampleForm.ControlInput2">
                     <Form.Label>{t('nameCreateF')} </Form.Label>
                     <Form.Control type="text" onChange={(e)=>setNameCollection(e.target.value)} placeholder={`${collectionData[0].name}`} />
@@ -94,8 +95,7 @@ export default function EditCollection(props) {
                     <Form.Label>{t('descriptCreateF')} </Form.Label>
                     <Form.Control as="textarea" rows={3} 
                                     onChange={(e)=>setShortNameCollection(e.target.value)}
-                                    placeholder={`${collectionData[0].description}`} 
-                    />
+                    >{`${collectionData[0].description}`}</Form.Control>
                 </Form.Group>
                 <Form.Group controlId="exampleForm.ControlInput3">
                     <Form.Label>{t('temaCreateF')} </Form.Label>
@@ -142,6 +142,8 @@ export default function EditCollection(props) {
                     {t('saveB')}
                 </Button>
             </Form>
+          </div>
+          
         </div>
         )
     )

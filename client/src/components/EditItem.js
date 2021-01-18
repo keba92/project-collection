@@ -31,6 +31,7 @@ export default function EditItem(props) {
     return(
         <div>
           <Link className='back' to={`/item/${id}`}>{t('backItemL')}</Link>
+          <div className='create'>
           <Form>
             {(itemData.length != 0)&&(
                 Object.keys(JSON.parse(itemData[0].poleItem)).map((keyName, idx) => {
@@ -49,7 +50,7 @@ export default function EditItem(props) {
                                 <Form.Control as={`${JSON.parse(itemData[0].poleItem)[keyName]}`} rows={3} title={keyName} onChange={(e)=>{
                                     newItemData[e.target.title] = e.target.value;
                                     setNewItemData(newItemData);
-                                }} placeholder={data[keyName]} />
+                                }} >{data[keyName]}</Form.Control>
                             </Form.Group>
                         )
                     } else if (keyName != 'tag') {
@@ -59,7 +60,7 @@ export default function EditItem(props) {
                                 <Form.Control type={`${JSON.parse(itemData[0].poleItem)[keyName]}`} title={keyName} onChange={(e)=>{
                                     newItemData[e.target.title] = e.target.value;
                                     setNewItemData(newItemData);
-                                }} placeholder={data[keyName]} />
+                                }} placeholder={data[keyName]}> </Form.Control>
                             </Form.Group>
                         )
                     }
@@ -69,6 +70,7 @@ export default function EditItem(props) {
                 {t('saveB')}
             </Button>
           </Form>
+          </div>
         </div>
     )
 }

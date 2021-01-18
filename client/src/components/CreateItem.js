@@ -250,7 +250,7 @@ export default function CreateItem(props) {
                 </Form>
             </div>
         </div>)}
-        <h3>Filter</h3>
+        <h3>{t('filterH')}</h3>
         <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
             {createOptions()}
         </div>
