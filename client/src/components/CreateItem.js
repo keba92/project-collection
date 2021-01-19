@@ -183,14 +183,20 @@ export default function CreateItem(props) {
     
     return (
     <div>
-        {(headersCSV)&&(<div style={{float: 'right'}}>
-            <CSVLink data={headersCSV} filename='collection.csv' separator={';'}>
-                 Download CSV Data Collection
-            </CSVLink>
-        </div>)}
-        <Search />
-        {(isAuthenticated)&&(<Link className='back' to={`/`}>{t('backMainL')}</Link>)}
-        {(isAuthenticated&&id==localStorage.getItem('userId'))&&(<Link className='back' to={`/user/${id}`}>{t('backCollectL')}</Link>)}
+        <br/>     
+        <div className='button-main'>
+            <div className='buttons'>
+                {(isAuthenticated)&&(<Link className='back' to={`/`}>{t('backMainL')}</Link>)}
+                {(isAuthenticated&&id==localStorage.getItem('userId'))&&(
+                <Link className='back' to={`/user/${id}`}>{t('backCollectL')}</Link>)}
+                {(headersCSV)&&(<div style={{float: 'right'}}>
+                    <CSVLink data={headersCSV} filename='collection.csv' separator={';'}>
+                        Download CSV
+                    </CSVLink>
+                </div>)}
+            </div>
+            <Search />
+        </div>
         {(isAuthenticated&&id==localStorage.getItem('userId')||JSON.parse(localStorage.getItem('arrAdmins')).includes(user.sub))&&
         (<div className='create'>
             <div className='create-block'>
@@ -250,7 +256,7 @@ export default function CreateItem(props) {
                 </Form>
             </div>
         </div>)}
-        <h3>{t('filterH')}</h3>
+        <h1>{t('filterH')}</h1>
         <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
             {createOptions()}
         </div>

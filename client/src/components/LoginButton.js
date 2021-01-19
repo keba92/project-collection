@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
+import { Button } from 'react-bootstrap';
 
 const LoginButton = () => {
   const { loginWithRedirect, isAuthenticated } = useAuth0();
@@ -8,9 +9,9 @@ const LoginButton = () => {
 
   return (
     !isAuthenticated && (
-      <button onClick={() => loginWithRedirect()}>
+      <Button variant="outline-primary" onClick={() => loginWithRedirect()}>
         {t('logInB')}
-      </button>
+      </Button>
     )
   )
 }

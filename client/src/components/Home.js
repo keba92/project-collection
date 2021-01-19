@@ -8,11 +8,12 @@ import TableCollection from './TableCollection';
 import { TagCloud } from 'react-tagcloud';
 import { useTranslation } from 'react-i18next';
 import ResultSearch from './ResultSearch';
+import { Button } from 'react-bootstrap';
 
 export default function Home() {
     const [items, setItems] = useState([]);
     const [dataCollect, setDataCollect] = useState([]);
-    const [choiseTag, setChoiseTag] = useState(null)
+    const [choiseTag, setChoiseTag] = useState(null);
     const socket = io({ transports: [ 'websocket', 'polling' ], reconnect: true });
     const { t, i18n } = useTranslation();
      useEffect(() => {
@@ -93,7 +94,7 @@ export default function Home() {
                   count: countTag[el]
                 }
             })
-        return(<TagCloud tags={arrTags} minSize={3} maxSize={10} renderer={customRenderer} />)
+        return(<TagCloud tags={arrTags} minSize={2} maxSize={7} renderer={customRenderer} />)
     }
 
     const makeResult = () => {
@@ -102,8 +103,13 @@ export default function Home() {
             if(el.tag.includes(choiseTag)) tegsItems.push(el);
         })
         return (
-            (tegsItems)&&(<div>
-                <button style={{float:'right', backgroundColor: 'tomato'}} onClick={()=>setChoiseTag(null)}>Close</button>
+            (tegsItems)&&(
+            <div>
+                <Button variant="danger" 
+                        style={{float:'right'}} 
+                        onClick={()=>setChoiseTag(null)}>
+                            Close
+                </Button>
                 <ResultSearch data={tegsItems}/>
             </div>)
         )
@@ -111,18 +117,23 @@ export default function Home() {
 
     
     return (
-        <div className='home-page'>     
-            <Search />
-            <AdminProfileButton />
-            <UserProfileButton />
+        <div className='home-page'>
+            <br/>
+            <div className='button-main'>
+                <div className='buttons'>
+                    <AdminProfileButton />
+                    <UserProfileButton />
+                </div> 
+                <Search />
+            </div>
             {(choiseTag)&&(makeResult())}
-            <h3>{t('cloudTagsH')}</h3>
+            <h1 style={{marginTop:'20px'}}>{t('cloudTagsH')}</h1>
             <div className='cloud-div'>
                 {makedataCloud()}
             </div>
-            <h3>{t('newItemsH')}</h3>
+            <h1>{t('newItemsH')}</h1>
             <TabelItems dataItems={items} idCollect=''/>
-            <h3>{t('bigCollectionH')}</h3>
+            <h1>{t('bigCollectionH')}</h1>
             {collect()}
         </div>
     )

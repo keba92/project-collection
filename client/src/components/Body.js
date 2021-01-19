@@ -12,7 +12,7 @@ import EditCollection from './EditCollection';
 function Body() {
 
   return (
-    <div>
+    <div className='body-page'>
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={Home} />

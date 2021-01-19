@@ -18,6 +18,11 @@ const LightTheme = () => {
           margin-left: 10px;
         }
 
+        body{
+          background-image: url(../img/tweed.png);
+          min-width: 750px;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -34,8 +39,12 @@ const LightTheme = () => {
           
           .search-block {
             display: flex;
-            margin-top: 10px;
             margin-left: 1.5%;
+          }
+
+          .button-main {
+            display: flex;
+            justify-content: space-between;
           }
           
           .input-search {
@@ -75,11 +84,9 @@ const LightTheme = () => {
           }
           
           .card{
-            margin-right: 1%;
-            margin-left: 1%;
-            margin-bottom: 1%;
+            margin: 2%;
             min-width: 7%;
-            border: 1px solid gray;
+            box-shadow: 0 14px 28px rgba(0,0,0,0.2), 0 10px 10px rgba(0,0,0,0.2);
           }
           
           .table-collection {
@@ -95,6 +102,7 @@ const LightTheme = () => {
             margin: 10px;
             padding: 15px;
             min-width: 350px;
+            box-shadow: 0 14px 28px rgba(0,0,0,0.2), 0 10px 10px rgba(0,0,0,0.2);
           }
           
           span i {
@@ -109,8 +117,7 @@ const LightTheme = () => {
             margin-top: 10px;
             margin-bottom: 10px;
             max-width: 50%;
-            padding-left: 5px;
-            padding-right: 5px;
+            padding: 5px;
             border: 1px solid rgb(207, 207, 207);
             border-radius: 3px;
             text-decoration: none;
@@ -153,7 +160,6 @@ const LightTheme = () => {
             flex-direction: column;
             align-items: center;
             margin-top: 10%;
-            width: 80%;
             overflow: scroll;
           }
           
@@ -183,8 +189,10 @@ const LightTheme = () => {
              text-align: center;
            }
 
-           h3 {
+           h1 {
             text-align: center;
+            margin-top: 2%;
+            margin-bottom: 2%
           }
           
            .user-name {
@@ -228,6 +236,16 @@ const LightTheme = () => {
 
         .active {
             border: 2px solid rebeccapurple;
+        }
+
+        .body-page {
+          margin: 0 auto;
+          width: 85%;
+          box-shadow:
+          0 1px 4px rgba(0, 0, 0, .3),
+          -23px 0 20px -23px rgba(0, 0, 0, .8),
+          23px 0 20px -23px rgba(0, 0, 0, .8),
+          0 0 40px rgba(0, 0, 0, .1);
         }
            
         `

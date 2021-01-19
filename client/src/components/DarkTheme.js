@@ -80,12 +80,16 @@ const DarkTheme = () => {
         }
         
         .card{
-            margin-right: 1%;
-            margin-left: 1%;
-            margin-bottom: 1%;
+            margin: 2%;
             min-width: 7%;
             background-color: rgb(26, 25, 25);
             border: 1px solid gray;
+            box-shadow: 0px 0px 8px 0px #fcfcfc;
+        }
+
+        .button-main {
+            display: flex;
+            justify-content: space-between;
         }
         
         .table-collection {
@@ -191,8 +195,10 @@ const DarkTheme = () => {
             text-align: center;
         }
 
-        h3 {
+        h1 {
             text-align: center;
+            margin-top: 1%;
+            margin-bottom: 3%
           }
         
         .user-name {
@@ -257,6 +263,16 @@ const DarkTheme = () => {
 
         .tagify__input {
             background-color: white;
+        }
+
+        .body-page {
+            margin: auto;
+            width: 85%;
+            box-shadow:
+            0 1px 4px rgba(0, 0, 0, .3),
+            -23px 0 20px -23px rgba(0, 0, 0, .8),
+            23px 0 20px -23px rgba(0, 0, 0, .8),
+            0 0 40px rgba(0, 0, 0, .1) inset;
         }
 
         `

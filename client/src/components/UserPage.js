@@ -11,10 +11,13 @@ function UserPage(props) {
   return (
     isAuthenticated && (
       <div className='user-page'>
-        <Search/>
+        <br/>
+        <div className='button-main'>
           <div className='navigation'>
               <Link className='back' to='/'>{t('backMainL')}</Link>
           </div>
+          <Search/>
+        </div>          
           <div className='body-user'>
               <CreateCollection idLink={props.location.pathname.slice(6)} />
           </div>

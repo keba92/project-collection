@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import io from 'socket.io-client';
 import ResultSearch from './ResultSearch';
 import { useTranslation } from 'react-i18next';
+import { InputGroup, FormControl, Button } from 'react-bootstrap';
 
 
 export default function Search() {
     const socket = io({ transports: [ 'websocket', 'polling' ], reconnect: true });
     const { t, i18n } = useTranslation();
-    const [option, setOption] = useState([]);
+    const [option, setOption] = useState(null);
     const [word, setWord] = useState('');
 
     const searchFT = async(e)=> {
@@ -39,11 +40,27 @@ export default function Search() {
 return (
     <div>
         <div className = "search-block">
-            <input className='search' style={{color: 'black', backgroundColor: 'white'}} onChange={(e)=>{setWord(e.target.value)}}
-                    placeholder={t('searchP')}/>
-            <button onClick={searchFT}>{t('searchB')}</button>
+            <InputGroup className="mb-3" style={{maxWidth: '400px'}}>
+                <FormControl
+                placeholder={t('searchP')}
+                aria-describedby="basic-addon2"
+                onChange={(e)=>{setWord(e.target.value)}}
+                />
+                <InputGroup.Append>
+                <Button variant="outline-success" onClick={searchFT}>{t('searchB')}</Button>
+                </InputGroup.Append>
+            </InputGroup>
         </div>
-        {(option)&&(<ResultSearch data = {option}/>)}
+        {(option)&&(
+            <div>
+                <Button variant="danger" 
+                        style={{float:'right'}} 
+                        onClick={()=>setOption(null)}>
+                            Close
+                </Button>
+                <ResultSearch data = {option}/>
+            </div>
+            )}
     </div>
     )
 }

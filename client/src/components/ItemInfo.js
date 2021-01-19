@@ -71,6 +71,7 @@ export default function ItemInfo(props) {
 
     return (
             <div>
+                <br/>
                 <Link className='back' to='/'>{t('backMainL')}</Link>
                 <div className='content-item'>
                     {makeItem}

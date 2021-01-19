@@ -24,6 +24,7 @@
     "createB": "Create",
     "sendB": "Send",
     "saveB": "Save",
+    "closeB": "Close",
     "nameCreateF": "Enter the title:",
     "descriptCreateF": "Enter a short description:",
     "temaCreateF": "Select a topic:",
