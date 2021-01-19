@@ -15,6 +15,7 @@ export default function DeleteButtonCollect(props) {
             socket.emit('deleteCollection', {
                 _id: id
             })
+            window.location.assign(`/`)
         }
     }
 

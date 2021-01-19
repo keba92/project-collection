@@ -14,6 +14,7 @@ export default function DeleteButtonItem(props) {
             socket.emit('deleteItem', {
                 _id: id
             })
+            window.location.assign(`/`)
         }
     }
 

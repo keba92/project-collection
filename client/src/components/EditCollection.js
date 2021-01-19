@@ -48,6 +48,7 @@ export default function EditCollection(props) {
             url: (urlPicture!='')? urlPicture: collectionData[0].url,
             poleItem: (Object.keys(poleItem).length==3)?(collectionData[0].poleItem):(JSON.stringify(poleItem))
         })
+        window.location.assign(`/collection/${id}`)
     }
 
     const addPoleItem = (e) =>{

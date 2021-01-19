@@ -26,6 +26,7 @@ export default function EditItem(props) {
             _id: id,
             dataItem: JSON.stringify(newItemData)
         })
+        window.location.assign(`/item/${id}`)
     }
 
     return(
