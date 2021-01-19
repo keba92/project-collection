@@ -153,12 +153,12 @@ const LightTheme = () => {
             flex-direction: column;
             align-items: center;
             margin-top: 10%;
+            width: 80%;
+            overflow: scroll;
           }
           
           table {
             border-collapse: collapse;
-            width: 80%;
-            overflow: scroll;
           }
           
           th, td {

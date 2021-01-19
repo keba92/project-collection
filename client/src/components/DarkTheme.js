@@ -21,7 +21,7 @@ const DarkTheme = () => {
         * {
             margin: 0;
             padding: 0;
-            color: white;
+            color: #bab9b9;
         }
         
         body {
@@ -160,13 +160,13 @@ const DarkTheme = () => {
             display: flex;
             flex-direction: column;
             align-items: center;
+            width: 80%;
+            overflow: scroll;
             margin-top: 10%;
         }
         
         table {
             border-collapse: collapse;
-            width: 80%;
-            overflow: scroll;
         }
         
         th, td {
@@ -247,7 +247,11 @@ const DarkTheme = () => {
             color: black;
         }
 
-        div tags input {
+        .tags-input tags span {
+            color:black;
+        }
+
+        tagify--focus {
             color: black;
         }
 

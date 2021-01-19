@@ -17,7 +17,7 @@ export default function Comment(props){
 
     return(
         <div className='comment'>
-            {(data)?(makeComment):(<p>{t('nonCommentP')}</p>)}
+            {(data.length!=0)?(makeComment):(<p>{t('nonCommentP')}</p>)}
         </div>
     )
 } 
