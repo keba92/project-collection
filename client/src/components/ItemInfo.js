@@ -35,7 +35,7 @@ export default function ItemInfo(props) {
         const data = JSON.parse(el.dataItem);
         const pole = JSON.parse(el.poleItem);
         return (
-            <Card style={{ width: '25rem' }} key={idx}>
+            <Card style={{ minWidth: '25rem' }} key={idx}>
                 <Card.Body>
                     {Object.keys(data).map((keyName, idx) => {
                         // eslint-disable-next-line default-case

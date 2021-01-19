@@ -132,7 +132,7 @@ export default function Home() {
                 {makedataCloud()}
             </div>
             <h1>{t('newItemsH')}</h1>
-            <TabelItems dataItems={items} idCollect=''/>
+            <TabelItems dataItems={(items.length>3)?(items.slice(items.length-4,items.length-1)):(items)} idCollect=''/>
             <h1>{t('bigCollectionH')}</h1>
             {collect()}
         </div>

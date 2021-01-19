@@ -18,11 +18,6 @@ const LightTheme = () => {
           margin-left: 10px;
         }
 
-        body{
-          background-image: url(../img/tweed.png);
-          min-width: 750px;
-        }
-
         * {
             margin: 0;
             padding: 0;
