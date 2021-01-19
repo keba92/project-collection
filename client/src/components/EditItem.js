@@ -60,7 +60,7 @@ export default function EditItem(props) {
                                 <Form.Control type={`${JSON.parse(itemData[0].poleItem)[keyName]}`} title={keyName} onChange={(e)=>{
                                     newItemData[e.target.title] = e.target.value;
                                     setNewItemData(newItemData);
-                                }} placeholder={data[keyName]}> </Form.Control>
+                                }} placeholder={data[keyName]}/>
                             </Form.Group>
                         )
                     }
