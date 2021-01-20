@@ -3,7 +3,7 @@ import {InputGroup, FormControl, Button } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
 import io from 'socket.io-client';
 import { useTranslation } from 'react-i18next';
-import Comment from './Comment';
+import Comment from '../components/Comment';
 
 export default function BoxComment(props){
     const [textComment, setTextComment] = useState('');

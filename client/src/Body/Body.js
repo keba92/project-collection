@@ -1,13 +1,13 @@
 import React from 'react';
-import UserPage from './UserPage';
+import UserPage from './UserPage/containers/UserPage';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Home from './Home';
+import Home from './HomePage/containers/Home';
 import PrivateRoute from './privateRoute';
-import ItemInfo from './ItemInfo';
-import CreateItem from './CreateItem';
-import EditItem from './EditItem';
-import AdminPage from './AdminPage';
-import EditCollection from './EditCollection';
+import ItemInfo from './ItemPage/containers/ItemInfo';
+import CreateItem from './UserPage/containers/CreateItem';
+import EditItem from './ItemPage/containers/EditItem';
+import AdminPage from '../Admin/containers/AdminPage';
+import EditCollection from './UserPage/containers/EditCollection';
 
 function Body() {
 

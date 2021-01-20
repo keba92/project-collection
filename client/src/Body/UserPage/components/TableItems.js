@@ -3,7 +3,7 @@ import React from 'react';
 import { Card } from 'react-bootstrap';
 import {  MarkdownPreview  } from 'react-marked-markdown';
 import { Link } from 'react-router-dom';
-import LikeButton from './LikeButton';
+import LikeButton from '../../ItemPage/containers/LikeButton';
 import Tag from '@uiw/react-tag';
 import { useTranslation } from 'react-i18next';
 
@@ -62,7 +62,6 @@ export default function TabelItems(props) {
             })
         }
     }
-    
 
     return (
         <div className='table-items'>

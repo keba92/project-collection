@@ -1,5 +1,5 @@
 import React from 'react';
-import TabelItems from './TableItems';
+import TabelItems from '../../UserPage/components/TableItems';
 import { useTranslation } from 'react-i18next';
 
 const ResultSearch = (props) => {

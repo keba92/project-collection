@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import io from 'socket.io-client';
-import ResultSearch from './ResultSearch';
+import ResultSearch from '../components/ResultSearch';
 import { useTranslation } from 'react-i18next';
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
-
 
 export default function Search() {
     const socket = io({ transports: [ 'websocket', 'polling' ], reconnect: true });
@@ -32,7 +31,6 @@ export default function Search() {
                         setOption(newOption);
                     }) 
                 })
-
             })
         }
     }

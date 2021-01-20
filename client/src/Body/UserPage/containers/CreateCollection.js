@@ -1,54 +1,66 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useAuth0 } from "@auth0/auth0-react";
 import { Form, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import TableCollection from '../components/TableCollection';
 import io from 'socket.io-client';
-import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
 import {useDropzone} from 'react-dropzone';
 import { Image } from 'cloudinary-react';
 
-export default function EditCollection(props) {
-    const id = props.location.pathname.slice(16);
+export default function CreateCollection(props) {
     const socket = io({ transports: [ 'websocket', 'polling' ], reconnect: true });
-    const [collectionData, setCollectionData] = useState([]);
     const [nameCollection, setNameCollection] = useState('');
     const [shortNameCollection, setShortNameCollection] = useState('');
     const [urlPicture, setUrlPicture] = useState('');
-    const [optionCollection, setOptionCollection] = useState('');
-    const [poleItem, setPoleItem] = useState({ 'name': 'text', 'teg': 'text'});
+    const [temaCollection, setTemaCollection] = useState('');
+    const [poleItem, setPoleItem] = useState({ 'name': 'text', 'tag': 'text'});
     const [namePole, setNamePole] = useState('');
     const [typePole, setTypePole] = useState('');
-    const [newId, setNewId] = useState('');
-    const { user } = useAuth0();
+    const [dataCollect, setDataCollect] = useState([]);
+    const { user, isAuthenticated } = useAuth0();
+    const [idUser, setIdUser] = useState(null);
+    const { idLink } = props;
     const { t, i18n } = useTranslation();
 
-    useEffect(() => {
-        let idUser;
-        socket.emit('getCollectionInfo', {
-            _id: id
-        })
-        socket.on('getCollectionDataInfo',(data) => {
-            setCollectionData(data);
-        })
-        if(localStorage.getItem('admin')) {
-            idUser = localStorage.getItem('admin');
-        } else {
-            idUser = user.sub
+    useEffect(() => {  
+       if(!idUser) {
+        socket.emit('getAdmins', { message: process.env.REACT_APP_AUTH0_TOKEN});
+        socket.on('getAdminsData', ((data)=>{
+            const admins = data.map(el => el.user_id);
+            let id;
+              if (isAuthenticated && !admins.includes(user.sub)) {
+                  id = user.sub;
+                  setIdUser(id)
+              } else if (isAuthenticated && admins.includes(user.sub)) {
+                  id = idLink;
+                  localStorage.setItem('admin', id)
+                  setIdUser(id)
+              } else {
+                  id = 'all';
+              }
+              socket.emit('getCollection', {
+                  id: id
+              })
+              socket.on('getDataCollect',(data) => {
+                  setDataCollect(data);
+              })
+        }))
         }
-        setNewId(idUser)
-    },[])
+    });
 
-    const editCollection = (e) => {
+    const addCollection = (e) =>{
         e.preventDefault();
-        socket.emit('editCollection', {
-            _id: id,
-            name:  (nameCollection!='')? nameCollection: collectionData[0].name,
-            description: (shortNameCollection!='')? shortNameCollection: collectionData[0].description,
-            tema: (optionCollection!='')? optionCollection: collectionData[0].tema,
-            url: (urlPicture!='')? urlPicture: collectionData[0].url,
-            poleItem: (Object.keys(poleItem).length==3)?(collectionData[0].poleItem):(JSON.stringify(poleItem))
+        socket.emit('addCollection', {
+            id: idUser,
+            name: nameCollection,
+            description: shortNameCollection,
+            tema: temaCollection,
+            url: urlPicture,
+            poleItem: JSON.stringify(poleItem)
         })
-        window.location.assign(`/collection/${id}`)
+        socket.on('getDataCollect',(data) => {
+            setDataCollect(data);
+        },[])
     }
 
     const addPoleItem = (e) =>{
@@ -83,30 +95,33 @@ export default function EditCollection(props) {
     });
 
     return(
-        (collectionData.length != 0) && (
-        <div>
-          <Link className='back' to={`/user/${newId}`}>{t('backCollectL')}</Link>
-          <div className="create">
+        <div className='create-block'>
+            <h1 className='create'>{t('createCollectionH')}</h1>
+            <div className='create-item create'>
             <Form>
-             <Form.Group controlId="exampleForm.ControlInput2">
+                <Form.Group controlId="exampleForm.ControlInput2">
                     <Form.Label>{t('nameCreateF')} </Form.Label>
-                    <Form.Control type="text" onChange={(e)=>setNameCollection(e.target.value)} placeholder={`${collectionData[0].name}`} />
+                    <Form.Control type="text" onChange={(e)=>setNameCollection(e.target.value)} placeholder={t('enterNameP')} />
                 </Form.Group>
                 <Form.Group controlId="exampleForm.ControlTextarea1">
                     <Form.Label>{t('descriptCreateF')} </Form.Label>
                     <Form.Control as="textarea" rows={3} 
                                     onChange={(e)=>setShortNameCollection(e.target.value)}
-                    >{`${collectionData[0].description}`}</Form.Control>
+                                    placeholder={t('descriptCreateF')} 
+                    />
                 </Form.Group>
                 <Form.Group controlId="exampleForm.ControlInput3">
                     <Form.Label>{t('temaCreateF')} </Form.Label>
-                    <Form.Control as="select" onInput={(e)=>setOptionCollection(e.target.value)}>
+                    <Form.Control as="select" onInput={(e)=>setTemaCollection(e.target.value)}>
                         <option></option>
                         <option value='alcohol'>Алкоголь</option>
-                        <option value='book'>Книга</option>
+                        <option value='book'>Книги</option>
+                        <option value='marks'>Марки</option>
+                        <option value='znak'>Значки</option>
                     </Form.Control>
                 </Form.Group>
                 <Form.Group controlId="exampleForm.ControlInput4">
+                    <Form.Label>{t('urlCreateF')} </Form.Label>
                     <div {...getRootProps()} className={`dropzone ${isDragActive ? 'active': null}`}>
                         <input {...getInputProps()} />
                         {
@@ -139,13 +154,13 @@ export default function EditCollection(props) {
                     <Form.Label>{t('choisePoleF')} {JSON.stringify(poleItem)} </Form.Label>
                   </Form.Group>
                 </Form>
-                <Button variant="primary" type="submit" onClick={editCollection}>
-                    {t('saveB')}
+                <Button variant="primary" type="submit" onClick={addCollection}>
+                    {t('createB')}
                 </Button>
             </Form>
-          </div>
-          
+            </div>
+            <h1 className='create'>{t('myCollectionH')}</h1>
+            <TableCollection dataCollect={dataCollect}/>
         </div>
-        )
     )
 }

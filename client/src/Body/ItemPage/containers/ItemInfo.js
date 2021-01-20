@@ -15,7 +15,6 @@ export default function ItemInfo(props) {
     const { user, isAuthenticated } = useAuth0();
     const [item, setItem] = useState([]);
     const { t, i18n } = useTranslation();
-
     useEffect(()=>{
         async function dataItem(){
             if(item.length==0) {
@@ -78,5 +77,5 @@ export default function ItemInfo(props) {
                     {(isAuthenticated)&&(<BoxComment id={props.location.pathname.slice(6)} />)}
                 </div>
             </div>
-    )
+        )
 }

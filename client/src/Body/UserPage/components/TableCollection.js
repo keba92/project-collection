@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Card } from 'react-bootstrap';
 import {  MarkdownPreview  } from 'react-marked-markdown';
 import { Link } from 'react-router-dom';
-import DeleteButtonCollect from './DeleteButtonCollect';
+import DeleteButtonCollect from '../containers/DeleteButtonCollect';
 import { useAuth0 } from "@auth0/auth0-react";
 import { useTranslation } from 'react-i18next';
 import { Image } from 'cloudinary-react';
@@ -17,7 +17,6 @@ export default function TableCollection(props) {
             setId(user.sub);
         }
     })
-        
     const makeCollection = dataCollect.map((el, idx) => {
         if(el) {
             return (

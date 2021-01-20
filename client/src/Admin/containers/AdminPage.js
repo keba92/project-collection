@@ -3,12 +3,10 @@ import { useState, useEffect } from "react";
 import io from 'socket.io-client';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import AdminTableRow from '../components/AdminTableRow';
+import AdminTableHead from '../components/AdminTableHead';
+import AdminButtons from '../components/AdminButtons';
 
-const Checkbox = ({ type = "checkbox", checked = false, onChange, title, value }) => {
-    return (
-      <input type={type} className ='form-check-input' checked={checked} onChange={onChange} title ={title} value={value} />
-    );
-};
 function AdminPage() {
     const [data, setData] = useState([]);
     const [checkedItems, setCheckedItems] = useState({});
@@ -65,24 +63,6 @@ function AdminPage() {
         })
     }
     
-    const tableTemplate = data.map((row) => {
-        idUsers.push(row.user_id);
-         return(
-            <tr key={row.user_id}>
-                <td><Checkbox checked={checkedItems[row.user_id]}
-                    onChange={handleChange} value ={row.user_id}/>
-                </td>
-                <td><Link to={`/user/${row.user_id}`}>{row.user_id}</Link></td>
-                <td>{row.name}</td>
-                <td>{row.email}</td>
-                <td>{row.created_at}</td>
-                <td>{row.last_login}</td>
-                <td>{(row.blocked)?('Block'):('OK')}</td>
-                <td>{(adminList.includes(row.user_id))?('Admin'):('')}</td>
-            </tr>
-         );
-    });
-
     const blockUser = (e) =>{
 		Object.keys(checkedItems).map((keyName) => {
             if(e.target.attributes[1].value == 'block') {
@@ -106,7 +86,6 @@ function AdminPage() {
                     })
                 }
             }
-            
         })
     }
 
@@ -129,26 +108,11 @@ function AdminPage() {
             <Link className='back' to='/'>{t('backMainL')}</Link>
             <div className = 'users'>
                 <h1>{t('usersH')}</h1>
-                <span className = 'toolBar'>
-                    <button className = 'btn' ><i className='fa fa-close' title='block' onClick={blockUser}>{t('blockI')}</i></button>
-                    <button className = 'btn' ><i className='fa fa-trash' onClick={deleteUsers}>{t('deleteI')}</i></button>
-                    <button className = 'btn' ><i className='fa fa-check' title='unblock' onClick={blockUser}>{t('unblockI')}</i></button>
-                    <button className = 'btn' onClick={makeAdmin}><i className='fa fa-check'>{t('adminI')}</i></button>
-                </span>
+                <AdminButtons blockUser={blockUser} deleteUsers={deleteUsers} makeAdmin={makeAdmin} />
                 <table className ='table-light'>
-                    <tr>
-                        <th>Check All<br/>
-                            <input type='checkbox' className ='form-check-input' onChange={(event) => selectAll(event.target.checked)} checked={checkedAll}/>
-                        </th>
-                        <th>ID</th>
-                        <th>{t('nameT')}</th>
-                        <th>{t('emailT')}</th>
-                        <th>{t('dateRegT')}</th>
-                        <th>{t('dateLastT')}</th>
-                        <th>{t('statusT')}</th>
-                        <th>{t('adminT')}</th>
-                    </tr>
-                    {tableTemplate}
+                    <AdminTableHead selectAll={selectAll} checkedAll={checkedAll} />
+                    <AdminTableRow data={data} adminList={adminList} handleChange={handleChange} 
+                                   checkedItems={checkedItems} idUsers={idUsers} />
                 </table>
             </div>
         </div>

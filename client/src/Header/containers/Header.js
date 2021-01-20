@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import Profile from './Profile';
+import Profile from '../components/Profile';
 import { useTranslation } from 'react-i18next';
 import Flag from 'react-world-flags';
-import DarkTheme from './DarkTheme';
-import LightTheme from './LightTheme';
+import DarkTheme from '../../Theame/components/DarkTheme';
+import LightTheme from '../../Theame/components/LightTheme';
 import { useAuth0 } from '@auth0/auth0-react';
 import io from 'socket.io-client';
 import { FaSun, FaMoon } from 'react-icons/fa';

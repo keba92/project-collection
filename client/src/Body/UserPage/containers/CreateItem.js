@@ -2,11 +2,11 @@ import React, {useState, useEffect, useCallback, useRef} from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
-import TabelItems from './TableItems';
+import TabelItems from '../components/TableItems';
 import io from 'socket.io-client';
 import Tags from "@yaireo/tagify/dist/react.tagify"
 import '@yaireo/tagify/dist/tagify.css';
-import Search from './Search';
+import Search from '../../HomePage/containers/Search';
 import { useTranslation } from 'react-i18next';
 import { CSVLink } from "react-csv";
 
@@ -85,7 +85,7 @@ export default function CreateItem(props) {
     const onChange = useCallback((e) => {
         e.persist();
         setTags(e.target.value);
-      },[]);
+    },[]);
 
     const settings = {
         ...baseTagifySettings
