@@ -6,7 +6,7 @@ import { InputGroup, FormControl, Button } from 'react-bootstrap';
 
 
 export default function Search() {
-    const socket = io("http://localhost:3001/",{ transports: [ 'websocket', 'polling' ], reconnect: true });
+    const socket = io({ transports: [ 'websocket', 'polling' ], reconnect: true });
     const { t, i18n } = useTranslation();
     const [option, setOption] = useState(null);
     const [word, setWord] = useState('');

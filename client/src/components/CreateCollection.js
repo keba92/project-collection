@@ -8,7 +8,7 @@ import {useDropzone} from 'react-dropzone';
 import { Image } from 'cloudinary-react';
 
 export default function CreateCollection(props) {
-    const socket = io("http://localhost:3001/",{ transports: [ 'websocket', 'polling' ], reconnect: true });
+    const socket = io({ transports: [ 'websocket', 'polling' ], reconnect: true });
     const [nameCollection, setNameCollection] = useState('');
     const [shortNameCollection, setShortNameCollection] = useState('');
     const [urlPicture, setUrlPicture] = useState('');

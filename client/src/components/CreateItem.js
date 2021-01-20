@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { CSVLink } from "react-csv";
 
 export default function CreateItem(props) {
-    const socket = io("http://localhost:3001/",{ transports: [ 'websocket', 'polling' ], reconnect: true });
+    const socket = io({ transports: [ 'websocket', 'polling' ], reconnect: true });
     const [collection, setCollection] = useState([]);
     const [itemData, setItemData] = useState({});
     const [dataItems, setDataItems] = useState([]);
