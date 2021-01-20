@@ -252,7 +252,7 @@ const LightTheme = () => {
 
         .body-page {
           background-color: #91bfbf;
-          min-height: 100%;
+          height: 100%;
         }
 
         .big-collect {
