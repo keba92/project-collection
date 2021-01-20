@@ -6,7 +6,7 @@ import { InputGroup, FormControl, Button } from 'react-bootstrap';
 
 
 export default function Search() {
-    const socket = io({ transports: [ 'websocket', 'polling' ], reconnect: true });
+    const socket = io("http://localhost:3001/",{ transports: [ 'websocket', 'polling' ], reconnect: true });
     const { t, i18n } = useTranslation();
     const [option, setOption] = useState(null);
     const [word, setWord] = useState('');
@@ -47,7 +47,7 @@ return (
                 onChange={(e)=>{setWord(e.target.value)}}
                 />
                 <InputGroup.Append>
-                <Button variant="outline-success" onClick={searchFT}>{t('searchB')}</Button>
+                <Button variant="light" onClick={searchFT}>{t('searchB')}</Button>
                 </InputGroup.Append>
             </InputGroup>
         </div>

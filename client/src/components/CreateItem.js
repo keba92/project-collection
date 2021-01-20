@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { CSVLink } from "react-csv";
 
 export default function CreateItem(props) {
-    const socket = io({ transports: [ 'websocket', 'polling' ], reconnect: true });
+    const socket = io("http://localhost:3001/",{ transports: [ 'websocket', 'polling' ], reconnect: true });
     const [collection, setCollection] = useState([]);
     const [itemData, setItemData] = useState({});
     const [dataItems, setDataItems] = useState([]);
@@ -159,7 +159,7 @@ export default function CreateItem(props) {
                 return Object.keys(obj).map((keyName,idx) => {
                     return (
                         <select className='filter'
-                                style={{width:'10%', marginRight:'10px'}}
+                                style={{maxWidth:'18%', margin:'1%', backgroundColor:'white'}}
                                 key={idx}
                                 onInput={e=>findItem(e.target.value)}
                             >
@@ -182,14 +182,13 @@ export default function CreateItem(props) {
     }
     
     return (
-    <div>
-        <br/>     
+    <div>    
         <div className='button-main'>
             <div className='buttons'>
                 {(isAuthenticated)&&(<Link className='back' to={`/`}>{t('backMainL')}</Link>)}
                 {(isAuthenticated&&id==localStorage.getItem('userId'))&&(
                 <Link className='back' to={`/user/${id}`}>{t('backCollectL')}</Link>)}
-                {(headersCSV)&&(<div style={{float: 'right'}}>
+                {(headersCSV)&&(<div style={{float: 'right', marginLeft:'10px'}}>
                     <CSVLink data={headersCSV} filename='collection.csv' separator={';'}>
                         Download CSV
                     </CSVLink>
@@ -256,9 +255,11 @@ export default function CreateItem(props) {
                 </Form>
             </div>
         </div>)}
-        <h1>{t('filterH')}</h1>
-        <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-            {createOptions()}
+        <div className='filter'>
+            <h1>{t('filterH')}</h1>
+            <div className='filterBox'>
+                {createOptions()}
+            </div>
         </div>
         <TabelItems dataItems={(resultItems)?resultItems:dataItems} idCollect={props.location.pathname.slice(12)} />  
     </div>

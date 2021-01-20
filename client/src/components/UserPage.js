@@ -11,7 +11,6 @@ function UserPage(props) {
   return (
     isAuthenticated && (
       <div className='user-page'>
-        <br/>
         <div className='button-main'>
           <div className='navigation'>
               <Link className='back' to='/'>{t('backMainL')}</Link>

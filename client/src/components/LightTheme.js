@@ -26,10 +26,11 @@ const LightTheme = () => {
           .header{
             display: flex;
             justify-content: space-between;
-            height: 60px;
-            width: 100%;
-            border-bottom: 2px solid gray;
-            background-color: rgb(189, 189, 189);
+            height: 5%;
+            -webkit-box-shadow: 0px 3px 4px 0px rgba(0,0,0,0.75);
+            -moz-box-shadow: 0px 3px 4px 0px rgba(0,0,0,0.75);
+            box-shadow: 0px 3px 4px 0px rgba(0,0,0,0.75);
+            background-color: #191919;
           }
           
           .search-block {
@@ -39,7 +40,12 @@ const LightTheme = () => {
 
           .button-main {
             display: flex;
+            position: sticky;
+            top: 0;
             justify-content: space-between;
+            background-color: #d4e3ec;
+            padding-top: 15px;
+            z-index: 100;
           }
           
           .input-search {
@@ -81,7 +87,9 @@ const LightTheme = () => {
           .card{
             margin: 2%;
             min-width: 7%;
+            background-color: #e4dece;
             box-shadow: 0 14px 28px rgba(0,0,0,0.2), 0 10px 10px rgba(0,0,0,0.2);
+            color: #0b2937;
           }
           
           .table-collection {
@@ -97,6 +105,8 @@ const LightTheme = () => {
             margin: 10px;
             padding: 15px;
             min-width: 350px;
+            color: #0b2937;
+            background-color: #e4dece;
             box-shadow: 0 14px 28px rgba(0,0,0,0.2), 0 10px 10px rgba(0,0,0,0.2);
           }
           
@@ -108,9 +118,7 @@ const LightTheme = () => {
           }
           
           a {
-            margin-left: 5px;
-            margin-top: 10px;
-            margin-bottom: 10px;
+            margin: 10px
             max-width: 50%;
             padding: 5px;
             border: 1px solid rgb(207, 207, 207);
@@ -118,28 +126,31 @@ const LightTheme = () => {
             text-decoration: none;
             color: rgb(0, 0, 0);
             text-align: center;
-            background-color: rgb(253, 238, 154);
+            background-color: #5f7d9c;
           }
           
           .comment-box {
-            border: 3px solid rgb(5, 5, 5);
+            border: 0px solid rgb(5, 5, 5);
             border-radius: 3px;
-            max-width: 650px;
+            width: 50%;
             margin: 15px;
             padding: 20px;
+            background-color: #d4e3ec;
+            box-shadow: 0 14px 28px rgba(0,0,0,0.2), 0 10px 10px rgba(0,0,0,0.2);
           }
           
           .comment-body {
             border: 2px solid rgb(7, 7, 7);
             border-radius: 3px;
-            max-width: 600px;
+            max-width: 97%;
             padding: 7px;
+            background-color: #f7f7d8;
           }
           
           .comment {
             border: 1px solid rgb(158, 157, 157);
             border-radius: 3px;
-            max-width: 350px;
+            max-width: 97%;
             margin-bottom: 3px;
             padding: 5px;
           }
@@ -182,12 +193,15 @@ const LightTheme = () => {
           
            h4 {
              text-align: center;
+             color: #2e545b;
            }
 
            h1 {
             text-align: center;
             margin-top: 2%;
-            margin-bottom: 2%
+            margin-bottom: 2%;
+            color: #2e545b;
+            text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);
           }
           
            .user-name {
@@ -195,11 +209,14 @@ const LightTheme = () => {
              font-weight: bold;
            }
           
-           .cloud-div {
+          .cloud-div {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-           }
+            flex-flow: column;
+            align-items: center;
+            background-color: #d4e3ec;
+            padding-bottom: 3%;
+            box-shadow: 0 3px 2px rgba(0,0,0,0.2), 0 3px 2px rgba(0,0,0,0.2);
+          }
           
            .lang {
              margin-top: 1%;
@@ -234,13 +251,37 @@ const LightTheme = () => {
         }
 
         .body-page {
+          background-color: #91bfbf;
+          min-height: 100%;
+        }
+
+        .big-collect {
+          display: flex;
+          flex-flow: column;
+          align-items: center;
+          background-color: #3892b7;
+          box-shadow: 0 14px 28px rgba(0,0,0,0.2), 0 10px 10px rgba(0,0,0,0.2);
+        }
+        
+        .btn-primary {
+          margin: 10px;
+        }
+
+        .filter {
           margin: 0 auto;
-          width: 85%;
-          box-shadow:
-          0 1px 4px rgba(0, 0, 0, .3),
-          -23px 0 20px -23px rgba(0, 0, 0, .8),
-          23px 0 20px -23px rgba(0, 0, 0, .8),
-          0 0 40px rgba(0, 0, 0, .1);
+          margin-top: 20px;
+          display: flex;
+          width: 100%;
+          flex-flow: column;
+          align-items: center;
+          background-color: #d4e3ec;
+          box-shadow: 0 14px 28px rgba(0,0,0,0.2), 0 10px 10px rgba(0,0,0,0.2);
+        }
+
+        .filterBox {
+          display: flex;
+          justify-content: center;
+          padding-bottom: 3%;
         }
            
         `

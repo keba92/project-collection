@@ -12,7 +12,7 @@ function Header() {
   const { i18n } = useTranslation();
   const [theame, setTheme] = useState(null);
   const [language, setLanguage] = useState(null)
-  const socket = io({ transports: [ 'websocket', 'polling' ], reconnect: true });
+  const socket = io("http://localhost:3001/",{ transports: [ 'websocket', 'polling' ], reconnect: true });
   const { user, isAuthenticated} = useAuth0();
 
   useEffect(()=>{
@@ -67,9 +67,9 @@ function Header() {
         <Flag className='ru lang' code={ 'ru' } height="16" onClick={()=>handleClick('ru')}/>
       </div>
       <div className='language'>
-      <FaSun style={{width:'40px'}} onClick={()=>changeTheame('light')} />
+      <FaSun style={{width:'40px', color: '#78dde2'}} onClick={()=>changeTheame('light')} />
       <span>  </span>
-      <FaMoon style={{width:'40px'}} onClick={()=>changeTheame('dark')} />
+      <FaMoon style={{width:'40px', color: '#78dde2'}} onClick={()=>changeTheame('dark')} />
       </div>
       <Profile />
     </div>

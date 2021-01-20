@@ -14,7 +14,7 @@ export default function Home() {
     const [items, setItems] = useState([]);
     const [dataCollect, setDataCollect] = useState([]);
     const [choiseTag, setChoiseTag] = useState(null);
-    const socket = io({ transports: [ 'websocket', 'polling' ], reconnect: true });
+    const socket = io("http://localhost:3001/",{ transports: [ 'websocket', 'polling' ], reconnect: true });
     const { t, i18n } = useTranslation();
      useEffect(() => {
          const getData = async ()=>{
@@ -42,7 +42,7 @@ export default function Home() {
     const countEl = items.reduce((acc, el) => {
         acc[el.idCollect] = (acc[el.idCollect] || 0) + 1;
         return acc;
-        }, {})
+    }, {})
 
     const collect = () => {
         const sortable = [];
@@ -71,14 +71,14 @@ export default function Home() {
             animation: 'blinker 3s linear infinite',
             animationDelay: `${Math.random() * 2}s`,
             fontSize: `${size / 2}em`,
-            border: `2px solid ${color}`,
+            border: `5px solid ${color}`,
             margin: '3px',
             padding: '3px',
             display: 'inline-block',
-            color: {color},
+            background: `${color}`,
           }}
           > 
-          <p style={{cursor: 'pointer'}} onClick={(e)=>setChoiseTag(e.target.innerHTML)}>{tag.value}</p> 
+          <p style={{cursor: 'pointer', color: '#0b2937'}} onClick={(e)=>setChoiseTag(e.target.innerHTML)}>{tag.value}</p> 
           </span>
       )
 
@@ -118,7 +118,6 @@ export default function Home() {
     
     return (
         <div className='home-page'>
-            <br/>
             <div className='button-main'>
                 <div className='buttons'>
                     <AdminProfileButton />
@@ -127,14 +126,18 @@ export default function Home() {
                 <Search />
             </div>
             {(choiseTag)&&(makeResult())}
-            <h1 style={{marginTop:'20px'}}>{t('cloudTagsH')}</h1>
             <div className='cloud-div'>
-                {makedataCloud()}
+                <h1  style={{marginTop:'20px'}}>{t('cloudTagsH')}</h1>
+                <div >
+                    {makedataCloud()}
+                </div>
             </div>
             <h1>{t('newItemsH')}</h1>
             <TabelItems dataItems={(items.length>3)?(items.slice(items.length-4,items.length-1)):(items)} idCollect=''/>
             <h1>{t('bigCollectionH')}</h1>
-            {collect()}
+            <div>
+                {collect()}
+            </div>
         </div>
     )
 }

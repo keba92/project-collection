@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react';
-import { Button } from 'react-bootstrap';
+import {InputGroup, FormControl, Button } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
 import io from 'socket.io-client';
 import { useTranslation } from 'react-i18next';
@@ -10,7 +10,7 @@ export default function BoxComment(props){
     const [newArrComment, setNewArrComment] = useState([]);
     const { user, isAuthenticated } = useAuth0();
     const { id } = props;
-    const socket = io({ transports: [ 'websocket', 'polling' ], reconnect: true });
+    const socket = io("http://localhost:3001/",{ transports: [ 'websocket', 'polling' ], reconnect: true });
     const { t, i18n } = useTranslation();
 
     useEffect(()=>{
@@ -54,16 +54,16 @@ export default function BoxComment(props){
                 <Comment data={newArrComment}/>
             </div>
             <div className='comment-footer'>
-                <input className='message-block' 
-                    placeholder={t('enterMessageP')} 
-                    style={{color:'black'}}
-                    onChange={(e)=>setTextComment(e.target.value)}/>
-                <Button 
-                        style={{color:'black'}}
-                        variant="primary"
-                        onClick={()=>setTimeout(addComment,1500)}
-                        >{t('sendB')}
-                </Button>
+                <InputGroup className="mb-3" style={{maxWidth: '400px'}}>
+                    <FormControl
+                    placeholder={t('enterMessageP')}
+                    aria-describedby="basic-addon2"
+                    onChange={(e)=>setTextComment(e.target.value)}
+                    />
+                    <InputGroup.Append>
+                    <Button variant="primary" onClick={()=>setTimeout(addComment,1500)}>{t('sendB')}</Button>
+                    </InputGroup.Append>
+                </InputGroup>
             </div>
         </div>
     )

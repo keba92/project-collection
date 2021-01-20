@@ -11,7 +11,7 @@ import Tag from '@uiw/react-tag';
 import { useTranslation } from 'react-i18next';
 
 export default function ItemInfo(props) {
-    const socket = io({ transports: [ 'websocket', 'polling' ], reconnect: true });
+    const socket = io("http://localhost:3001/",{ transports: [ 'websocket', 'polling' ], reconnect: true });
     const { user, isAuthenticated } = useAuth0();
     const [item, setItem] = useState([]);
     const { t, i18n } = useTranslation();
@@ -35,7 +35,7 @@ export default function ItemInfo(props) {
         const data = JSON.parse(el.dataItem);
         const pole = JSON.parse(el.poleItem);
         return (
-            <Card style={{ minWidth: '25rem' }} key={idx}>
+            <Card style={{ minWidth: '15rem' }} key={idx}>
                 <Card.Body>
                     {Object.keys(data).map((keyName, idx) => {
                         // eslint-disable-next-line default-case

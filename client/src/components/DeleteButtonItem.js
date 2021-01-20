@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 export default function DeleteButtonItem(props) {
     const { id } = props;
-    const socket = io({ transports: [ 'websocket', 'polling' ], reconnect: true });
+    const socket = io("http://localhost:3001/",{ transports: [ 'websocket', 'polling' ], reconnect: true });
     const { t, i18n } = useTranslation();
     const deleteItem = (e) => {
         // eslint-disable-next-line no-restricted-globals

@@ -9,7 +9,7 @@ import { Image } from 'cloudinary-react';
 
 export default function EditCollection(props) {
     const id = props.location.pathname.slice(16);
-    const socket = io({ transports: [ 'websocket', 'polling' ], reconnect: true });
+    const socket = io("http://localhost:3001/",{ transports: [ 'websocket', 'polling' ], reconnect: true });
     const [collectionData, setCollectionData] = useState([]);
     const [nameCollection, setNameCollection] = useState('');
     const [shortNameCollection, setShortNameCollection] = useState('');
