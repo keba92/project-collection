@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import CreateCollection from './CreateCollection';
 import { useAuth0 } from "@auth0/auth0-react";
@@ -25,4 +25,4 @@ function UserPage(props) {
   )
 }
 
-export default UserPage;
+export default memo(UserPage);

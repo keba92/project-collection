@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import TabelItems from '../../UserPage/components/TableItems';
 import { useTranslation } from 'react-i18next';
 
@@ -14,4 +14,4 @@ const ResultSearch = (props) => {
   )
 }
 
-export default ResultSearch
+export default memo(ResultSearch);

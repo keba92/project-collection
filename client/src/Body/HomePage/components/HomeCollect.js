@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { memo } from 'react';
 import TableCollection from '../../UserPage/components/TableCollection';
 
-export default function HomeCollect(props) {
+function HomeCollect(props) {
     const { countEl, dataCollect } = props;
     const sortable = [];
         for (const cont in countEl) {
@@ -21,3 +21,5 @@ export default function HomeCollect(props) {
 
     return(<TableCollection dataCollect={newCollect}/>)
 }
+
+export default memo(HomeCollect);

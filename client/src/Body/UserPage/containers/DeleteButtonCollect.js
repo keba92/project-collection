@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Button } from 'react-bootstrap';
 import io from 'socket.io-client';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +8,7 @@ export default function DeleteButtonCollect(props) {
     const socket = io({ transports: [ 'websocket', 'polling' ], reconnect: true });
     const { t, i18n } = useTranslation();
 
-    const deleteCollection = (e) => {
+    const deleteCollection = useCallback((e) => {
         // eslint-disable-next-line no-restricted-globals
         const answer = confirm(`${t('deleteC')}`);
         if (answer) {
@@ -17,7 +17,7 @@ export default function DeleteButtonCollect(props) {
             })
             window.location.assign(`/`)
         }
-    }
+    }, [id, t])
 
     return(
         <>

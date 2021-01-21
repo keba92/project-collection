@@ -148,6 +148,7 @@ const DarkTheme = () => {
             padding: 20px;
             background-color: #0b2937;
             box-shadow: 0 14px 28px rgba(0,0,0,0.2), 0 10px 10px rgba(0,0,0,0.2);
+            color: #0b2937;
           }
           
           .comment-body {
@@ -294,6 +295,8 @@ const DarkTheme = () => {
           background-color: #094f58;
           box-shadow: 0 14px 28px rgba(0,0,0,0.2), 0 10px 10px rgba(0,0,0,0.2);
         }
+
+
 
         .filterBox {
           display: flex;

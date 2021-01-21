@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { Card } from 'react-bootstrap';
 import {  MarkdownPreview  } from 'react-marked-markdown';
 import { Link } from 'react-router-dom';
@@ -7,7 +7,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useTranslation } from 'react-i18next';
 import { Image } from 'cloudinary-react';
 
-export default function TableCollection(props) {
+function TableCollection(props) {
     const { dataCollect } = props;
     const { user, isAuthenticated} = useAuth0();
     const { t, i18n } = useTranslation();
@@ -42,3 +42,5 @@ export default function TableCollection(props) {
         </div>
     )
 }
+
+export default memo(TableCollection);

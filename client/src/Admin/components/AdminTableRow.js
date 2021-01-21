@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import AdminCheckbox from './AdminCheckbox'
 
-export default function AdminTableRow(props) {
+function AdminTableRow(props) {
     const {data,adminList, handleChange, checkedItems, idUsers} = props;
     const tableTemplate = data.map((row) => {
         idUsers.push(row.user_id);
@@ -28,3 +28,5 @@ export default function AdminTableRow(props) {
         </tbody>
     )
 }
+
+export default memo(AdminTableRow);

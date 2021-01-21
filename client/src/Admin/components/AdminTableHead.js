@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export default function AdminTableHead(props) {
+function AdminTableHead(props) {
     const { selectAll, checkedAll } = props;
     const { t, i18n } = useTranslation();
 
@@ -22,3 +22,5 @@ export default function AdminTableHead(props) {
         </tr>
     )
 }
+
+export default memo(AdminTableHead);

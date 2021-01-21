@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { TagCloud } from 'react-tagcloud';
 
-export default function TagsCloud(props) {
+function TagsCloud(props) {
     const {setChoiseTag, items} = props;
     const customRenderer = (tag, size, color) => (
         <span
@@ -32,3 +32,5 @@ export default function TagsCloud(props) {
         
     return(<TagCloud tags={arrTags} minSize={3} maxSize={8} renderer={customRenderer} />)
 }
+
+export default memo(TagsCloud);

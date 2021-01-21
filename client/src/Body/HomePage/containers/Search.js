@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import io from 'socket.io-client';
 import ResultSearch from '../components/ResultSearch';
 import { useTranslation } from 'react-i18next';
@@ -10,7 +10,7 @@ export default function Search() {
     const [option, setOption] = useState(null);
     const [word, setWord] = useState('');
 
-    const searchFT = async(e)=> {
+    const searchFT = useCallback(async(e)=> {
         e.preventDefault();
         if(option) setOption(null);
         setWord('');
@@ -33,7 +33,7 @@ export default function Search() {
                 })
             })
         }
-    }
+    }, [word, option])
 
 return (
     <div>

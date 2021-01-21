@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 const AdminCheckbox = ({ type = "checkbox", checked = false, onChange, title, value }) => {
     return (
@@ -6,4 +6,4 @@ const AdminCheckbox = ({ type = "checkbox", checked = false, onChange, title, va
     );
 };
 
-export default AdminCheckbox;
+export default memo(AdminCheckbox);

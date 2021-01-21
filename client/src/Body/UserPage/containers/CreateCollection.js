@@ -48,7 +48,7 @@ export default function CreateCollection(props) {
         }
     });
 
-    const addCollection = (e) =>{
+    const addCollection = useCallback((e) =>{
         e.preventDefault();
         socket.emit('addCollection', {
             id: idUser,
@@ -61,16 +61,15 @@ export default function CreateCollection(props) {
         socket.on('getDataCollect',(data) => {
             setDataCollect(data);
         },[])
-    }
+    }, [idUser, nameCollection, shortNameCollection, temaCollection, urlPicture, poleItem])
 
-    const addPoleItem = (e) =>{
+    const addPoleItem = useCallback((e) =>{
         e.preventDefault();
         if(namePole !=='' && typePole !==''){
             poleItem[`${namePole}`] = typePole;
         }
         setPoleItem(poleItem);
-        console.log(poleItem)
-    }
+    }, [namePole, typePole, poleItem])
 
     const onDrop = useCallback(async(acceptedFiles) => {
         

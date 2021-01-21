@@ -91,7 +91,7 @@ export default function CreateItem(props) {
         ...baseTagifySettings
     }
 
-    const addItem = (e) => {
+    const addItem = useCallback((e) => {
         e.preventDefault();
         const onlyTags = JSON.parse(tags).map(el=>el.value);
         socket.emit('addItem', {
@@ -104,9 +104,9 @@ export default function CreateItem(props) {
         socket.on('getDataItems',(data) => {
             setDataItems(data);
         },[])
-    }
+    }, [tags, id, props, itemData, collection])
 
-    const findItem = (word) => {
+    const findItem = useCallback((word) => {
         if(word){
             const itemsCollection = dataItems.filter((el)=>{
                 if (el.idCollect == props.location.pathname.slice(12)){
@@ -131,7 +131,8 @@ export default function CreateItem(props) {
         } else {
             setResultItems(dataItems)
         }
-    }
+    }, [dataItems, props])
+
     let createOptions;
 
     try {
@@ -175,7 +176,7 @@ export default function CreateItem(props) {
                     )
                 })
             }
-        }    
+        }
 
     } catch(e) {
         console.log(e);

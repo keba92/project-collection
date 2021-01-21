@@ -38,7 +38,7 @@ export default function EditCollection(props) {
         setNewId(idUser)
     },[])
 
-    const editCollection = (e) => {
+    const editCollection = useCallback((e) => {
         e.preventDefault();
         socket.emit('editCollection', {
             _id: id,
@@ -49,16 +49,15 @@ export default function EditCollection(props) {
             poleItem: (Object.keys(poleItem).length==3)?(collectionData[0].poleItem):(JSON.stringify(poleItem))
         })
         window.location.assign(`/collection/${id}`)
-    }
+    },[id, nameCollection, collectionData, shortNameCollection, optionCollection, urlPicture, poleItem])
 
-    const addPoleItem = (e) =>{
+    const addPoleItem = useCallback((e) =>{
         e.preventDefault();
         if(namePole !=='' && typePole !==''){
             poleItem[`${namePole}`] = typePole;
         }
         setPoleItem(poleItem);
-        console.log(poleItem)
-    }
+    }, [namePole, typePole])
 
     const onDrop = useCallback(async(acceptedFiles) => {
         const url = `https://api.cloudinary.com/v1_1/dgeev9d6l/image/upload`;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import LoginButton from './LoginButton';
 import LogoutButton from './LogoutButton';
 import User from './User';
@@ -13,4 +13,4 @@ const Profile = () => {
     )
 }
 
-export default Profile
+export default memo(Profile)

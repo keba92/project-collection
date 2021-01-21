@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export default function AdminButtons(props) {
+function AdminButtons(props) {
     const { blockUser, deleteUsers, makeAdmin } = props;
     const { t, i18n } = useTranslation();
 
@@ -14,3 +14,5 @@ export default function AdminButtons(props) {
         </span>
     )
 }
+
+export default memo(AdminButtons);

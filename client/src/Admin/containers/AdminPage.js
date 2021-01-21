@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useState, useEffect } from "react";
 import io from 'socket.io-client';
 import { Link } from 'react-router-dom';
@@ -29,14 +29,14 @@ function AdminPage() {
             })
     },[])
 
-    const handleChange = (event) => {
+    const handleChange = useCallback((event) => {
         setCheckedItems({...checkedItems, [event.target.value] : event.target.checked });
         if(!event.target.checked && checkedAll==true){
             selectAll(false);
         }
-    }
+    }, [checkedItems])
 
-    const deleteUsers = (e) => {
+    const deleteUsers = useCallback((e) => {
         e.preventDefault();
 		Object.keys(checkedItems).map((keyName) => {
             // eslint-disable-next-line no-restricted-globals
@@ -48,9 +48,9 @@ function AdminPage() {
                 })
             }
         })
-    }
+    }, [checkedItems])
 
-    const makeAdmin = (e) => {
+    const makeAdmin = useCallback((e) => {
         e.preventDefault();
         Object.keys(checkedItems).map((keyName) => {
             if(checkedItems[keyName] && !adminList.includes(keyName)) {
@@ -62,9 +62,9 @@ function AdminPage() {
                 })
             }
         })
-    }
+    },[checkedItems, adminList])
     
-    const blockUser = (e) =>{
+    const blockUser = useCallback((e) =>{
 		Object.keys(checkedItems).map((keyName) => {
             if(e.target.attributes[1].value == 'block') {
                 // eslint-disable-next-line no-restricted-globals
@@ -88,9 +88,9 @@ function AdminPage() {
                 }
             }
         })
-    }
+    }, [checkedItems])
 
-    const selectAll = (value) => {
+    const selectAll = useCallback((value) => {
         idUsers.forEach((el) => {
             checkedItems[el] = false;
         })
@@ -102,7 +102,7 @@ function AdminPage() {
           }
           return newState;
         });
-      };
+      }, [idUsers, checkedItems, setCheckedAll, setCheckedItems])
     
     return(
         <div className='admin-page'>

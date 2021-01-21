@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Profile from '../components/Profile';
 import { useTranslation } from 'react-i18next';
 import Flag from 'react-world-flags';
@@ -33,19 +33,19 @@ function Header() {
     }
   })
 
-  const handleClick = (lang) =>{
+  const handleClick = useCallback((lang) =>{
     i18n.changeLanguage(lang);
     localStorage.setItem('lang',lang);
     saveStore();
-  }
+  },[])
 
-  const changeTheame = (value) =>{
+  const changeTheame = useCallback((value) =>{
     (value !== 'light')?(DarkTheme()):(LightTheme());
     setTheme(value);
     localStorage.setItem('theme',value);
     saveStore();
-  }
-  const saveStore = () =>{
+  }, [])
+  const saveStore = useCallback(() =>{
     if(isAuthenticated){
       socket.emit('userData', {
         id: user.sub,
@@ -53,7 +53,7 @@ function Header() {
         lang: (localStorage.getItem('lang'))?(localStorage.getItem('lang')):'ru'
       })
     }
-  }
+  }, [user])
 
   if(!theame&&!isAuthenticated) {
     LightTheme();
@@ -67,9 +67,9 @@ function Header() {
         <Flag className='ru lang' code={ 'ru' } height="16" onClick={()=>handleClick('ru')}/>
       </div>
       <div className='language'>
-      <FaSun style={{width:'40px', color: '#78dde2'}} onClick={()=>changeTheame('light')} />
-      <span>  </span>
-      <FaMoon style={{width:'40px', color: '#78dde2'}} onClick={()=>changeTheame('dark')} />
+        <FaSun style={{width:'50px', color: '#78dde2', cursor: 'pointer'}} onClick={()=>changeTheame('light')} />
+        <span>  </span>
+        <FaMoon style={{width:'50px', color: '#78dde2', cursor:'pointer'}} onClick={()=>changeTheame('dark')} />
       </div>
       <Profile />
     </div>

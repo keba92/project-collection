@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useCallback} from 'react';
 import {InputGroup, FormControl, Button } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
 import io from 'socket.io-client';
@@ -27,7 +27,7 @@ export default function BoxComment(props){
         }
     }, [])
 
-    const addComment = () =>{
+    const addComment = useCallback(() =>{
         newArrComment.push(JSON.stringify({
             nameUser: user.name,
             message: textComment
@@ -42,10 +42,9 @@ export default function BoxComment(props){
         setNewArrComment(newArrComment)
         socket.on('getCommentData', (data)=> {
             setNewArrComment(data[0].arrComment);
-            setTextComment(null)
-            document.querySelector('.message').value=null;
+            setTextComment(null);
         },[])
-    }
+    }, [newArrComment, user, textComment, id])
 
     return(
         <div className='comment-box'>

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export default function Comment(props){
+function Comment(props){
     const {data} = props;
     const { t, i18n } = useTranslation();
     const makeComment = data.map((el,idx)=>{
@@ -19,4 +19,6 @@ export default function Comment(props){
             {(data.length!=0)?(makeComment):(<p>{t('nonCommentP')}</p>)}
         </div>
     )
-} 
+}
+
+export default memo(Comment);

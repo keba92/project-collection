@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Card } from 'react-bootstrap';
 import {  MarkdownPreview  } from 'react-marked-markdown';
 import { Link } from 'react-router-dom';
@@ -7,8 +7,7 @@ import LikeButton from '../../ItemPage/containers/LikeButton';
 import Tag from '@uiw/react-tag';
 import { useTranslation } from 'react-i18next';
 
-
-export default function TabelItems(props) {
+function TabelItems(props) {
     const {dataItems, idCollect} = props;
     const { isAuthenticated } = useAuth0();
     const { t, i18n } = useTranslation();
@@ -23,7 +22,7 @@ export default function TabelItems(props) {
             }
         })
     }
-    const makeItems = () => {
+    const makeItems = useCallback(() => {
         if(collectItems.length!=0){
             return collectItems.reverse().map((el, idx) => {
                 const data = JSON.parse(el.dataItem);
@@ -61,7 +60,7 @@ export default function TabelItems(props) {
                 )
             })
         }
-    }
+    }, [dataItems, idCollect, collectItems, isAuthenticated, t])
 
     return (
         <div className='table-items'>
@@ -69,3 +68,5 @@ export default function TabelItems(props) {
         </div>
     )
 }
+
+export default TabelItems;

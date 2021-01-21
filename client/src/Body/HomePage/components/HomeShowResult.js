@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import ResultSearch from './ResultSearch';
 import { Button } from 'react-bootstrap';
 
-export default function HomeShowResult(props) {
+function HomeShowResult(props) {
     const { items, choiseTag, setChoiseTag } = props;
-
     const tegsItems=[];
     items.forEach((el) =>{
         if(el.tag.includes(choiseTag)) tegsItems.push(el);
@@ -22,3 +21,5 @@ export default function HomeShowResult(props) {
         </div>)
     )
 }
+
+export default memo(HomeShowResult);

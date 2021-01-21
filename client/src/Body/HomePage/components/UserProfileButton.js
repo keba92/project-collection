@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -16,4 +16,4 @@ const UserProfileButton = () => {
   )
 }
 
-export default UserProfileButton
+export default memo(UserProfileButton);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import io from 'socket.io-client';
@@ -20,14 +20,14 @@ export default function EditItem(props) {
         })
     },[])
 
-    const editItem = (e) => {
+    const editItem = useCallback((e) => {
         e.preventDefault();
         socket.emit('editItem', {
             _id: id,
             dataItem: JSON.stringify(newItemData)
         })
         window.location.assign(`/item/${id}`)
-    }
+    }, [newItemData, id])
 
     return(
         <div className='edit-item'>
