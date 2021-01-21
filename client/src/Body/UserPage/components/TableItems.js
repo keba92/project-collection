@@ -51,7 +51,7 @@ export default function TabelItems(props) {
                             })}
                             {el.tag.map((teg,indx)=>{
                                 return (
-                                    <Tag key={`${indx}`} light disabled color="#28a745">{teg}</Tag>
+                                    <Tag key={`${indx}`} light disabled color="rgb(41, 178, 128)">{teg}</Tag>
                                 )
                             })}
                         </Card.Body>

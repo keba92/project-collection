@@ -54,7 +54,6 @@ export default function Home() {
             </div>
             {(choiseTag)&&(<HomeShowResult items={items} choiseTag={choiseTag} setChoiseTag={setChoiseTag} />)}
             <div className='cloud-div'>
-                <h1  style={{marginTop:'20px'}}>{t('cloudTagsH')}</h1>
                 <div >
                     <TagsCloud setChoiseTag={setChoiseTag} items={items}/>
                 </div>

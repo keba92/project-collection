@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import AdminTableRow from '../components/AdminTableRow';
 import AdminTableHead from '../components/AdminTableHead';
 import AdminButtons from '../components/AdminButtons';
+import { Table } from 'react-bootstrap';
 
 function AdminPage() {
     const [data, setData] = useState([]);
@@ -105,16 +106,21 @@ function AdminPage() {
     
     return(
         <div className='admin-page'>
-            <Link className='back' to='/'>{t('backMainL')}</Link>
+            <div className='button-main'>
+                <Link className='back' to='/'>{t('backMainL')}</Link>
+            </div>
             <div className = 'users'>
                 <h1>{t('usersH')}</h1>
                 <AdminButtons blockUser={blockUser} deleteUsers={deleteUsers} makeAdmin={makeAdmin} />
-                <table className ='table-light'>
-                    <AdminTableHead selectAll={selectAll} checkedAll={checkedAll} />
+                <Table striped bordered hover variant="dark" className ='table-light'>
+                    <thead>
+                        <AdminTableHead selectAll={selectAll} checkedAll={checkedAll} />
+                    </thead>
                     <AdminTableRow data={data} adminList={adminList} handleChange={handleChange} 
                                    checkedItems={checkedItems} idUsers={idUsers} />
-                </table>
+                </Table>
             </div>
+            <div style={{height:'500px'}}></div>
         </div>
     );
 }

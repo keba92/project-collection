@@ -7,10 +7,10 @@ const DarkTheme = () => {
         style.setAttribute('class', 'theme-head')
         document.head.appendChild(style);
         style.innerHTML = `
-        @media (min-width:600px){
-          .user-name{
-              display:none;
-          }
+
+        html, body {
+          width: 100%;
+          height: 100%;
         }
 
         .fa-sun-o .fa-moon-o {
@@ -38,13 +38,20 @@ const DarkTheme = () => {
             margin-left: 1.5%;
           }
 
+          edit-item {
+            min-height: 100%;
+          }
+
           .button-main {
             display: flex;
+            position: sticky;
+            top: 0;
             justify-content: space-between;
-            background-color: #107f8f;
+            background-color: #0b2937;
             padding-top: 15px;
+            z-index: 100;
           }
-          
+
           .input-search {
             height: 35px;
           }
@@ -55,15 +62,7 @@ const DarkTheme = () => {
             padding-bottom: 10px;
             margin-right: 3%;
           }
-          
-          button {
-            height: 35px;
-            width: 90px;
-            background-color: rgb(163, 162, 162);
-            margin-right: 10px;
-            cursor: pointer;
-          }
-          
+                    
           .user-img {
             max-width: 30px;
           }
@@ -84,9 +83,15 @@ const DarkTheme = () => {
           .card{
             margin: 2%;
             min-width: 7%;
-            background-color: #f7f7d8;
+            background-color: #0b2937;
             box-shadow: 0 14px 28px rgba(0,0,0,0.2), 0 10px 10px rgba(0,0,0,0.2);
-            color: #0b2937;
+          }
+
+          .card:hover {
+              -webkit-transform: scale(1.03);
+              -ms-transform: scale(1.03);
+              transform: scale(1.03);
+              transition: 0.5s;
           }
           
           .table-collection {
@@ -97,13 +102,11 @@ const DarkTheme = () => {
           }
           
           form {
-            border: 1px solid rgb(190, 190, 190);
             border-radius: 3px;
             margin: 10px;
             padding: 15px;
             min-width: 350px;
-            color: #0b2937;
-            background-color: #f7f7d8;
+            background-color: #0b2937;
             box-shadow: 0 14px 28px rgba(0,0,0,0.2), 0 10px 10px rgba(0,0,0,0.2);
           }
           
@@ -115,29 +118,40 @@ const DarkTheme = () => {
           }
           
           a {
-            margin: 10px
+            margin-left: 10px;
             max-width: 50%;
             padding: 5px;
-            border: 1px solid rgb(207, 207, 207);
             border-radius: 3px;
             text-decoration: none;
             color: rgb(0, 0, 0);
             text-align: center;
-            background-color: #78dde2;
+            background-color: rgb(41, 178, 128);
+          }
+
+          .table-items .card a {
+            margin: 0;
+            min-width: 100%;
+          }
+
+          a:hover {
+            background: #1ff6c8;
+            -webkit-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;;
+            -o-transition: all 0.3s ease;;
+            transition: all 0.3s ease;
           }
           
           .comment-box {
-            border: 0px solid rgb(5, 5, 5);
             border-radius: 3px;
             width: 50%;
             margin: 15px;
             padding: 20px;
-            background-color: #0f6e7b;
+            background-color: #0b2937;
             box-shadow: 0 14px 28px rgba(0,0,0,0.2), 0 10px 10px rgba(0,0,0,0.2);
           }
           
           .comment-body {
-            border: 2px solid rgb(7, 7, 7);
+            border: 1px solid rgb(7, 7, 7);
             border-radius: 3px;
             max-width: 97%;
             padding: 7px;
@@ -162,31 +176,30 @@ const DarkTheme = () => {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 10%;
-            overflow: scroll;
+            height: 100%;
           }
           
-          table {
-            border-collapse: collapse;
+          .table-dark {
+            max-width: 85% !important;
+            table-layout: auto;
           }
           
           th, td {
             border: 1px solid black;
-            padding: 10px
+            padding: 10px;
           }
           
           .toolBar {
-            display: inline
+            display: inline;
            }
           
-           .back {
-              margin-top: 20px;
-              margin-left: 20px;
-              margin-bottom: 20px;
-             color: rgb(151, 13, 13);
-             -webkit-text-stroke-width: 1px;
-             -webkit-text-stroke-color: #000000;
-           }
+          .back {
+            margin-left: 20px;
+            margin-bottom: 20px;
+            color: rgb(151, 13, 13);
+            -webkit-text-stroke-width: 1px;
+            -webkit-text-stroke-color: #000000;
+          }
           
            h4 {
              text-align: center;
@@ -198,7 +211,6 @@ const DarkTheme = () => {
             margin-top: 2%;
             margin-bottom: 2%;
             color: #f7f7d8;
-            text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);
           }
           
            .user-name {
@@ -210,7 +222,7 @@ const DarkTheme = () => {
             display: flex;
             flex-flow: column;
             align-items: center;
-            background-color: #107f8f;
+            background-color: #0b2937;
             padding-bottom: 3%;
             box-shadow: 0 10px 10px rgba(0,0,0,0.2), 0 10px 10px rgba(0,0,0,0.2);
           }
@@ -226,12 +238,19 @@ const DarkTheme = () => {
              background-color: white;
            }
 
+           .tag-cloud span:hover {
+            -webkit-transform: scale(1.08);
+            -ms-transform: scale(1.08);
+            transform: scale(1.08);
+            transition: 0.5s;
+           }
+
            select {
              background-color: white;
              color: black;
            }
 
-           .dropzone {
+          .dropzone {
             height: 4rem;
             margin: 1rem;
             padding: 1rem;
@@ -248,8 +267,9 @@ const DarkTheme = () => {
         }
 
         .body-page {
-          background-color: #0b2937;
+          background-color: #1e656a;
           min-height: 100%;
+          color: #f7f7d8;
         }
 
         .big-collect {

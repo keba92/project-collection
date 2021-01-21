@@ -10,14 +10,11 @@ export default function TagsCloud(props) {
             animation: 'blinker 3s linear infinite',
             animationDelay: `${Math.random() * 2}s`,
             fontSize: `${size / 2}em`,
-            border: `5px solid ${color}`,
             margin: '3px',
-            padding: '3px',
             display: 'inline-block',
-            background: `${color}`,
           }}
           > 
-          <p style={{cursor: 'pointer', color: '#0b2937'}} onClick={(e)=>setChoiseTag(e.target.innerHTML)}>{tag.value}</p> 
+          <p style={{cursor: 'pointer', color: `${color}`}} onClick={(e)=>setChoiseTag(e.target.innerHTML)}>{tag.value}</p> 
           </span>
       )
 
@@ -33,5 +30,5 @@ export default function TagsCloud(props) {
               }
           });
         
-    return(<TagCloud tags={arrTags} minSize={2} maxSize={7} renderer={customRenderer} />)
+    return(<TagCloud tags={arrTags} minSize={3} maxSize={8} renderer={customRenderer} />)
 }

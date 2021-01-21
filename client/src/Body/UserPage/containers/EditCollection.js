@@ -82,7 +82,9 @@ export default function EditCollection(props) {
     return(
         (collectionData.length != 0) && (
         <div>
-          <Link className='back' to={`/user/${newId}`}>{t('backCollectL')}</Link>
+          <div className='button-main'>
+            <Link className='back' to={`/user/${newId}`}>{t('backCollectL')}</Link>
+          </div>
           <div className="create">
             <Form>
              <Form.Group controlId="exampleForm.ControlInput2">

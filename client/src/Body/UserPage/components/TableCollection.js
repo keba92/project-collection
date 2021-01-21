@@ -17,6 +17,7 @@ export default function TableCollection(props) {
             setId(user.sub);
         }
     })
+
     const makeCollection = dataCollect.map((el, idx) => {
         if(el) {
             return (

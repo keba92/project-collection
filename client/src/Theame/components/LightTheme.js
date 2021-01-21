@@ -7,10 +7,9 @@ const LightTheme = () => {
         style.setAttribute('class', 'theme-head')
         document.head.appendChild(style);
         style.innerHTML = `
-        @media (min-width:600px){
-          .user-name{
-              display:none;
-          }
+        html, body {
+          width: 100%;
+          height: 100%;
         }
 
         .fa-sun-o .fa-moon-o {
@@ -38,6 +37,10 @@ const LightTheme = () => {
             margin-left: 1.5%;
           }
 
+          edit-item {
+            min-height: 100%;
+          }
+
           .button-main {
             display: flex;
             position: sticky;
@@ -47,7 +50,7 @@ const LightTheme = () => {
             padding-top: 15px;
             z-index: 100;
           }
-          
+
           .input-search {
             height: 35px;
           }
@@ -58,15 +61,7 @@ const LightTheme = () => {
             padding-bottom: 10px;
             margin-right: 3%;
           }
-          
-          button {
-            height: 35px;
-            width: 90px;
-            background-color: rgb(163, 162, 162);
-            margin-right: 10px;
-            cursor: pointer;
-          }
-          
+                    
           .user-img {
             max-width: 30px;
           }
@@ -87,9 +82,15 @@ const LightTheme = () => {
           .card{
             margin: 2%;
             min-width: 7%;
-            background-color: #e4dece;
+            background-color: #f9f9f9;
             box-shadow: 0 14px 28px rgba(0,0,0,0.2), 0 10px 10px rgba(0,0,0,0.2);
-            color: #0b2937;
+          }
+
+          .card:hover {
+              -webkit-transform: scale(1.03);
+              -ms-transform: scale(1.03);
+              transform: scale(1.03);
+              transition: 0.5s;
           }
           
           .table-collection {
@@ -100,13 +101,11 @@ const LightTheme = () => {
           }
           
           form {
-            border: 1px solid rgb(190, 190, 190);
             border-radius: 3px;
             margin: 10px;
             padding: 15px;
             min-width: 350px;
-            color: #0b2937;
-            background-color: #e4dece;
+            background-color: #f9f9f9;
             box-shadow: 0 14px 28px rgba(0,0,0,0.2), 0 10px 10px rgba(0,0,0,0.2);
           }
           
@@ -118,19 +117,30 @@ const LightTheme = () => {
           }
           
           a {
-            margin: 10px
+            margin-left: 10px;
             max-width: 50%;
             padding: 5px;
-            border: 1px solid rgb(207, 207, 207);
             border-radius: 3px;
             text-decoration: none;
             color: rgb(0, 0, 0);
             text-align: center;
             background-color: #5f7d9c;
           }
+
+          .table-items .card a {
+            margin: 0;
+            min-width: 100%;
+          }
+
+          a:hover {
+            background: #2099f5;
+            -webkit-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;;
+            -o-transition: all 0.3s ease;;
+            transition: all 0.3s ease;
+          }
           
           .comment-box {
-            border: 0px solid rgb(5, 5, 5);
             border-radius: 3px;
             width: 50%;
             margin: 15px;
@@ -140,7 +150,7 @@ const LightTheme = () => {
           }
           
           .comment-body {
-            border: 2px solid rgb(7, 7, 7);
+            border: 1px solid rgb(7, 7, 7);
             border-radius: 3px;
             max-width: 97%;
             padding: 7px;
@@ -165,43 +175,41 @@ const LightTheme = () => {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 10%;
-            overflow: scroll;
+            height: 100%;
           }
           
-          table {
-            border-collapse: collapse;
+          .table-dark {
+            max-width: 85% !important;
+            table-layout: auto;
           }
           
           th, td {
             border: 1px solid black;
-            padding: 10px
+            padding: 10px;
           }
           
           .toolBar {
-            display: inline
+            display: inline;
            }
           
-           .back {
-              margin-top: 20px;
-              margin-left: 20px;
-              margin-bottom: 20px;
-             color: rgb(151, 13, 13);
-             -webkit-text-stroke-width: 1px;
-             -webkit-text-stroke-color: #000000;
-           }
+          .back {
+            margin-left: 20px;
+            margin-bottom: 20px;
+            color: rgb(151, 13, 13);
+            -webkit-text-stroke-width: 1px;
+            -webkit-text-stroke-color: #000000;
+          }
           
            h4 {
              text-align: center;
-             color: #2e545b;
+             color: #2b2e2d;
            }
 
            h1 {
             text-align: center;
             margin-top: 2%;
             margin-bottom: 2%;
-            color: #2e545b;
-            text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);
+            color: #2b2e2d;
           }
           
            .user-name {
@@ -214,8 +222,8 @@ const LightTheme = () => {
             flex-flow: column;
             align-items: center;
             background-color: #d4e3ec;
-            padding-bottom: 3%;
-            box-shadow: 0 3px 2px rgba(0,0,0,0.2), 0 3px 2px rgba(0,0,0,0.2);
+            padding-bottom: 1%;
+            box-shadow: 0 2px 2px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.2);
           }
           
            .lang {
@@ -229,12 +237,23 @@ const LightTheme = () => {
              background-color: white;
            }
 
+           .tag-cloud span p {
+              text-shadow: 0px 0px 2px rgba(150, 150, 150, 1);
+           }
+
+           .tag-cloud span:hover {
+            -webkit-transform: scale(1.08);
+            -ms-transform: scale(1.08);
+            transform: scale(1.08);
+            transition: 0.5s;
+           }
+
            select {
              background-color: white;
              color: black;
            }
 
-           .dropzone {
+          .dropzone {
             height: 4rem;
             margin: 1rem;
             padding: 1rem;
@@ -251,15 +270,16 @@ const LightTheme = () => {
         }
 
         .body-page {
-          background-color: #91bfbf;
-          height: 100%;
+          background-color: #9fa293;
+          min-height: 100%;
+          color: #2b2e2d;;
         }
 
         .big-collect {
           display: flex;
           flex-flow: column;
           align-items: center;
-          background-color: #3892b7;
+          background-color: #91bfbf;
           box-shadow: 0 14px 28px rgba(0,0,0,0.2), 0 10px 10px rgba(0,0,0,0.2);
         }
         
@@ -283,7 +303,6 @@ const LightTheme = () => {
           justify-content: center;
           padding-bottom: 3%;
         }
-           
         `
 }
 

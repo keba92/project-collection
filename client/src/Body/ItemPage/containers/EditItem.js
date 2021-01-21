@@ -30,8 +30,10 @@ export default function EditItem(props) {
     }
 
     return(
-        <div>
-          <Link className='back' to={`/item/${id}`}>{t('backItemL')}</Link>
+        <div className='edit-item'>
+          <div className='button-main'>
+            <Link className='back'  to={`/item/${id}`}>{t('backItemL')}</Link>
+          </div>
           <div className='create'>
           <Form>
             {(itemData.length != 0)&&(
@@ -71,6 +73,8 @@ export default function EditItem(props) {
                 {t('saveB')}
             </Button>
           </Form>
+          </div>
+          <div style={{height:'500px'}}>
           </div>
         </div>
     )
