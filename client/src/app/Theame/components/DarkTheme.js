@@ -296,8 +296,6 @@ const DarkTheme = () => {
           box-shadow: 0 14px 28px rgba(0,0,0,0.2), 0 10px 10px rgba(0,0,0,0.2);
         }
 
-
-
         .filterBox {
           display: flex;
           justify-content: center;

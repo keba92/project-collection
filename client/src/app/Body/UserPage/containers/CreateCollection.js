@@ -61,6 +61,7 @@ export default function CreateCollection(props) {
         socket.on('getDataCollect',(data) => {
             setDataCollect(data);
         },[])
+        document.querySelectorAll('.form-create-collect input').forEach(el=>el.value='');
     }, [idUser, nameCollection, shortNameCollection, temaCollection, urlPicture, poleItem])
 
     const addPoleItem = useCallback((e) =>{
@@ -95,16 +96,21 @@ export default function CreateCollection(props) {
         <div className='create-block'>
             <h1 className='create'>{t('createCollectionH')}</h1>
             <div className='create-item create'>
-            <Form>
+            <Form className='form-create-collect'>
                 <Form.Group controlId="exampleForm.ControlInput2">
-                    <Form.Label>{t('nameCreateF')} </Form.Label>
-                    <Form.Control type="text" onChange={(e)=>setNameCollection(e.target.value)} placeholder={t('enterNameP')} />
+                    <Form.Label>{t('nameCreateF')}</Form.Label>
+                    <Form.Control type="text" 
+                                  onChange={(e)=>setNameCollection(e.target.value)} 
+                                  placeholder={t('enterNameP')} 
+                                  value={nameCollection}
+                    />
                 </Form.Group>
                 <Form.Group controlId="exampleForm.ControlTextarea1">
                     <Form.Label>{t('descriptCreateF')} </Form.Label>
                     <Form.Control as="textarea" rows={3} 
                                     onChange={(e)=>setShortNameCollection(e.target.value)}
-                                    placeholder={t('descriptCreateF')} 
+                                    placeholder={t('descriptCreateF')}
+                                    value={shortNameCollection}
                     />
                 </Form.Group>
                 <Form.Group controlId="exampleForm.ControlInput3">
@@ -135,7 +141,11 @@ export default function CreateCollection(props) {
                   <Form.Label><b>{t('polesCreateF')}</b></Form.Label>
                   <Form.Group controlId="exampleForm.ControlInput4">
                     <Form.Label>{t('poleItemF')} </Form.Label>
-                    <Form.Control type="text" onChange={(e)=>setNamePole(e.target.value)} placeholder={t('poleItemF')}/>
+                    <Form.Control type="text" 
+                                  onChange={(e)=>setNamePole(e.target.value)} 
+                                  placeholder={t('poleItemF')}
+                                  value={namePole}
+                    />
                     <Form.Label>{t('typePoleF')} </Form.Label>
                     <Form.Control as="select" onInput={(e)=>setTypePole(e.target.value)}>
                         <option></option>

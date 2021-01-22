@@ -59,7 +59,7 @@ export default function Home() {
                 </div>
             </div>
             <h1>{t('newItemsH')}</h1>
-            <TabelItems dataItems={(items.length>3)?(items.slice(items.length-4,items.length-1)):(items)} idCollect=''/>
+            <TabelItems dataItems={(items.length>3)?(items.slice(items.length-3,items.length)):(items)} idCollect=''/>
             <h1>{t('bigCollectionH')}</h1>
             <div>
                 <HomeCollect countEl={countEl} dataCollect={dataCollect} />

@@ -20,14 +20,23 @@ export default function EditItem(props) {
         })
     },[])
 
-    const editItem = useCallback((e) => {
+    const editItem = (e) => {
         e.preventDefault();
+        const objData = JSON.parse(itemData[0].dataItem);
+        Object.keys(objData).forEach((keyName)=>{
+            if(newItemData[keyName]){
+                newItemData[keyName] = newItemData[keyName];
+            } else {
+                newItemData[keyName] = objData[keyName];
+            }
+        })
         socket.emit('editItem', {
             _id: id,
             dataItem: JSON.stringify(newItemData)
         })
+        document.querySelector('.form-edit-item').reset();
         window.location.assign(`/item/${id}`)
-    }, [newItemData, id])
+    }
 
     return(
         <div className='edit-item'>
@@ -35,7 +44,7 @@ export default function EditItem(props) {
             <Link className='back'  to={`/item/${id}`}>{t('backItemL')}</Link>
           </div>
           <div className='create'>
-          <Form>
+          <Form className='form-edit-item'>
             {(itemData.length != 0)&&(
                 Object.keys(JSON.parse(itemData[0].poleItem)).map((keyName, idx) => {
                     const data = JSON.parse(itemData[0].dataItem)

@@ -6,7 +6,7 @@ import PrivateRoute from './privateRoute';
 import ItemInfo from './ItemPage/containers/ItemInfo';
 import CreateItem from './UserPage/containers/CreateItem';
 import EditItem from './ItemPage/containers/EditItem';
-import AdminPage from '../Admin/containers/AdminPage';
+import AdminPage from './Admin/containers/AdminPage';
 import EditCollection from './UserPage/containers/EditCollection';
 
 function Body() {

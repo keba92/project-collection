@@ -15,7 +15,7 @@ export default function EditCollection(props) {
     const [shortNameCollection, setShortNameCollection] = useState('');
     const [urlPicture, setUrlPicture] = useState('');
     const [optionCollection, setOptionCollection] = useState('');
-    const [poleItem, setPoleItem] = useState({ 'name': 'text', 'teg': 'text'});
+    const [poleItem, setPoleItem] = useState({ 'name': 'text', 'tag': 'text'});
     const [namePole, setNamePole] = useState('');
     const [typePole, setTypePole] = useState('');
     const [newId, setNewId] = useState('');
@@ -46,7 +46,7 @@ export default function EditCollection(props) {
             description: (shortNameCollection!='')? shortNameCollection: collectionData[0].description,
             tema: (optionCollection!='')? optionCollection: collectionData[0].tema,
             url: (urlPicture!='')? urlPicture: collectionData[0].url,
-            poleItem: (Object.keys(poleItem).length==3)?(collectionData[0].poleItem):(JSON.stringify(poleItem))
+            poleItem: (Object.keys(poleItem).length==2)?(collectionData[0].poleItem):(JSON.stringify(poleItem))
         })
         window.location.assign(`/collection/${id}`)
     },[id, nameCollection, collectionData, shortNameCollection, optionCollection, urlPicture, poleItem])
@@ -88,7 +88,11 @@ export default function EditCollection(props) {
             <Form>
              <Form.Group controlId="exampleForm.ControlInput2">
                     <Form.Label>{t('nameCreateF')} </Form.Label>
-                    <Form.Control type="text" onChange={(e)=>setNameCollection(e.target.value)} placeholder={`${collectionData[0].name}`} />
+                    <Form.Control type="text" 
+                                  onChange={(e)=>setNameCollection(e.target.value)} 
+                                  placeholder={`${collectionData[0].name}`}
+                                  value={nameCollection}
+                    />
                 </Form.Group>
                 <Form.Group controlId="exampleForm.ControlTextarea1">
                     <Form.Label>{t('descriptCreateF')} </Form.Label>

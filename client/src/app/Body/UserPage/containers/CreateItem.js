@@ -104,6 +104,7 @@ export default function CreateItem(props) {
         socket.on('getDataItems',(data) => {
             setDataItems(data);
         },[])
+        document.querySelector('.form-create-item').reset();
     }, [tags, id, props, itemData, collection])
 
     const findItem = useCallback((word) => {
@@ -195,7 +196,7 @@ export default function CreateItem(props) {
         (<div className='create'>
             <div className='create-block'>
                 <h1 className='create'>{t('createItemH')}</h1>
-                <Form>
+                <Form className='form-create-item'>
                     {(collection.length != 0)&&(
                         Object.keys(JSON.parse(collection[0].poleItem)).map((keyName, idx) => {
                             if (JSON.parse(collection[0].poleItem)[keyName] == 'checkbox' ) {

@@ -27,7 +27,7 @@ export default function BoxComment(props){
         }
     }, [])
 
-    const addComment = useCallback(() =>{
+    const addComment = () =>{
         newArrComment.push(JSON.stringify({
             nameUser: user.name,
             message: textComment
@@ -44,7 +44,8 @@ export default function BoxComment(props){
             setNewArrComment(data[0].arrComment);
             setTextComment(null);
         },[])
-    }, [newArrComment, user, textComment, id])
+        document.querySelector('.comment-message').value = '';
+    }
 
     return(
         <div className='comment-box'>
@@ -55,12 +56,13 @@ export default function BoxComment(props){
             <div className='comment-footer'>
                 <InputGroup className="mb-3" style={{maxWidth: '400px'}}>
                     <FormControl
+                    className='comment-message'
                     placeholder={t('enterMessageP')}
                     aria-describedby="basic-addon2"
                     onChange={(e)=>setTextComment(e.target.value)}
                     />
                     <InputGroup.Append>
-                    <Button variant="primary" onClick={()=>setTimeout(addComment,1500)}>{t('sendB')}</Button>
+                    <Button variant="primary" onClick={()=>setTimeout(addComment,200)}>{t('sendB')}</Button>
                     </InputGroup.Append>
                 </InputGroup>
             </div>

@@ -5,6 +5,13 @@ The format is based on forthetraveler.netlify.app(https://keepachangelog.com/en/
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [1.9.0] - 2021-01-18
+### Changed
+
+- Сhanged project structure.
+- Using useCallback, useMemo, memo project was optimized.
+- Improved, in my opinion, the ui of the application.
+
+## [1.9.0] - 2021-01-18
 ### Added
 
 - Added dark and white theame.

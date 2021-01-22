@@ -10,7 +10,7 @@ export default function Search() {
     const [option, setOption] = useState(null);
     const [word, setWord] = useState('');
 
-    const searchFT = useCallback(async(e)=> {
+    const searchFT = useCallback(async(e)=>{
         e.preventDefault();
         if(option) setOption(null);
         setWord('');
@@ -33,13 +33,15 @@ export default function Search() {
                 })
             })
         }
+        document.querySelector('.search-input').value = '';
     }, [word, option])
 
 return (
     <div>
         <div className = "search-block">
             <InputGroup className="mb-3" style={{maxWidth: '400px'}}>
-                <FormControl
+                <FormControl 
+                className='search-input'
                 placeholder={t('searchP')}
                 aria-describedby="basic-addon2"
                 onChange={(e)=>{setWord(e.target.value)}}
