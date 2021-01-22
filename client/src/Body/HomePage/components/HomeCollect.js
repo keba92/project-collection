@@ -1,23 +1,19 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import TableCollection from '../../UserPage/components/TableCollection';
 
 function HomeCollect(props) {
     const { countEl, dataCollect } = props;
-    const sortable = [];
-        for (const cont in countEl) {
-            sortable.push([cont, countEl[cont]]);
-        }
-        sortable.sort((a, b)=> {
-            return a[1] - b[1];
-        });
-        const newSort = sortable.map(el=>el[0]).reverse();
-        const newCollect = [];
-        newSort.forEach((el,idx)=>{
-            const colect = dataCollect.find((elem)=>{
+    const sortable = useMemo(()=>Object.keys(countEl)
+        .map((keyName)=> [keyName, countEl[keyName]])
+        .sort((a, b)=> a[1] - b[1]), [countEl]);
+    const newSort = useMemo(()=>sortable.map(el=>el[0]).reverse(), [sortable]);
+    const newCollect = [];
+    newSort.forEach((el,idx)=>{
+        const colect = dataCollect.find((elem)=>{
                 if(elem._id== el) return elem;
-            })
-            newCollect[idx] = colect
         })
+        newCollect[idx] = colect
+    })
 
     return(<TableCollection dataCollect={newCollect}/>)
 }

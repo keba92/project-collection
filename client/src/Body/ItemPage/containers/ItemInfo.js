@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Card } from 'react-bootstrap';
 import {  MarkdownPreview  } from 'react-marked-markdown';
 import { Link } from 'react-router-dom';
@@ -30,7 +30,7 @@ export default function ItemInfo(props) {
             dataItem()
         }      
     })
-    const makeItem = item.map((el, idx) => {
+    const makeItem = useMemo(()=>item.map((el, idx) => {
         const data = JSON.parse(el.dataItem);
         const pole = JSON.parse(el.poleItem);
         return (
@@ -66,7 +66,7 @@ export default function ItemInfo(props) {
                 )}
             </Card>
         )
-    })
+    }),[isAuthenticated, item, props, user])
 
     return (
             <div>

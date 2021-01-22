@@ -1,9 +1,9 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 import { TagCloud } from 'react-tagcloud';
 
 function TagsCloud(props) {
     const {setChoiseTag, items} = props;
-    const customRenderer = (tag, size, color) => (
+    const customRenderer = useCallback((tag, size, color) => (
         <span
           key={tag.value}
           style={{
@@ -16,19 +16,19 @@ function TagsCloud(props) {
           > 
           <p style={{cursor: 'pointer', color: `${color}`}} onClick={(e)=>setChoiseTag(e.target.innerHTML)}>{tag.value}</p> 
           </span>
-      )
+      ), [setChoiseTag])
 
-    const itemsTag = items.map((el)=>el.tag);
-    const countTag = itemsTag.flat().reduce((acc,el)=>{
+    const itemsTag = useMemo(()=>items.map((el)=>el.tag),[items]);
+    const countTag = useMemo(()=>itemsTag.flat().reduce((acc,el)=>{
               acc[el] = (acc[el] || 0) + 1;
               return acc;
-          },{});
-    const arrTags = Object.keys(countTag).map(el=>{
+    },{}),[itemsTag]);
+    const arrTags = useMemo(()=>Object.keys(countTag).map(el=>{
               return {
                   value: el,
                   count: countTag[el]
               }
-          });
+    }),[countTag]);
         
     return(<TagCloud tags={arrTags} minSize={3} maxSize={8} renderer={customRenderer} />)
 }

@@ -40,7 +40,10 @@ export default function LikeButton(props) {
     return(
         <>
             <span>
-                <i className="fa fa-heart" aria-hidden="true" title={id} onClick={(e)=>makeLike(e)}> {(like.length!=0)&&(like[0].countLike)} </i>
+                <i className="fa fa-heart" 
+                   aria-hidden="true" 
+                   title={id} 
+                   onClick={(e)=>makeLike(e)}> {(like.length!=0)&&(like[0].countLike)} </i>
             </span>
         </>
     )

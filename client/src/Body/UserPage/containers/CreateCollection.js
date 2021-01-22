@@ -72,9 +72,7 @@ export default function CreateCollection(props) {
     }, [namePole, typePole, poleItem])
 
     const onDrop = useCallback(async(acceptedFiles) => {
-        
         const url = `https://api.cloudinary.com/v1_1/dgeev9d6l/image/upload`;
-        
             const formData = new FormData();
             formData.append('file', acceptedFiles[0]);
             formData.append('upload_preset', 'nllbt9qq')

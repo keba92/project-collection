@@ -1,13 +1,10 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import ResultSearch from './ResultSearch';
 import { Button } from 'react-bootstrap';
 
 function HomeShowResult(props) {
     const { items, choiseTag, setChoiseTag } = props;
-    const tegsItems=[];
-    items.forEach((el) =>{
-        if(el.tag.includes(choiseTag)) tegsItems.push(el);
-    })
+    const tegsItems= useMemo(()=>items.filter((el) => el.tag.includes(choiseTag)),[items, choiseTag]);
 
     return (
         (tegsItems)&&(

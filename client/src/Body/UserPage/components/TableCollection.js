@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 import { Card } from 'react-bootstrap';
 import {  MarkdownPreview  } from 'react-marked-markdown';
 import { Link } from 'react-router-dom';
@@ -18,7 +18,7 @@ function TableCollection(props) {
         }
     })
 
-    const makeCollection = dataCollect.map((el, idx) => {
+    const makeCollection = useMemo(()=>dataCollect.map((el, idx) => {
         if(el) {
             return (
                 <Card style={{ width: '25rem' }} key={el._id}>
@@ -34,7 +34,7 @@ function TableCollection(props) {
                 </Card>
             )
         }
-    })
+    }),[dataCollect, isAuthenticated, user, t])
 
     return (
         <div className='table-collection'>

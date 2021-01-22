@@ -1,13 +1,13 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
 
 const User = () => {
   const { user, isAuthenticated } = useAuth0();
 
-  const saveLocalStorage = () => {
+  const saveLocalStorage = useCallback(() => {
     localStorage.setItem('auth', 'true');
     if(isAuthenticated) localStorage.setItem('userId', user.sub);
-  }
+  },[isAuthenticated, user])
 
   return (
     isAuthenticated && ( 

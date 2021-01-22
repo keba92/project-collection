@@ -138,15 +138,9 @@ export default function CreateItem(props) {
     try {
         createOptions = () => {
             const obj = {};
-            const itemsCollection = dataItems.filter((el)=>{
-                if (el.idCollect == props.location.pathname.slice(12)){
-                    return el;
-                }
-            }).map(el=> {
-                const arr = JSON.parse(el.dataItem)
-                return arr;
-            })
             let names = [];
+            const itemsCollection = dataItems.filter((el)=>el.idCollect == props.location.pathname.slice(12))
+                                             .map(el=>JSON.parse(el.dataItem))
             if(itemsCollection.length!=0){
                 names = Object.keys(itemsCollection[0]);
                 names.forEach(el => { obj[el] = [] });

@@ -1,10 +1,10 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import AdminCheckbox from './AdminCheckbox'
 
 function AdminTableRow(props) {
     const {data,adminList, handleChange, checkedItems, idUsers} = props;
-    const tableTemplate = data.map((row) => {
+    const tableTemplate = useMemo(()=> data.map((row) => {
         idUsers.push(row.user_id);
          return(
             <tr key={row.user_id}>
@@ -20,7 +20,7 @@ function AdminTableRow(props) {
                 <td>{(adminList.includes(row.user_id))?('Admin'):('')}</td>
             </tr>
          );
-    });
+    }),[data, handleChange, checkedItems, idUsers]);
 
     return (
         <tbody>

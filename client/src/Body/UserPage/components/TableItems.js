@@ -11,16 +11,12 @@ function TabelItems(props) {
     const {dataItems, idCollect} = props;
     const { isAuthenticated } = useAuth0();
     const { t, i18n } = useTranslation();
-    const collectItems = [];
+    let collectItems;
 
     if(idCollect == ''){
-        dataItems.forEach((el) => collectItems.push(el))
+        collectItems = dataItems.filter((el) => el);
     } else {
-        dataItems.forEach((el) => {
-            if(el.idCollect == idCollect) {
-                collectItems.push(el);
-            }
-        })
+        collectItems = dataItems.filter((el) => el.idCollect == idCollect);
     }
     const makeItems = useCallback(() => {
         if(collectItems.length!=0){

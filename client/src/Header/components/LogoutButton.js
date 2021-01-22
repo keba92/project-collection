@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
 const LogoutButton = () => {
-  const { logout, isAuthenticated, user } = useAuth0();
+  const { logout, isAuthenticated } = useAuth0();
   const { t, i18n } = useTranslation();
 
   const out = () => {

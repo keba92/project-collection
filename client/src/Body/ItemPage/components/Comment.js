@@ -1,10 +1,10 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 function Comment(props){
     const {data} = props;
     const { t, i18n } = useTranslation();
-    const makeComment = data.map((el,idx)=>{
+    const makeComment = useMemo(()=>data.map((el,idx)=>{
         const obj = JSON.parse(el);
         return (
             <>
@@ -12,7 +12,7 @@ function Comment(props){
                 <p key={idx}> {obj.message} </p>
             </>
         )
-    })
+    }),[data])
 
     return(
         <div className='comment'>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import TabelItems from '../../UserPage/components/TableItems';
 import UserProfileButton from '../components/UserProfileButton';
 import io from 'socket.io-client';
@@ -38,10 +38,10 @@ export default function Home() {
          getData(); 
     },[])
 
-    const countEl = items.reduce((acc, el) => {
+    const countEl = useMemo(()=>items.reduce((acc, el) => {
         acc[el.idCollect] = (acc[el.idCollect] || 0) + 1;
         return acc;
-    }, {})
+    }, {}),[items])
     
     return (
         <div className='home-page'>
