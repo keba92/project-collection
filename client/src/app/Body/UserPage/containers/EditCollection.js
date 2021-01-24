@@ -27,14 +27,8 @@ export default function EditCollection(props) {
         socket.emit('getCollectionInfo', {
             _id: id
         })
-        socket.on('getCollectionDataInfo',(data) => {
-            setCollectionData(data);
-        })
-        if(localStorage.getItem('admin')) {
-            idUser = localStorage.getItem('admin');
-        } else {
-            idUser = user.sub
-        }
+        socket.on('getCollectionDataInfo',(data)=>setCollectionData(data))
+        (localStorage.getItem('admin'))? idUser = localStorage.getItem('admin') : idUser = user.sub
         setNewId(idUser)
     },[])
 
@@ -81,7 +75,7 @@ export default function EditCollection(props) {
     return(
         (collectionData.length != 0) && (
         <div>
-          <div className='button-main'>
+          <div className='button-main flex-button'>
             <Link className='back' to={`/user/${newId}`}>{t('backCollectL')}</Link>
           </div>
           <div className="create">

@@ -1,12 +1,12 @@
 const DarkTheme = () => {
     const last = document.head.lastChild;
     if (last.className == 'theme-head') {
-        document.head.removeChild(last);
+      document.head.removeChild(last);
     } 
-        const style = document.createElement('style');
-        style.setAttribute('class', 'theme-head')
-        document.head.appendChild(style);
-        style.innerHTML = `
+    const style = document.createElement('style');
+    style.setAttribute('class', 'theme-head')
+    document.head.appendChild(style);
+    style.innerHTML = `
 
         html, body {
           width: 100%;
@@ -24,18 +24,22 @@ const DarkTheme = () => {
           }
           
           .header{
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
-            justify-content: space-between;
+            -webkit-box-pack: justify;
+                -ms-flex-pack: justify;
+                    justify-content: space-between;
             height: 5%;
-            -webkit-box-shadow: 0px 3px 4px 0px rgba(0,0,0,0.75);
-            -moz-box-shadow: 0px 3px 4px 0px rgba(0,0,0,0.75);
             box-shadow: 0px 3px 4px 0px rgba(0,0,0,0.75);
             background-color: #191919;
           }
           
           .search-block {
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
-            margin-left: 1.5%;
+            margin-right: 1%;
           }
 
           edit-item {
@@ -43,10 +47,15 @@ const DarkTheme = () => {
           }
 
           .button-main {
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
+            position: -webkit-sticky;
             position: sticky;
             top: 0;
-            justify-content: space-between;
+            -webkit-box-pack: justify;
+                -ms-flex-pack: justify;
+                    justify-content: space-between;
             background-color: #0b2937;
             padding-top: 15px;
             z-index: 100;
@@ -68,15 +77,26 @@ const DarkTheme = () => {
           }
           
           .create {
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
-            align-items: center;
-            justify-content: center;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
           }
           
           .table-items {
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
             margin-top: 20px;
           }
           
@@ -89,15 +109,20 @@ const DarkTheme = () => {
 
           .card:hover {
               -webkit-transform: scale(1.03);
-              -ms-transform: scale(1.03);
               transform: scale(1.03);
+              -webkit-transition: 0.5s;
               transition: 0.5s;
           }
           
           .table-collection {
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
             margin-top: 20px;
           }
           
@@ -118,9 +143,8 @@ const DarkTheme = () => {
           }
           
           a {
-            margin-left: 10px;
-            max-width: 50%;
-            padding: 5px;
+            margin-left: 1%;
+            padding: 3px;
             border-radius: 3px;
             text-decoration: none;
             color: rgb(0, 0, 0);
@@ -135,15 +159,13 @@ const DarkTheme = () => {
 
           a:hover {
             background: #1ff6c8;
-            -webkit-transition: all 0.3s ease;
-            -moz-transition: all 0.3s ease;;
-            -o-transition: all 0.3s ease;;
+            -webkit-transition: all 0.3s ease;;
             transition: all 0.3s ease;
           }
           
           .comment-box {
             border-radius: 3px;
-            width: 50%;
+            width: 85%;
             margin: 15px;
             padding: 20px;
             background-color: #0b2937;
@@ -168,15 +190,27 @@ const DarkTheme = () => {
           }
           
           .content-item {
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
-            flex-flow: column;
-            align-items: center;
+            -ms-flex-flow: column;
+                flex-flow: column;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
           }
           
           .users {
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+                -ms-flex-direction: column;
+                    flex-direction: column;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
             height: 100%;
           }
           
@@ -220,12 +254,16 @@ const DarkTheme = () => {
            }
           
           .cloud-div {
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
-            flex-flow: column;
-            align-items: center;
+            -ms-flex-flow: column;
+                flex-flow: column;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
             background-color: #0b2937;
-            padding-bottom: 3%;
-            box-shadow: 0 10px 10px rgba(0,0,0,0.2), 0 10px 10px rgba(0,0,0,0.2);
+            box-shadow:         0px 4px 2px 0px rgba(50, 50, 50, 0.5);
           }
           
            .lang {
@@ -241,8 +279,8 @@ const DarkTheme = () => {
 
            .tag-cloud span:hover {
             -webkit-transform: scale(1.08);
-            -ms-transform: scale(1.08);
             transform: scale(1.08);
+            -webkit-transition: 0.5s;
             transition: 0.5s;
            }
 
@@ -252,13 +290,23 @@ const DarkTheme = () => {
            }
 
           .dropzone {
+            height: 64px;
             height: 4rem;
+            margin: 16px;
             margin: 1rem;
+            padding: 16px;
             padding: 1rem;
             border: 1px dashed salmon;
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            font-size: 16px;
             font-size: 1rem;
             cursor: pointer;
         }
@@ -269,14 +317,20 @@ const DarkTheme = () => {
 
         .body-page {
           background-color: #1e656a;
+          min-width: 100%;
           min-height: 100%;
           color: #f7f7d8;
         }
 
         .big-collect {
+          display: -webkit-box;
+          display: -ms-flexbox;
           display: flex;
-          flex-flow: column;
-          align-items: center;
+          -ms-flex-flow: column;
+              flex-flow: column;
+          -webkit-box-align: center;
+              -ms-flex-align: center;
+                  align-items: center;
           background-color: #3892b7;
           box-shadow: 0 14px 28px rgba(0,0,0,0.2), 0 10px 10px rgba(0,0,0,0.2);
         }
@@ -288,18 +342,37 @@ const DarkTheme = () => {
         .filter {
           margin: 0 auto;
           margin-top: 20px;
+          display: -webkit-box;
+          display: -ms-flexbox;
           display: flex;
           width: 100%;
-          flex-flow: column;
-          align-items: center;
+          -ms-flex-flow: column;
+              flex-flow: column;
+          -webkit-box-align: center;
+              -ms-flex-align: center;
+                  align-items: center;
           background-color: #094f58;
           box-shadow: 0 14px 28px rgba(0,0,0,0.2), 0 10px 10px rgba(0,0,0,0.2);
         }
 
         .filterBox {
+          display: -webkit-box;
+          display: -ms-flexbox;
           display: flex;
-          justify-content: center;
+          -webkit-box-pack: center;
+              -ms-flex-pack: center;
+                  justify-content: center;
           padding-bottom: 3%;
+        }
+
+        .result-search {
+          background-color: #0b2937;
+        }
+
+        .flex-button {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: start;
         }
         `
     

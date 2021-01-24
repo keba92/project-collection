@@ -50,7 +50,7 @@ function TabelItems(props) {
                                 )
                             })}
                         </Card.Body>
-                        {(isAuthenticated)&&(<LikeButton id={el._id}/>)}
+                        <LikeButton id={el._id}/>
                         <Link to={`/item/${el._id}`}> {t('openL')} </Link>
                     </Card>
                 )

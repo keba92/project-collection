@@ -45,6 +45,7 @@ function Header() {
     localStorage.setItem('theme',value);
     saveStore();
   }, [])
+
   const saveStore = useCallback(() =>{
     if(isAuthenticated){
       socket.emit('userData', {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import io from 'socket.io-client';
@@ -40,7 +40,7 @@ export default function EditItem(props) {
 
     return(
         <div className='edit-item'>
-          <div className='button-main'>
+          <div className='button-main flex-button'>
             <Link className='back'  to={`/item/${id}`}>{t('backItemL')}</Link>
           </div>
           <div className='create'>

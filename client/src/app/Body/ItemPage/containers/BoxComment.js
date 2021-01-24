@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback} from 'react';
+import React, { useState, useEffect} from 'react';
 import {InputGroup, FormControl, Button } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
 import io from 'socket.io-client';
@@ -22,9 +22,7 @@ export default function BoxComment(props){
                 setNewArrComment(data[0].arrComment);
             })
         }
-        if(isAuthenticated){
-            commentData();  
-        }
+        commentData();
     }, [])
 
     const addComment = () =>{
@@ -53,19 +51,21 @@ export default function BoxComment(props){
             <div className='comment-body'>
                 <Comment data={newArrComment}/>
             </div>
-            <div className='comment-footer'>
-                <InputGroup className="mb-3" style={{maxWidth: '400px'}}>
-                    <FormControl
-                    className='comment-message'
-                    placeholder={t('enterMessageP')}
-                    aria-describedby="basic-addon2"
-                    onChange={(e)=>setTextComment(e.target.value)}
-                    />
-                    <InputGroup.Append>
-                    <Button variant="primary" onClick={()=>setTimeout(addComment,200)}>{t('sendB')}</Button>
-                    </InputGroup.Append>
-                </InputGroup>
-            </div>
+            {(isAuthenticated)&&
+                (<div className='comment-footer'>
+                    <InputGroup className="mb-3" style={{maxWidth: '400px'}}>
+                        <FormControl
+                            className='comment-message'
+                            placeholder={t('enterMessageP')}
+                            aria-describedby="basic-addon2"
+                            onChange={(e)=>setTextComment(e.target.value)}
+                        />
+                        <InputGroup.Append>
+                            <Button variant="primary" onClick={()=>setTimeout(addComment,200)}>{t('sendB')}</Button>
+                        </InputGroup.Append>
+                    </InputGroup>
+                </div>)
+            }
         </div>
     )
 }

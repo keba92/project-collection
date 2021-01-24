@@ -46,7 +46,7 @@ export default function Home() {
     return (
         <div className='home-page'>
             <div className='button-main'>
-                <div className='buttons'>
+                <div className='buttons flex-button'>
                     <AdminProfileButton />
                     <UserProfileButton />
                 </div> 

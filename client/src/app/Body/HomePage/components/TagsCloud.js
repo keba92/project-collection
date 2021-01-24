@@ -14,7 +14,8 @@ function TagsCloud(props) {
             display: 'inline-block',
           }}
           > 
-          <p style={{cursor: 'pointer', color: `${color}`}} onClick={(e)=>setChoiseTag(e.target.innerHTML)}>{tag.value}</p> 
+            <p style={{cursor: 'pointer', color: `${color}`}} 
+               onClick={(e)=>setChoiseTag(e.target.innerHTML)}>{tag.value}</p> 
           </span>
       ), [setChoiseTag])
 

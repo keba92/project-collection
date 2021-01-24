@@ -18,29 +18,25 @@ function AdminPage() {
     const idUsers = []
 
     useEffect(() =>{
-            socket.emit('getUsers', { message: process.env.REACT_APP_AUTH0_TOKEN});
-            socket.on('getUsersData', (data)=>{
-                setData(data);
-            })
-            socket.emit('getAdmins', { message: process.env.REACT_APP_AUTH0_TOKEN});
-            socket.on('getAdminsData', (data)=>{
-                const newData = data.map(el=>el.user_id)
-                setAdminList(newData);
-            })
+        socket.emit('getUsers', { message: process.env.REACT_APP_AUTH0_TOKEN});
+        socket.on('getUsersData', (data)=>setData(data))
+        socket.emit('getAdmins', { message: process.env.REACT_APP_AUTH0_TOKEN});
+        socket.on('getAdminsData', (data)=>{
+            const newData = data.map(el=>el.user_id);
+            setAdminList(newData);
+        })
     },[])
 
     const handleChange = useCallback((event) => {
         setCheckedItems({...checkedItems, [event.target.value] : event.target.checked });
-        if(!event.target.checked && checkedAll==true){
-            selectAll(false);
-        }
+        if(!event.target.checked && checkedAll==true) selectAll(false);
     }, [checkedItems])
 
     const deleteUsers = useCallback((e) => {
         e.preventDefault();
 		Object.keys(checkedItems).map((keyName) => {
             // eslint-disable-next-line no-restricted-globals
-            const answer = confirm(`Вы уверены, что хотите удалить пользователя с id:'${keyName}'?`)
+            const answer = confirm(`Вы уверены, что хотите удалить пользователя с id:'${keyName}'?`);
             if(checkedItems[keyName] && answer) {
                 socket.emit('deleteUser', {
                     message: process.env.REACT_APP_AUTH0_TOKEN,
@@ -63,29 +59,25 @@ function AdminPage() {
             }
         })
     },[checkedItems, adminList])
+
+    const blockUnblockData = (operation, id, data) =>{
+        // eslint-disable-next-line no-restricted-globals
+        const answer = confirm(`Вы уверены, что хотите ${operation} пользователя с id:'${id}'?`);
+        if(checkedItems[id] && answer) {
+            socket.emit('blockUser', {
+                message: process.env.REACT_APP_AUTH0_TOKEN,
+                idUser: id,
+                block: data
+            })
+        }
+    } 
     
     const blockUser = useCallback((e) =>{
 		Object.keys(checkedItems).map((keyName) => {
             if(e.target.attributes[1].value == 'block') {
-                // eslint-disable-next-line no-restricted-globals
-                const answer = confirm(`Вы уверены, что хотите заблокировать пользователя с id:'${keyName}'?`)
-                if(checkedItems[keyName] && answer) {
-                    socket.emit('blockUser', {
-                        message: process.env.REACT_APP_AUTH0_TOKEN,
-                        idUser: keyName,
-                        block: true
-                    })
-                }
+                blockUnblockData('block', keyName, true);
             } else {
-                // eslint-disable-next-line no-restricted-globals
-                const answer = confirm(`Вы уверены, что хотите разблокировать пользователя с id:'${keyName}'?`)
-                if(checkedItems[keyName] && answer) {
-                    socket.emit('blockUser', {
-                        message: process.env.REACT_APP_AUTH0_TOKEN,
-                        idUser: keyName,
-                        block: false
-                    })
-                }
+                blockUnblockData('unblock', keyName, false);
             }
         })
     }, [checkedItems])
@@ -106,7 +98,7 @@ function AdminPage() {
     
     return(
         <div className='admin-page'>
-            <div className='button-main'>
+            <div className='button-main flex-button'>
                 <Link className='back' to='/'>{t('backMainL')}</Link>
             </div>
             <div className = 'users'>

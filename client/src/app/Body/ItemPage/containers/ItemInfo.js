@@ -22,13 +22,9 @@ export default function ItemInfo(props) {
                     _id: props.location.pathname.slice(6)
                 })
             }
-            await socket.on('getItemDataInfo', (data) => {
-                setItem(data)})
-            
+            await socket.on('getItemDataInfo',(data)=>setItem(data)) 
         }
-        if(item.length==0){
-            dataItem()
-        }      
+        if(item.length==0) dataItem();     
     })
     const makeItem = useMemo(()=>item.map((el, idx) => {
         const data = JSON.parse(el.dataItem);
@@ -57,7 +53,7 @@ export default function ItemInfo(props) {
                         )
                     })}
                 </Card.Body>
-                {(isAuthenticated)&&(<LikeButton id={props.location.pathname.slice(6)}/>)}
+                <LikeButton id={props.location.pathname.slice(6)}/>
                 {(isAuthenticated && user.sub == el.idUser || localStorage.getItem('admin'))&&(
                     <div>
                         <DeleteButtonItem id={props.location.pathname.slice(6)} />
@@ -70,11 +66,12 @@ export default function ItemInfo(props) {
 
     return (
             <div>
-                <br/>
-                <Link className='back' to='/'>{t('backMainL')}</Link>
-                <div className='content-item'>
+                <div className='flex-button'>
+                    <Link className='back' to='/'>{t('backMainL')}</Link>
+                </div>
+                <div className='content-item' style={{pointerEvents: 'none'}}>
                     {makeItem}
-                    {(isAuthenticated)&&(<BoxComment id={props.location.pathname.slice(6)} />)}
+                    <BoxComment id={props.location.pathname.slice(6)} />
                 </div>
             </div>
         )

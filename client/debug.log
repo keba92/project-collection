@@ -254,3 +254,4 @@
 [0122/094509.081:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\IMAS\AppData\Local\Google\Chrome\User Data\Crashpad\attachments\1f3b8a63-7207-4477-aba2-aef45441bee2: Системе не удается найти указанный путь. (0x3)
 [0122/094509.081:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\IMAS\AppData\Local\Google\Chrome\User Data\Crashpad\attachments\f5033659-bc3b-4e31-b6c3-572232ba8a61: Системе не удается найти указанный путь. (0x3)
 [0122/094509.081:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\IMAS\AppData\Local\Google\Chrome\User Data\Crashpad\attachments\d4339b10-623e-485b-be1d-fd965b0c7ecf: Системе не удается найти указанный путь. (0x3)
+[0124/141204.433:ERROR:directory_reader_win.cc(43)] FindFirstFile: Системе не удается найти указанный путь. (0x3)

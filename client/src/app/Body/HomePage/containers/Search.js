@@ -18,9 +18,7 @@ export default function Search() {
             await socket.emit('searchFT', {
                 word: word
             })
-            await socket.on('dataItem', (data) => {
-                setOption(data);
-            })
+            await socket.on('dataItem', (data) => setOption(data))
             await socket.on('dataComment', (data) => {
                 data.map( async el=>{
                     await socket.emit('getItemInfo', {
@@ -41,10 +39,10 @@ return (
         <div className = "search-block">
             <InputGroup className="mb-3" style={{maxWidth: '400px'}}>
                 <FormControl 
-                className='search-input'
-                placeholder={t('searchP')}
-                aria-describedby="basic-addon2"
-                onChange={(e)=>{setWord(e.target.value)}}
+                    className='search-input'
+                    placeholder={t('searchP')}
+                    aria-describedby="basic-addon2"
+                    onChange={(e)=>{setWord(e.target.value)}}
                 />
                 <InputGroup.Append>
                 <Button variant="light" onClick={searchFT}>{t('searchB')}</Button>

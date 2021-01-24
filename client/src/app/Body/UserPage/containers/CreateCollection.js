@@ -30,22 +30,20 @@ export default function CreateCollection(props) {
             let id;
               if (isAuthenticated && !admins.includes(user.sub)) {
                   id = user.sub;
-                  setIdUser(id)
+                  setIdUser(id);
               } else if (isAuthenticated && admins.includes(user.sub)) {
                   id = idLink;
-                  localStorage.setItem('admin', id)
-                  setIdUser(id)
+                  localStorage.setItem('admin', id);
+                  setIdUser(id);
               } else {
                   id = 'all';
               }
               socket.emit('getCollection', {
                   id: id
               })
-              socket.on('getDataCollect',(data) => {
-                  setDataCollect(data);
-              })
+              socket.on('getDataCollect',(data)=>setDataCollect(data));
         }))
-        }
+      }
     });
 
     const addCollection = useCallback((e) =>{
@@ -58,9 +56,7 @@ export default function CreateCollection(props) {
             url: urlPicture,
             poleItem: JSON.stringify(poleItem)
         })
-        socket.on('getDataCollect',(data) => {
-            setDataCollect(data);
-        },[])
+        socket.on('getDataCollect',(data)=>setDataCollect(data),[])
         document.querySelectorAll('.form-create-collect input').forEach(el=>el.value='');
     }, [idUser, nameCollection, shortNameCollection, temaCollection, urlPicture, poleItem])
 
@@ -82,9 +78,8 @@ export default function CreateCollection(props) {
                 body: formData
             })
             const data = await response.json();
-            console.log(data.public_id)
             setUrlPicture(data.public_id);
-      }, [])
+    }, [])
 
     const {getRootProps, getInputProps, isDragActive} = useDropzone({
         onDrop,

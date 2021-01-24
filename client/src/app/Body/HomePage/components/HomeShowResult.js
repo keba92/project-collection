@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 
 function HomeShowResult(props) {
     const { items, choiseTag, setChoiseTag } = props;
-    const tegsItems= useMemo(()=>items.filter((el) => el.tag.includes(choiseTag)),[items, choiseTag]);
+    const tegsItems= useMemo(()=>items.filter((el) =>el.tag.includes(choiseTag)),[items, choiseTag]);
 
     return (
         (tegsItems)&&(

@@ -30,33 +30,21 @@ export default function CreateItem(props) {
         socket.emit('getCollectionInfo',{
             _id: props.location.pathname.slice(12)
         })
-        socket.on('getCollectionDataInfo', (data) => {
-            setCollection(data)
-        })
+        socket.on('getCollectionDataInfo',(data)=>setCollection(data))
         socket.emit('getItems', {
             idCollect: (isAuthenticated) ? props.location.pathname.slice(12) : 'all'
         })
         socket.on('getDataItems',(data) => {
             try {
-                const newDataCSV = data.filter((el)=>{
-                    if (el.idCollect == props.location.pathname.slice(12)){
-                        return el;
-                    }
-                }).map(el=> {
-                    const arr = JSON.parse(el.dataItem)
-                    return arr;
-                })
+                const newDataCSV = data.filter((el)=>(el.idCollect == props.location.pathname.slice(12)))
+                .map(el=>JSON.parse(el.dataItem))
                 setHeadersCSV(newDataCSV)
             } catch (err) {
                 console.log(err)
             }
             setDataItems(data);
         })
-        if(localStorage.getItem('admin')) {
-            idUser = localStorage.getItem('admin');
-        } else {
-            idUser = user.sub
-        }
+        (localStorage.getItem('admin')) ? (idUser = localStorage.getItem('admin')) : (idUser = user.sub);
         //get all items from tags
         socket.emit('getItems', {
             idCollect: 'all'
@@ -101,19 +89,14 @@ export default function CreateItem(props) {
             dataItem: JSON.stringify(itemData),
             poleItem: collection[0].poleItem
         })
-        socket.on('getDataItems',(data) => {
-            setDataItems(data);
-        },[])
+        socket.on('getDataItems',(data) =>setDataItems(data),[])
         document.querySelector('.form-create-item').reset();
     }, [tags, id, props, itemData, collection])
 
     const findItem = useCallback((word) => {
         if(word){
-            const itemsCollection = dataItems.filter((el)=>{
-                if (el.idCollect == props.location.pathname.slice(12)){
-                    return el;
-                }
-            }).map(el=> {
+            const itemsCollection = dataItems.filter((el)=>el.idCollect == props.location.pathname.slice(12))
+            .map(el=> {
                 const obj = {};
                 const arr = JSON.parse(el.dataItem);
                 obj[el._id] = arr;
@@ -180,7 +163,7 @@ export default function CreateItem(props) {
     return (
     <div>    
         <div className='button-main'>
-            <div className='buttons'>
+            <div className='buttons flex-button'>
                 {(isAuthenticated)&&(<Link className='back' to={`/`}>{t('backMainL')}</Link>)}
                 {(isAuthenticated&&id==localStorage.getItem('userId'))&&(
                 <Link className='back' to={`/user/${id}`}>{t('backCollectL')}</Link>)}

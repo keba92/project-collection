@@ -9,9 +9,7 @@ function HomeCollect(props) {
     const newSort = useMemo(()=>sortable.map(el=>el[0]).reverse(), [sortable]);
     const newCollect = [];
     newSort.forEach((el,idx)=>{
-        const colect = dataCollect.find((elem)=>{
-                if(elem._id== el) return elem;
-        })
+        const colect = dataCollect.find((elem)=>elem._id== el)
         newCollect[idx] = colect
     })
 

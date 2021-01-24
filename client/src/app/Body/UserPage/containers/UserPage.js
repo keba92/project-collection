@@ -12,7 +12,7 @@ function UserPage(props) {
     isAuthenticated && (
       <div className='user-page'>
         <div className='button-main'>
-          <div className='navigation'>
+          <div className='navigation flex-button'>
               <Link className='back' to='/'>{t('backMainL')}</Link>
           </div>
           <Search/>

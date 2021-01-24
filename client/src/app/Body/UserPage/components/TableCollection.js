@@ -18,7 +18,7 @@ function TableCollection(props) {
         }
     })
 
-    const makeCollection = useMemo(()=>dataCollect.map((el, idx) => {
+    const makeCollection = useMemo(()=>dataCollect.map((el) => {
         if(el) {
             return (
                 <Card style={{ width: '25rem' }} key={el._id}>
