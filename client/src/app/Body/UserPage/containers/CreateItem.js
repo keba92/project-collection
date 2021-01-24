@@ -37,14 +37,21 @@ export default function CreateItem(props) {
         socket.on('getDataItems',(data) => {
             try {
                 const newDataCSV = data.filter((el)=>(el.idCollect == props.location.pathname.slice(12)))
-                .map(el=>JSON.parse(el.dataItem))
+                .map(el=> {
+                    const arr = JSON.parse(el.dataItem)
+                    return arr;
+                })
                 setHeadersCSV(newDataCSV)
             } catch (err) {
                 console.log(err)
             }
             setDataItems(data);
         })
-        (localStorage.getItem('admin')) ? (idUser = localStorage.getItem('admin')) : (idUser = user.sub);
+        if(localStorage.getItem('admin')) {
+            idUser = localStorage.getItem('admin');
+        } else {
+            idUser = user.sub
+        }
         //get all items from tags
         socket.emit('getItems', {
             idCollect: 'all'
@@ -89,14 +96,19 @@ export default function CreateItem(props) {
             dataItem: JSON.stringify(itemData),
             poleItem: collection[0].poleItem
         })
-        socket.on('getDataItems',(data) =>setDataItems(data),[])
+        socket.on('getDataItems',(data) => {
+            setDataItems(data);
+        },[])
         document.querySelector('.form-create-item').reset();
     }, [tags, id, props, itemData, collection])
 
     const findItem = useCallback((word) => {
         if(word){
-            const itemsCollection = dataItems.filter((el)=>el.idCollect == props.location.pathname.slice(12))
-            .map(el=> {
+            const itemsCollection = dataItems.filter((el)=>{
+                if (el.idCollect == props.location.pathname.slice(12)){
+                    return el;
+                }
+            }).map(el=> {
                 const obj = {};
                 const arr = JSON.parse(el.dataItem);
                 obj[el._id] = arr;
