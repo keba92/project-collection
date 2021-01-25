@@ -14,7 +14,7 @@ ReactDOM.render(
     clientId={clientId}
     redirectUri={window.location.origin}
     audience="https://dev-lma8p4gy.eu.auth0.com/api/v2/"
-    scope="read:current_user update:current_user_metadata">
+    scope='id_token token'>
     <App />
   </Auth0Provider>
   </Suspense>,
