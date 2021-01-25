@@ -188,6 +188,14 @@ const DarkTheme = () => {
             margin-bottom: 3px;
             padding: 5px;
           }
+
+          .nav {
+            background-color: #0d6efd;
+          }
+
+          .nav:hover {
+            background-color: #0d9dfd;
+          }
           
           .content-item {
             display: -webkit-box;
@@ -230,7 +238,8 @@ const DarkTheme = () => {
           
           .back {
             margin-left: 20px;
-            margin-bottom: 20px;
+            max-height: 30px;
+            margin-bottom: 8px;
             color: rgb(151, 13, 13);
             -webkit-text-stroke-width: 1px;
             -webkit-text-stroke-color: #000000;

@@ -45,7 +45,7 @@ function Header() {
     localStorage.setItem('theme',value);
     saveStore();
   }, [])
-
+  
   const saveStore = useCallback(() =>{
     if(isAuthenticated){
       socket.emit('userData', {
@@ -69,7 +69,6 @@ function Header() {
       </div>
       <div className='language'>
         <FaSun style={{width:'50px', color: '#78dde2', cursor: 'pointer'}} onClick={()=>changeTheame('light')} />
-        <span>  </span>
         <FaMoon style={{width:'50px', color: '#78dde2', cursor:'pointer'}} onClick={()=>changeTheame('dark')} />
       </div>
       <Profile />

@@ -228,7 +228,8 @@ const LightTheme = () => {
         
       .back {
           margin-left: 20px;
-          margin-bottom: 20px;
+          max-height: 30px;
+          margin-bottom: 8px;
           color: rgb(151, 13, 13);
           -webkit-text-stroke-width: 1px;
           -webkit-text-stroke-color: #000000;
@@ -374,6 +375,14 @@ const LightTheme = () => {
         display: flex;
         flex-wrap: wrap;
         justify-content: start;
+      }
+
+      .nav {
+        background-color: #0d6efd;
+      }
+
+      .nav:hover {
+        background-color: #0d9dfd;
       }
         `
 }

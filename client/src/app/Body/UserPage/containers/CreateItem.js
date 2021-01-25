@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback, useRef} from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import TabelItems from '../components/TableItems';
@@ -23,6 +23,7 @@ export default function CreateItem(props) {
     const { t, i18n } = useTranslation();
     const [headersCSV, setHeadersCSV] = useState(null);
     const [resultItems, setResultItems] = useState(null);
+    const [loading, setLoading] = useState(true)
 
     useEffect(()=>{
         setTagifyProps({loading: true})
@@ -60,6 +61,7 @@ export default function CreateItem(props) {
             const arrTags = data.map(el=>el.tag);
             const newArrTags = arrTags.flat();
             const uniqTags =newArrTags.filter((item, idx) => newArrTags.indexOf(item) === idx);
+            setLoading(false);
             setTagifyProps((lastProps) => ({
                 ...lastProps,
                 whitelist: uniqTags,
@@ -179,9 +181,11 @@ export default function CreateItem(props) {
                 {(isAuthenticated)&&(<Link className='back' to={`/`}>{t('backMainL')}</Link>)}
                 {(isAuthenticated&&id==localStorage.getItem('userId'))&&(
                 <Link className='back' to={`/user/${id}`}>{t('backCollectL')}</Link>)}
-                {(headersCSV)&&(<div style={{float: 'right', marginLeft:'10px'}}>
-                    <CSVLink data={headersCSV} filename='collection.csv' separator={';'}>
-                        Download CSV
+                <a className='back nav' href="#createItems">Создать</a>
+                <a className='back nav' href="#myItems">Item´s</a>  
+                {(headersCSV)&&(<div style={{float: 'right', marginTop:'3px', marginLeft:'8px'}}>
+                    <CSVLink className='back' data={headersCSV} filename='collection.csv' separator={';'}>
+                        Download
                     </CSVLink>
                 </div>)}
             </div>
@@ -190,7 +194,7 @@ export default function CreateItem(props) {
         {(isAuthenticated&&id==localStorage.getItem('userId')||JSON.parse(localStorage.getItem('arrAdmins')).includes(user.sub))&&
         (<div className='create'>
             <div className='create-block'>
-                <h1 className='create'>{t('createItemH')}</h1>
+                <h1 id='createItems' className='create'>{t('createItemH')}</h1>
                 <Form className='form-create-item'>
                     {(collection.length != 0)&&(
                         Object.keys(JSON.parse(collection[0].poleItem)).map((keyName, idx) => {
@@ -246,13 +250,14 @@ export default function CreateItem(props) {
                 </Form>
             </div>
         </div>)}
-        <div className='filter'>
+        <div id='myItems' className='filter'>
             <h1>{t('filterH')}</h1>
             <div className='filterBox'>
                 {createOptions()}
             </div>
         </div>
-        <TabelItems dataItems={(resultItems)?resultItems:dataItems} idCollect={props.location.pathname.slice(12)} />  
+        {(loading)?(<Spinner animation="border" variant="primary" />)
+                  :(<TabelItems dataItems={(resultItems)?resultItems:dataItems} idCollect={props.location.pathname.slice(12)} />)}  
     </div>
     )
 }

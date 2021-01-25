@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Card } from 'react-bootstrap';
+import { Card, Spinner } from 'react-bootstrap';
 import {  MarkdownPreview  } from 'react-marked-markdown';
 import { Link } from 'react-router-dom';
 import io from 'socket.io-client';
@@ -69,9 +69,10 @@ export default function ItemInfo(props) {
                 <div className='flex-button'>
                     <Link className='back' to='/'>{t('backMainL')}</Link>
                 </div>
-                <div className='content-item' style={{pointerEvents: 'none'}}>
-                    {makeItem}
-                    <BoxComment id={props.location.pathname.slice(6)} />
+                <div className='content-item' >
+                    {(item.length==0)?(<Spinner animation="border" variant="primary" />):(makeItem)}
+                    {(item.length==0)?(<Spinner animation="border" variant="primary" />)
+                                     :(<BoxComment id={props.location.pathname.slice(6)} />)}
                 </div>
             </div>
         )

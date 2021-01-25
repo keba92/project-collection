@@ -14,6 +14,8 @@ function UserPage(props) {
         <div className='button-main'>
           <div className='navigation flex-button'>
               <Link className='back' to='/'>{t('backMainL')}</Link>
+              <a className='back nav' href="#createCollect">Создать</a>
+              <a className='back nav' href="#myCollect">Мои коллекции</a>
           </div>
           <Search/>
         </div>          

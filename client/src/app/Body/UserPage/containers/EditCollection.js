@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import io from 'socket.io-client';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
 import {useDropzone} from 'react-dropzone';
 import { Image } from 'cloudinary-react';
+import FormInput from '../components/FormInput';
+import FormOption from '../components/FormOption';
 
 export default function EditCollection(props) {
     const id = props.location.pathname.slice(16);
@@ -20,6 +22,7 @@ export default function EditCollection(props) {
     const [typePole, setTypePole] = useState('');
     const [newId, setNewId] = useState('');
     const { user } = useAuth0();
+    const [loading, setLoading] = useState(true);
     const { t, i18n } = useTranslation();
 
     useEffect(() => {
@@ -27,8 +30,15 @@ export default function EditCollection(props) {
         socket.emit('getCollectionInfo', {
             _id: id
         })
-        socket.on('getCollectionDataInfo',(data)=>setCollectionData(data))
-        (localStorage.getItem('admin'))? idUser = localStorage.getItem('admin') : idUser = user.sub
+        socket.on('getCollectionDataInfo',(data) => {
+            setCollectionData(data);
+            setLoading(false);
+        })
+        if(localStorage.getItem('admin')) {
+            idUser = localStorage.getItem('admin');
+        } else {
+            idUser = user.sub
+        }
         setNewId(idUser)
     },[])
 
@@ -79,29 +89,27 @@ export default function EditCollection(props) {
             <Link className='back' to={`/user/${newId}`}>{t('backCollectL')}</Link>
           </div>
           <div className="create">
-            <Form>
-             <Form.Group controlId="exampleForm.ControlInput2">
-                    <Form.Label>{t('nameCreateF')} </Form.Label>
-                    <Form.Control type="text" 
-                                  onChange={(e)=>setNameCollection(e.target.value)} 
-                                  placeholder={`${collectionData[0].name}`}
-                                  value={nameCollection}
-                    />
-                </Form.Group>
-                <Form.Group controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>{t('descriptCreateF')} </Form.Label>
-                    <Form.Control as="textarea" rows={3} 
-                                    onChange={(e)=>setShortNameCollection(e.target.value)}
-                    >{`${collectionData[0].description}`}</Form.Control>
-                </Form.Group>
-                <Form.Group controlId="exampleForm.ControlInput3">
-                    <Form.Label>{t('temaCreateF')} </Form.Label>
-                    <Form.Control as="select" onInput={(e)=>setOptionCollection(e.target.value)}>
-                        <option></option>
-                        <option value='alcohol'>Алкоголь</option>
-                        <option value='book'>Книга</option>
-                    </Form.Control>
-                </Form.Group>
+          {(loading)?(<Spinner animation="border" variant="primary" />):
+            (<Form>
+                <FormInput idContrl="exampleForm.ControlInput2"
+                          lable='nameCreateF'
+                          type='text'
+                          placeholder='enterNameP'
+                          setFunc={setNameCollection}
+                          value={nameCollection} />
+                <FormInput idContrl="exampleForm.ControlTextarea1"
+                          lable='descriptCreateF'
+                          type='textarea'
+                          placeholder='descriptCreateF'
+                          setFunc={setShortNameCollection}
+                          data={`${collectionData[0].description}`} />
+                <FormOption idContrl="exampleForm.ControlInput3"
+                            lable='temaCreateF'
+                            setFunc={setOptionCollection}
+                            dataOption={{alcohol: 'Алкоголь',
+                                         book: 'Книги',
+                                         marks: 'Марки',
+                                         znak: 'Значки'}} />
                 <Form.Group controlId="exampleForm.ControlInput4">
                     <div {...getRootProps()} className={`dropzone ${isDragActive ? 'active': null}`}>
                         <input {...getInputProps()} />
@@ -117,18 +125,21 @@ export default function EditCollection(props) {
                 </Form.Group>
                 <Form>
                   <Form.Label><b>{t('polesCreateF')}</b></Form.Label>
-                  <Form.Group controlId="exampleForm.ControlInput4">
-                    <Form.Label>{t('poleItemF')} </Form.Label>
-                    <Form.Control type="text" onChange={(e)=>setNamePole(e.target.value)} placeholder={t('poleItemF')}/>
-                    <Form.Label>{t('typePoleF')} </Form.Label>
-                    <Form.Control as="select" onInput={(e)=>setTypePole(e.target.value)}>
-                        <option></option>
-                        <option value='number'>Числовое</option>
-                        <option value='text'>Текстовое(однострочное)</option>
-                        <option value='textarea'>Текстовое(многострочное)</option>
-                        <option value='date'>Дата</option>
-                        <option value='checkbox'>Булевое</option>
-                    </Form.Control>
+                  <FormInput idContrl="exampleForm.ControlInput4"
+                            lable='poleItemF'
+                            type='text'
+                            placeholder='poleItemF'
+                            setFunc={setNamePole}
+                            value={namePole} />
+                  <FormOption idContrl="exampleForm.ControlInput6"
+                            lable='typePoleF'
+                            setFunc={setTypePole}
+                            dataOption={{number: 'Числовое',
+                                         text: 'Текстовое(однострочное)',
+                                         textarea: 'Текстовое(многострочное)',
+                                         date: 'Дата',
+                                         checkbox: 'Булевое'}} />
+                  <Form.Group controlId="exampleForm.ControlInput8">
                     <Button variant="primary" type="submit" onClick={addPoleItem}>
                         {t('addB')}
                     </Button>
@@ -138,9 +149,8 @@ export default function EditCollection(props) {
                 <Button variant="primary" type="submit" onClick={editCollection}>
                     {t('saveB')}
                 </Button>
-            </Form>
-          </div>
-          
+            </Form>)}
+          </div> 
         </div>
         )
     )

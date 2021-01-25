@@ -3,6 +3,7 @@ import TabelItems from '../../UserPage/components/TableItems';
 import UserProfileButton from '../components/UserProfileButton';
 import io from 'socket.io-client';
 import AdminProfileButton from '../components/AdminProfileButton';
+import { Spinner } from 'react-bootstrap';
 import Search from './Search';
 import { useTranslation } from 'react-i18next';
 import TagsCloud from '../components/TagsCloud';
@@ -55,14 +56,17 @@ export default function Home() {
             {(choiseTag)&&(<HomeShowResult items={items} choiseTag={choiseTag} setChoiseTag={setChoiseTag} />)}
             <div className='cloud-div'>
                 <div >
-                    <TagsCloud setChoiseTag={setChoiseTag} items={items}/>
+                    {(items.length==0)?(<Spinner animation="border" variant="primary" />)
+                                      :(<TagsCloud setChoiseTag={setChoiseTag} items={items}/>)}
                 </div>
             </div>
             <h1>{t('newItemsH')}</h1>
-            <TabelItems dataItems={(items.length>3)?(items.slice(items.length-3,items.length)):(items)} idCollect=''/>
+            {(items.length==0)?(<Spinner animation="border" variant="primary" />)
+                              :(<TabelItems dataItems={(items.length>3)?(items.slice(items.length-3,items.length)):(items)} idCollect=''/>)}
             <h1>{t('bigCollectionH')}</h1>
             <div>
-                <HomeCollect countEl={countEl} dataCollect={dataCollect} />
+                {(dataCollect.length==0)?(<Spinner animation="border" variant="primary" />)
+                                        :(<HomeCollect countEl={countEl} dataCollect={dataCollect} />)}
             </div>
         </div>
     )

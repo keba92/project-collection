@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import io from 'socket.io-client';
 import { useTranslation } from 'react-i18next';
@@ -44,7 +44,8 @@ export default function EditItem(props) {
             <Link className='back'  to={`/item/${id}`}>{t('backItemL')}</Link>
           </div>
           <div className='create'>
-          <Form className='form-edit-item'>
+          {(itemData.length == 0)?(<Spinner animation="border" variant="primary" />)
+            :(<Form className='form-edit-item'>
             {(itemData.length != 0)&&(
                 Object.keys(JSON.parse(itemData[0].poleItem)).map((keyName, idx) => {
                     const data = JSON.parse(itemData[0].dataItem)
@@ -81,7 +82,7 @@ export default function EditItem(props) {
             <Button variant="primary" type="submit" onClick={editItem}>
                 {t('saveB')}
             </Button>
-          </Form>
+          </Form>)}
           </div>
           <div style={{height:'500px'}}>
           </div>
