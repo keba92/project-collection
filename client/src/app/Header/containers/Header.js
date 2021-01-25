@@ -54,7 +54,7 @@ function Header() {
         lang: (localStorage.getItem('lang'))?(localStorage.getItem('lang')):'ru'
       })
     }
-  }, [user])
+  }, [user, isAuthenticated])
 
   if(!theame&&!isAuthenticated) {
     LightTheme();
