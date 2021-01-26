@@ -9,9 +9,6 @@
     "@testing-library/user-event": "^12.6.0",
     "@uiw/react-search-select": "^4.7.5",
     "@uiw/react-tag": "^4.7.5",
-    "@welcome-ui/tag": "^2.0.2",
-    "@xstyled/styled-components": "^2.1.0",
-    "@xstyled/system": "^2.1.0",
     "@yaireo/tagify": "^3.22.0",
     "bootstrap": "^4.5.3",
     "cloudinary": "^1.23.0",
@@ -37,7 +34,6 @@
     "react-tagcloud": "^2.0.0",
     "react-world-flags": "^1.4.0",
     "socket.io-client": "^3.0.4",
-    "styled-components": "^5.2.1",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
