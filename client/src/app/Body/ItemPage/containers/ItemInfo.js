@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Card, Spinner } from 'react-bootstrap';
-import {  MarkdownPreview  } from 'react-marked-markdown';
 import { Link } from 'react-router-dom';
 import io from 'socket.io-client';
 import DeleteButtonItem from './DeleteButtonItem';
 import { useAuth0 } from '@auth0/auth0-react';
 import LikeButton from './LikeButton';
 import BoxComment from './BoxComment';
-import Tag from '@uiw/react-tag';
 import { useTranslation } from 'react-i18next';
+import ItemBody from '../components/ItemBody';
 
 export default function ItemInfo(props) {
     const socket = io({ transports: [ 'websocket', 'polling' ], reconnect: true });
@@ -31,28 +30,7 @@ export default function ItemInfo(props) {
         const pole = JSON.parse(el.poleItem);
         return (
             <Card style={{ minWidth: '15rem' }} key={idx}>
-                <Card.Body>
-                    {Object.keys(data).map((keyName, idx) => {
-                        // eslint-disable-next-line default-case
-                        switch (pole[keyName]) {
-                            case 'number':
-                            return <Card.Text key={idx}>{`${keyName}: ${data[keyName]}`}</Card.Text>;
-                            case 'text':
-                            return <Card.Text key={idx}>{`${keyName}: ${data[keyName]}`}</Card.Text>;
-                            case 'textarea':
-                            return <MarkdownPreview value={data[keyName]} />;
-                            case 'date':
-                            return <Card.Text key={idx}>{`${keyName}: ${data[keyName]}`}</Card.Text>;
-                            case 'checkbox':
-                            return <Card.Text key = {idx}>{`${keyName}: ${(data[keyName])?('Да'):('Нет')}`}</Card.Text>;
-                        }
-                    })}
-                    {el.tag.map((teg,indx)=>{
-                        return (
-                            <Tag key={`${indx}`} light disabled color="#28a745">{teg}</Tag>
-                        )
-                    })}
-                </Card.Body>
+                <ItemBody data={data} pole={pole} el={el} />
                 <LikeButton id={props.location.pathname.slice(6)}/>
                 {(isAuthenticated && user.sub == el.idUser || localStorage.getItem('admin'))&&(
                     <div>

@@ -1,14 +1,15 @@
-import React, {useState, useEffect, useCallback, useRef} from 'react';
+import React, {useState, useEffect, useCallback, useRef, Suspense} from 'react';
 import { Form, Button, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
-import TabelItems from '../components/TableItems';
 import io from 'socket.io-client';
 import Tags from "@yaireo/tagify/dist/react.tagify"
 import '@yaireo/tagify/dist/tagify.css';
 import Search from '../../HomePage/containers/Search';
 import { useTranslation } from 'react-i18next';
 import { CSVLink } from "react-csv";
+
+const TabelItems = React.lazy(()=>import('../components/TableItems'));
 
 export default function CreateItem(props) {
     const socket = io({ transports: [ 'websocket', 'polling' ], reconnect: true });
@@ -23,7 +24,6 @@ export default function CreateItem(props) {
     const { t, i18n } = useTranslation();
     const [headersCSV, setHeadersCSV] = useState(null);
     const [resultItems, setResultItems] = useState(null);
-    const [loading, setLoading] = useState(true)
 
     useEffect(()=>{
         setTagifyProps({loading: true})
@@ -61,7 +61,6 @@ export default function CreateItem(props) {
             const arrTags = data.map(el=>el.tag);
             const newArrTags = arrTags.flat();
             const uniqTags =newArrTags.filter((item, idx) => newArrTags.indexOf(item) === idx);
-            setLoading(false);
             setTagifyProps((lastProps) => ({
                 ...lastProps,
                 whitelist: uniqTags,
@@ -181,8 +180,8 @@ export default function CreateItem(props) {
                 {(isAuthenticated)&&(<Link className='back' to={`/`}>{t('backMainL')}</Link>)}
                 {(isAuthenticated&&id==localStorage.getItem('userId'))&&(
                 <Link className='back' to={`/user/${id}`}>{t('backCollectL')}</Link>)}
-                <a className='back nav' href="#createItems">Создать</a>
-                <a className='back nav' href="#myItems">Item´s</a>  
+                <a className='back nav' href="#createItems">{t('createL')}</a>
+                <a className='back nav' href="#myItems">{t('myItemsL')}</a>  
                 {(headersCSV)&&(<div style={{float: 'right', marginTop:'3px', marginLeft:'8px'}}>
                     <CSVLink className='back' data={headersCSV} filename='collection.csv' separator={';'}>
                         Download
@@ -256,8 +255,9 @@ export default function CreateItem(props) {
                 {createOptions()}
             </div>
         </div>
-        {(loading)?(<Spinner animation="border" variant="primary" />)
-                  :(<TabelItems dataItems={(resultItems)?resultItems:dataItems} idCollect={props.location.pathname.slice(12)} />)}  
+        <Suspense fallback={<Spinner animation="border" variant="primary" />}>
+            <TabelItems dataItems={(resultItems)?resultItems:dataItems} idCollect={props.location.pathname.slice(12)} />
+        </Suspense> 
     </div>
     )
 }

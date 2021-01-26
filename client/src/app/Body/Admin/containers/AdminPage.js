@@ -1,12 +1,12 @@
-import React, { useCallback } from 'react';
-import { useState, useEffect } from "react";
+import React, {  useState, useEffect, useCallback, Suspense} from 'react';
 import io from 'socket.io-client';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import AdminTableRow from '../components/AdminTableRow';
 import AdminTableHead from '../components/AdminTableHead';
 import AdminButtons from '../components/AdminButtons';
 import { Table, Spinner } from 'react-bootstrap';
+
+const AdminTableRow = React.lazy(()=>import('../components/AdminTableRow'));
 
 function AdminPage() {
     const [data, setData] = useState([]);
@@ -108,9 +108,10 @@ function AdminPage() {
                     <thead>
                         <AdminTableHead selectAll={selectAll} checkedAll={checkedAll} />
                     </thead>
-                    {(data.length==0)?(<Spinner animation="border" variant="primary" />)
-                                     :(<AdminTableRow data={data} adminList={adminList} handleChange={handleChange} 
-                                        checkedItems={checkedItems} idUsers={idUsers} />)}   
+                    <Suspense fallback={<Spinner animation="border" variant="primary" />}>
+                        <AdminTableRow data={data} adminList={adminList} handleChange={handleChange} 
+                                       checkedItems={checkedItems} idUsers={idUsers} />
+                    </Suspense> 
                 </Table>
             </div>
             <div style={{height:'500px'}}></div>

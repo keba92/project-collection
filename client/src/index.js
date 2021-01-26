@@ -2,13 +2,14 @@ import React, {Suspense} from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { Auth0Provider } from '@auth0/auth0-react';
-import './i18n'
+import './i18n';
+import { Spinner } from 'react-bootstrap';
 
 const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
 
 ReactDOM.render(
-  <Suspense fallback={(<div>Loading ...</div>)}>
+  <Suspense fallback={<Spinner animation="border" variant="primary" />}>
     <Auth0Provider
     domain={domain}
     clientId={clientId}

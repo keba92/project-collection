@@ -1,14 +1,15 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import TabelItems from '../../UserPage/components/TableItems';
+import React, { useState, useEffect, useMemo, Suspense } from 'react';
 import UserProfileButton from '../components/UserProfileButton';
 import io from 'socket.io-client';
 import AdminProfileButton from '../components/AdminProfileButton';
 import { Spinner } from 'react-bootstrap';
 import Search from './Search';
 import { useTranslation } from 'react-i18next';
-import TagsCloud from '../components/TagsCloud';
 import HomeShowResult from '../components/HomeShowResult';
-import HomeCollect from '../components/HomeCollect';
+
+const TagsCloud = React.lazy(()=>import('../components/TagsCloud'));
+const TabelItems = React.lazy(()=>import('../../UserPage/components/TableItems'));
+const HomeCollect = React.lazy(()=>import('../components/HomeCollect'));
 
 export default function Home() {
     const [items, setItems] = useState([]);
@@ -56,17 +57,20 @@ export default function Home() {
             {(choiseTag)&&(<HomeShowResult items={items} choiseTag={choiseTag} setChoiseTag={setChoiseTag} />)}
             <div className='cloud-div'>
                 <div >
-                    {(items.length==0)?(<Spinner animation="border" variant="primary" />)
-                                      :(<TagsCloud setChoiseTag={setChoiseTag} items={items}/>)}
+                    <Suspense fallback={<Spinner animation="border" variant="primary" />}>
+                        <TagsCloud setChoiseTag={setChoiseTag} items={items}/>
+                    </Suspense>
                 </div>
             </div>
             <h1>{t('newItemsH')}</h1>
-            {(items.length==0)?(<Spinner animation="border" variant="primary" />)
-                              :(<TabelItems dataItems={(items.length>3)?(items.slice(items.length-3,items.length)):(items)} idCollect=''/>)}
+            <Suspense fallback={<Spinner animation="border" variant="primary" />}>
+                <TabelItems dataItems={(items.length>3)?(items.slice(items.length-3,items.length)):(items)} idCollect=''/>
+            </Suspense>
             <h1>{t('bigCollectionH')}</h1>
             <div>
-                {(dataCollect.length==0)?(<Spinner animation="border" variant="primary" />)
-                                        :(<HomeCollect countEl={countEl} dataCollect={dataCollect} />)}
+                <Suspense fallback={<Spinner animation="border" variant="primary" />}>
+                    <HomeCollect countEl={countEl} dataCollect={dataCollect} />
+                </Suspense>
             </div>
         </div>
     )

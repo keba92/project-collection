@@ -1,13 +1,14 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
 import { Form, Button, Spinner } from 'react-bootstrap';
-import TableCollection from '../components/TableCollection';
 import io from 'socket.io-client';
 import { useTranslation } from 'react-i18next';
 import {useDropzone} from 'react-dropzone';
 import { Image } from 'cloudinary-react';
 import FormInput from '../components/FormInput';
 import FormOption from '../components/FormOption';
+
+const TableCollection = React.lazy(()=>import('../components/TableCollection'));
 
 export default function CreateCollection(props) {
     const socket = io({ transports: [ 'websocket', 'polling' ], reconnect: true });
@@ -21,7 +22,6 @@ export default function CreateCollection(props) {
     const [dataCollect, setDataCollect] = useState([]);
     const { user, isAuthenticated } = useAuth0();
     const [idUser, setIdUser] = useState(null);
-    const [loading, setLoading] = useState(true)
     const { idLink } = props;
     const { t, i18n } = useTranslation();
 
@@ -46,7 +46,6 @@ export default function CreateCollection(props) {
               })
               socket.on('getDataCollect',(data)=>{
                   setDataCollect(data);
-                  setLoading(false);
                 });
         }))
       }
@@ -160,8 +159,9 @@ export default function CreateCollection(props) {
             </Form>
             </div>
             <h1 id='myCollect' className='create'>{t('myCollectionH')}</h1>
-            {(loading)?(<Spinner animation="border" variant="primary" />)
-                      :(<TableCollection dataCollect={dataCollect}/>)}   
+            <Suspense fallback={<Spinner animation="border" variant="primary" />}>
+                <TableCollection dataCollect={dataCollect}/>
+            </Suspense> 
         </div>
     )
 }

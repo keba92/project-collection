@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import Profile from '../components/Profile';
 import { useTranslation } from 'react-i18next';
 import Flag from 'react-world-flags';
@@ -33,20 +33,20 @@ function Header() {
     }
   })
 
-  const handleClick = useCallback((lang) =>{
+  const handleClick = (lang) =>{
     i18n.changeLanguage(lang);
     localStorage.setItem('lang',lang);
     saveStore();
-  },[])
+  }
 
-  const changeTheame = useCallback((value) =>{
+  const changeTheame = (value) =>{
     (value !== 'light')?(DarkTheme()):(LightTheme());
     setTheme(value);
     localStorage.setItem('theme',value);
     saveStore();
-  }, [])
+  }
   
-  const saveStore = useCallback(() =>{
+  const saveStore = () =>{
     if(isAuthenticated){
       socket.emit('userData', {
         id: user.sub,
@@ -54,7 +54,7 @@ function Header() {
         lang: (localStorage.getItem('lang'))?(localStorage.getItem('lang')):'ru'
       })
     }
-  }, [user, isAuthenticated])
+  }
 
   if(!theame&&!isAuthenticated) {
     LightTheme();

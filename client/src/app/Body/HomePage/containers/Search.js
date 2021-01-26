@@ -1,8 +1,9 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, Suspense} from 'react';
 import io from 'socket.io-client';
-import ResultSearch from '../components/ResultSearch';
 import { useTranslation } from 'react-i18next';
-import { InputGroup, FormControl, Button } from 'react-bootstrap';
+import { InputGroup, FormControl, Button, Spinner } from 'react-bootstrap';
+
+const ResultSearch = React.lazy(()=>import('../components/ResultSearch'))
 
 export default function Search() {
     const socket = io({ transports: [ 'websocket', 'polling' ], reconnect: true });
@@ -56,7 +57,9 @@ return (
                         onClick={()=>setOption(null)}>
                             Close
                 </Button>
-                <ResultSearch data = {option}/>
+                <Suspense fallback={<Spinner animation="border" variant="primary" />}>
+                    <ResultSearch data = {option}/>
+                </Suspense>
             </div>
             )}
     </div>
