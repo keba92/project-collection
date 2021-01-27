@@ -33,18 +33,18 @@ function Header() {
     }
   })
 
-  const handleClick = useCallback((lang) =>{
+  const handleClick = (lang) =>{
     i18n.changeLanguage(lang);
     localStorage.setItem('lang',lang);
     saveStore();
-  },[i18n, saveStore])
+  }
 
-  const changeTheame = useCallback((value) =>{
+  const changeTheame = (value) =>{
     (value !== 'light')?(DarkTheme()):(LightTheme());
     setTheme(value);
     localStorage.setItem('theme',value);
     saveStore();
-  },[DarkTheme, LightTheme, setTheme, saveStore])
+  }
   
   const saveStore = () =>{
     if(isAuthenticated){
