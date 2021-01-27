@@ -168,7 +168,6 @@ export default function CreateItem(props) {
                 })
             }
         }
-
     } catch(e) {
         console.log(e);
     }

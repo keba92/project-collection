@@ -60,6 +60,7 @@ export default function EditCollection(props) {
         if(namePole !=='' && typePole !==''){
             poleItem[`${namePole}`] = typePole;
         }
+        alert(`${t('choisePoleF')} ${JSON.stringify(poleItem)}`)
         setPoleItem(poleItem);
     }, [namePole, typePole])
 

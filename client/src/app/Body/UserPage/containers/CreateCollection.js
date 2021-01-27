@@ -71,6 +71,7 @@ export default function CreateCollection(props) {
             poleItem[`${namePole}`] = typePole;
         }
         setPoleItem(poleItem);
+        alert(`${t('choisePoleF')} ${JSON.stringify(poleItem)}`)
     }, [namePole, typePole, poleItem])
 
     const onDrop = useCallback(async(acceptedFiles) => {
@@ -150,7 +151,6 @@ export default function CreateCollection(props) {
                     <Button variant="primary" type="submit" onClick={addPoleItem}>
                         {t('addB')}
                     </Button>
-                    <Form.Label>{t('choisePoleF')} {JSON.stringify(poleItem)} </Form.Label>
                   </Form.Group>
                 </Form>
                 <Button variant="primary" type="submit" onClick={addCollection}>

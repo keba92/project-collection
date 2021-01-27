@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import ItemBody from '../components/ItemBody';
 
 export default function ItemInfo(props) {
-    const socket = io({ transports: [ 'websocket', 'polling' ], reconnect: true });
+    const socket = io("http://localhost:3001/",{ transports: [ 'websocket', 'polling' ], reconnect: true });
     const { user, isAuthenticated } = useAuth0();
     const [item, setItem] = useState([]);
     const { t, i18n } = useTranslation();
