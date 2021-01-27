@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Profile from '../components/Profile';
 import { useTranslation } from 'react-i18next';
 import Flag from 'react-world-flags';
@@ -12,7 +12,7 @@ function Header() {
   const { i18n } = useTranslation();
   const [theame, setTheme] = useState(null);
   const [language, setLanguage] = useState(null)
-  const socket = io("http://localhost:3001/",{ transports: [ 'websocket', 'polling' ], reconnect: true });
+  const socket = io({ transports: [ 'websocket', 'polling' ], reconnect: true });
   const { user, isAuthenticated} = useAuth0();
 
   useEffect(()=>{
@@ -33,18 +33,18 @@ function Header() {
     }
   })
 
-  const handleClick = (lang) =>{
+  const handleClick = useCallback((lang) =>{
     i18n.changeLanguage(lang);
     localStorage.setItem('lang',lang);
     saveStore();
-  }
+  },[i18n, saveStore])
 
-  const changeTheame = (value) =>{
+  const changeTheame = useCallback((value) =>{
     (value !== 'light')?(DarkTheme()):(LightTheme());
     setTheme(value);
     localStorage.setItem('theme',value);
     saveStore();
-  }
+  },[DarkTheme, LightTheme, setTheme, saveStore])
   
   const saveStore = () =>{
     if(isAuthenticated){
