@@ -7,7 +7,7 @@ const ResultSearch = (props) => {
   const { t, i18n } = useTranslation();
 
   return (
-     <div className='result-search'>
+     <div id='result-block' className='result-search'>
         {(data.length!=0)&&(<h4>{t('resultSearchH')}</h4>)}
         <TabelItems dataItems={data} idCollect=''/>
      </div>

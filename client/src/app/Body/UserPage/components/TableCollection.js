@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useMemo, useState } from 'react';
-import { Card } from 'react-bootstrap';
+import { Card, Button } from 'react-bootstrap';
 import {  MarkdownPreview  } from 'react-marked-markdown';
 import { Link } from 'react-router-dom';
 import DeleteButtonCollect from '../containers/DeleteButtonCollect';
@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { Image } from 'cloudinary-react';
 
 function TableCollection(props) {
-    const { dataCollect } = props;
+    const { dataCollect, setCollect } = props;
     const { user, isAuthenticated} = useAuth0();
     const { t, i18n } = useTranslation();
     const [id, setId] = useState(null);
@@ -27,6 +27,8 @@ function TableCollection(props) {
                         <Card.Title>{el.name}</Card.Title>
                         <Card.Text>{el.collections}</Card.Text>
                         <MarkdownPreview value={el.description} />
+                        {!(id)&&(<Button variant="primary" type="submit" name={el._id} onClick={(e)=>{
+                        setCollect(e.target.name)}}>{t('openL')}</Button>)}
                         {(isAuthenticated&&user.sub==el.id||id)&&(<Link to={`/collection/${el._id}`} > {t('openL')} </Link>)}
                         {(isAuthenticated&&user.sub==el.id||id)&&(<Link to={`/editCollection/${el._id}`} > {t('editL')} </Link>)}
                         {(isAuthenticated&&user.sub==el.id||id)&&(<DeleteButtonCollect id={el._id} />)}

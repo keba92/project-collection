@@ -6,7 +6,6 @@ import LikeButton from '../../ItemPage/containers/LikeButton';
 import { useTranslation } from 'react-i18next';
 import ItemBody from '../../ItemPage/components/ItemBody';
 
-
 function TabelItems(props) {
     const {dataItems, idCollect} = props;
     const { isAuthenticated } = useAuth0();

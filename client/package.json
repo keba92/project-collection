@@ -17,6 +17,7 @@
     "i18next": "^19.8.4",
     "i18next-browser-languagedetector": "^6.0.1",
     "i18next-http-backend": "^1.0.21",
+    "jest-dom": "^4.0.0",
     "js-sha256": "^0.9.0",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.0",
@@ -32,6 +33,7 @@
     "react-scripts": "4.0.1",
     "react-select-search": "^2.2.4",
     "react-tagcloud": "^2.0.0",
+    "react-test-render": "^1.1.2",
     "react-world-flags": "^1.4.0",
     "socket.io-client": "^3.0.4",
     "web-vitals": "^0.2.4"

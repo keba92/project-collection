@@ -69,7 +69,7 @@ export default function Home() {
             <h1>{t('bigCollectionH')}</h1>
             <div>
                 <Suspense fallback={<Spinner animation="border" variant="primary" />}>
-                    <HomeCollect countEl={countEl} dataCollect={dataCollect} />
+                    <HomeCollect countEl={countEl} dataCollect={dataCollect} items={items}/>
                 </Suspense>
             </div>
         </div>
