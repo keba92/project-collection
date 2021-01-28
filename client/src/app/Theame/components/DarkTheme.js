@@ -1,12 +1,12 @@
 const DarkTheme = () => {
-    const last = document.head.lastChild;
-    if (last.className == 'theme-head') {
-      document.head.removeChild(last);
-    } 
-    const style = document.createElement('style');
-    style.setAttribute('class', 'theme-head')
-    document.head.appendChild(style);
-    style.innerHTML = `
+  const last = document.head.lastChild;
+  if (last.className == 'theme-head') {
+    document.head.removeChild(last);
+  }
+  const style = document.createElement('style');
+  style.setAttribute('class', 'theme-head');
+  document.head.appendChild(style);
+  style.innerHTML = `
 
         html, body {
           width: 100%;
@@ -21,7 +21,7 @@ const DarkTheme = () => {
         * {
             margin: 0;
             padding: 0;
-          }
+        }
           
           .header{
             display: -webkit-box;
@@ -145,7 +145,6 @@ const DarkTheme = () => {
           a {
             margin-left: 1%;
             padding: 3px;
-            border-radius: 3px;
             text-decoration: none;
             color: rgb(0, 0, 0);
             text-align: center;
@@ -383,8 +382,7 @@ const DarkTheme = () => {
           flex-wrap: wrap;
           justify-content: start;
         }
-        `
-    
-}
+        `;
+};
 
 export default DarkTheme;

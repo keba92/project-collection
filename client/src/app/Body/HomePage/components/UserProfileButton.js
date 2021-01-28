@@ -9,11 +9,11 @@ const UserProfileButton = () => {
 
   return (
     isAuthenticated && (
-      <Link className='back' to={`/user/${user.sub}`}>
+      <Link className="back" to={`/user/${user.sub}`}>
         {t('userPageL')}
       </Link>
     )
-  )
-}
+  );
+};
 
 export default memo(UserProfileButton);

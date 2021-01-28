@@ -10,17 +10,19 @@ const LogoutButton = () => {
   const out = () => {
     logout();
     localStorage.clear();
-  }
+  };
 
   return (
     isAuthenticated && (
-      <Button onClick={() => {
-        out();
-      }}>
+      <Button
+        onClick={() => {
+          out();
+        }}
+      >
         {t('logOutB')}
       </Button>
     )
-  )
-}
+  );
+};
 
 export default memo(LogoutButton);

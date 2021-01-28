@@ -13,7 +13,7 @@ const LoginButton = () => {
         {t('logInB')}
       </Button>
     )
-  )
-}
+  );
+};
 
 export default memo(LoginButton);

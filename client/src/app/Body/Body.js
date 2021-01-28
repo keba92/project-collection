@@ -10,9 +10,8 @@ import AdminPage from './Admin/containers/AdminPage';
 import EditCollection from './UserPage/containers/EditCollection';
 
 function Body() {
-
   return (
-    <div className='body-page'>
+    <div className="body-page">
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={Home} />

@@ -1,12 +1,12 @@
 const LightTheme = () => {
-    const last = document.head.lastChild;
-    if (last.className == 'theme-head') {
-      document.head.removeChild(last);
-    } 
-    const style = document.createElement('style');
-    style.setAttribute('class', 'theme-head')
-    document.head.appendChild(style);
-    style.innerHTML = `
+  const last = document.head.lastChild;
+  if (last.className == 'theme-head') {
+    document.head.removeChild(last);
+  }
+  const style = document.createElement('style');
+  style.setAttribute('class', 'theme-head');
+  document.head.appendChild(style);
+  style.innerHTML = `
       html, body {
           width: 100%;
             height: 100%;
@@ -144,7 +144,6 @@ const LightTheme = () => {
       a {
           margin-left: 1%;
           padding: 3px;
-          border-radius: 3px;
           text-decoration: none;
           color: rgb(0, 0, 0);
           text-align: center;
@@ -384,7 +383,7 @@ const LightTheme = () => {
       .nav:hover {
         background-color: #0d9dfd;
       }
-        `
-}
+        `;
+};
 
 export default LightTheme;
