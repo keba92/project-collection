@@ -1,6 +1,6 @@
 {
   "name": "server",
-  "version": "1.2.0",
+  "version": "1.11.0",
   "description": "",
   "scripts": {
     "start": "./node_modules/.bin/concurrently \"npm run server\" \"npm run client\"",

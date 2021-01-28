@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<tr>
+  <th>
+    Check All
+    <br />
+    <input
+      checked={[Function]}
+      className="form-check-input"
+      onChange={[Function]}
+      type="checkbox"
+    />
+  </th>
+  <th>
+    ID
+  </th>
+  <th>
+    nameT
+  </th>
+  <th>
+    emailT
+  </th>
+  <th>
+    dateRegT
+  </th>
+  <th>
+    dateLastT
+  </th>
+  <th>
+    statusT
+  </th>
+  <th>
+    adminT
+  </th>
+</tr>
+`;

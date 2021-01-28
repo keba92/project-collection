@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<span
+  className="toolBar"
+>
+  <button
+    className="btn"
+  >
+    <i
+      className="fa fa-close"
+      onClick={[Function]}
+      title="block"
+    >
+      blockI
+    </i>
+  </button>
+  <button
+    className="btn"
+  >
+    <i
+      className="fa fa-trash"
+      onClick={[Function]}
+    >
+      deleteI
+    </i>
+  </button>
+  <button
+    className="btn"
+  >
+    <i
+      className="fa fa-check"
+      onClick={[Function]}
+      title="unblock"
+    >
+      unblockI
+    </i>
+  </button>
+  <button
+    className="btn"
+    onClick={[Function]}
+  >
+    <i
+      className="fa fa-check"
+    >
+      adminI
+    </i>
+  </button>
+</span>
+`;

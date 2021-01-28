@@ -4,7 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on forthetraveler.netlify.app(https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.9.0] - 2021-01-18
+## [1.11.0] - 2021-01-28
+### Added
+
+- Added some tests  for components.
+
+### Changed
+
+- Project was optimized.
+
+## [1.10.0] - 2021-01-21
 ### Changed
 
 - Сhanged project structure.

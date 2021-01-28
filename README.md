@@ -1,6 +1,6 @@
 # Final-Progect-Collection
 
-[v.1.10.0](CHANGELOG.md)
+[v.1.11.0](CHANGELOG.md)
 
 ### Итоговый проект Itransition.
 
