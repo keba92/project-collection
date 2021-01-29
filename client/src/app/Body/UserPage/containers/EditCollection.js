@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Form, Button, Spinner } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import io from 'socket.io-client';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
@@ -8,6 +7,7 @@ import { useDropzone } from 'react-dropzone';
 import { Image } from 'cloudinary-react';
 import FormInput from '../components/FormInput';
 import FormOption from '../components/FormOption';
+import NavMenu from '../../HomePage/components/NavMenu';
 
 export default function EditCollection(props) {
   const id = props.location.pathname.slice(16);
@@ -105,11 +105,7 @@ export default function EditCollection(props) {
   return (
     collectionData.length != 0 && (
       <div>
-        <div className="button-main flex-button">
-          <Link className="back" to={`/user/${newId}`}>
-            {t('backCollectL')}
-          </Link>
-        </div>
+        <NavMenu page="editCollect" id={newId} />
         <div className="create">
           {loading ? (
             <Spinner animation="border" variant="primary" />

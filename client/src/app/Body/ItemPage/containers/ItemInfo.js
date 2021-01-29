@@ -8,6 +8,7 @@ import DeleteButtonItem from './DeleteButtonItem';
 import LikeButton from './LikeButton';
 import BoxComment from './BoxComment';
 import ItemBody from '../components/ItemBody';
+import NavMenu from '../../HomePage/components/NavMenu';
 
 export default function ItemInfo(props) {
   const socket = io({
@@ -51,11 +52,7 @@ export default function ItemInfo(props) {
 
   return (
     <div>
-      <div className="flex-button">
-        <Link className="back" to="/">
-          {t('backMainL')}
-        </Link>
-      </div>
+      <NavMenu page="item" />
       <div className="content-item">
         {item.length == 0 ? <Spinner animation="border" variant="primary" /> : makeItem}
         {item.length == 0 ? (

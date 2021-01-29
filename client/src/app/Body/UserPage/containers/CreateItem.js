@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useCallback, useRef, Suspense } from 'react';
 import { Form, Button, Spinner } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import io from 'socket.io-client';
 import Tags from '@yaireo/tagify/dist/react.tagify';
 import '@yaireo/tagify/dist/tagify.css';
 import { useTranslation } from 'react-i18next';
-import { CSVLink } from 'react-csv';
-import Search from '../../HomePage/containers/Search';
+import NavMenu from '../../HomePage/components/NavMenu';
 
 const TabelItems = React.lazy(() => import('../components/TableItems'));
 
@@ -192,34 +190,7 @@ export default function CreateItem(props) {
 
   return (
     <div>
-      <div className="button-main">
-        <div className="buttons flex-button">
-          {isAuthenticated && (
-            <Link className="back" to={`/`}>
-              {t('backMainL')}
-            </Link>
-          )}
-          {isAuthenticated && id == localStorage.getItem('userId') && (
-            <Link className="back" to={`/user/${id}`}>
-              {t('backCollectL')}
-            </Link>
-          )}
-          <a className="back nav" href="#createItems">
-            {t('createL')}
-          </a>
-          <a className="back nav" href="#myItems">
-            {t('myItemsL')}
-          </a>
-          {headersCSV && (
-            <div style={{ float: 'right', marginTop: '3px', marginLeft: '8px' }}>
-              <CSVLink className="back" data={headersCSV} filename="collection.csv" separator={';'}>
-                Download
-              </CSVLink>
-            </div>
-          )}
-        </div>
-        <Search />
-      </div>
+      <NavMenu page="createItem" id={id} headersCSV={headersCSV} />
       {((isAuthenticated && id == localStorage.getItem('userId')) ||
         JSON.parse(localStorage.getItem('arrAdmins')).includes(user.sub)) && (
         <div className="create">

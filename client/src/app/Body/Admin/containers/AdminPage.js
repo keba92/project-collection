@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import io from 'socket.io-client';
-import { Link } from 'react-router-dom';
 import { Table, Spinner } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import AdminTableHead from '../components/AdminTableHead';
 import AdminButtons from '../components/AdminButtons';
+import NavMenu from '../../HomePage/components/NavMenu';
 
 const AdminTableRow = React.lazy(() => import('../components/AdminTableRow'));
 
@@ -116,11 +116,7 @@ function AdminPage() {
 
   return (
     <div className="admin-page">
-      <div className="button-main flex-button">
-        <Link className="back" to="/">
-          {t('backMainL')}
-        </Link>
-      </div>
+      <NavMenu page="admin" />
       <div className="users">
         <h1>{t('usersH')}</h1>
         <AdminButtons blockUser={blockUser} deleteUsers={deleteUsers} makeAdmin={makeAdmin} />

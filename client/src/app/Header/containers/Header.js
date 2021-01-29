@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import Profile from '../components/Profile';
 import { useTranslation } from 'react-i18next';
 import Flag from 'react-world-flags';

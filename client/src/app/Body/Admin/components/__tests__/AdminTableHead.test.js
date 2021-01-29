@@ -6,11 +6,11 @@ import '@testing-library/jest-dom';
 
 afterEach(cleanup);
 
-const testFn = ()=>{
-    return 'test';
-}
+const testFn = () => {
+  return 'test';
+};
 
 it('matches snapshot', () => {
-    const tree = renderer.create(<AdminTableHead selectAll={testFn} checkedAll={testFn} />).toJSON();
-    expect(tree).toMatchSnapshot();
-})
+  const tree = renderer.create(<AdminTableHead selectAll={testFn} checkedAll={testFn} />).toJSON();
+  expect(tree).toMatchSnapshot();
+});

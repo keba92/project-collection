@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Spinner } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import io from 'socket.io-client';
 import { useTranslation } from 'react-i18next';
+import NavMenu from '../../HomePage/components/NavMenu';
 
 export default function EditItem(props) {
   const id = props.location.pathname.slice(10);
@@ -43,11 +43,7 @@ export default function EditItem(props) {
 
   return (
     <div className="edit-item">
-      <div className="button-main flex-button">
-        <Link className="back" to={`/item/${id}`}>
-          {t('backItemL')}
-        </Link>
-      </div>
+      <NavMenu page="editItem" id={id} />
       <div className="create">
         {itemData.length == 0 ? (
           <Spinner animation="border" variant="primary" />

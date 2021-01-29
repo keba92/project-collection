@@ -2,10 +2,8 @@ import React, { useState, useEffect, useMemo, Suspense } from 'react';
 import io from 'socket.io-client';
 import { Spinner } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import AdminProfileButton from '../components/AdminProfileButton';
-import UserProfileButton from '../components/UserProfileButton';
-import Search from './Search';
 import HomeShowResult from '../components/HomeShowResult';
+import NavMenu from '../components/NavMenu';
 
 const TagsCloud = React.lazy(() => import('../components/TagsCloud'));
 const TabelItems = React.lazy(() => import('../../UserPage/components/TableItems'));
@@ -54,13 +52,7 @@ export default function Home() {
 
   return (
     <div className="home-page">
-      <div className="button-main">
-        <div className="buttons flex-button">
-          <AdminProfileButton />
-          <UserProfileButton />
-        </div>
-        <Search />
-      </div>
+      <NavMenu page="home" />
       {choiseTag && (
         <HomeShowResult items={items} choiseTag={choiseTag} setChoiseTag={setChoiseTag} />
       )}
