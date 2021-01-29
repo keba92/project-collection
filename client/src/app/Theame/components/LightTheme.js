@@ -383,7 +383,14 @@ const LightTheme = () => {
       .nav:hover {
         background-color: #0d9dfd;
       }
-        `;
+
+      .navMenu {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+    `;
 };
 
 export default LightTheme;

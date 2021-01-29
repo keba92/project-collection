@@ -46,6 +46,13 @@ const DarkTheme = () => {
             min-height: 100%;
           }
 
+          .navMenu {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+          }
+
           .button-main {
             display: -webkit-box;
             display: -ms-flexbox;
@@ -58,7 +65,7 @@ const DarkTheme = () => {
                     justify-content: space-between;
             background-color: #0b2937;
             padding-top: 15px;
-            z-index: 100;
+            
           }
 
           .input-search {
