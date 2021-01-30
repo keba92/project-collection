@@ -319,8 +319,8 @@ const LightTheme = () => {
 
       .body-page {
         background-color: #9fa293;
-        min-height: 100%;
-        color: #2b2e2d;;
+        height: 100%;
+        color: #2b2e2d;
       }
 
       .big-collect {
@@ -389,6 +389,21 @@ const LightTheme = () => {
         position: sticky;
         top: 0;
         z-index: 100;
+      }
+
+      .footer {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-flow: column;
+            flex-flow: column;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+        background-color: #191919;
+        color: #78dde2;
+        height: 20%;
+        padding: 10px;
       }
     `;
 };

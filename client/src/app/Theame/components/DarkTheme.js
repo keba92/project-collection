@@ -389,6 +389,21 @@ const DarkTheme = () => {
           flex-wrap: wrap;
           justify-content: start;
         }
+
+        .footer {
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-flow: column;
+              flex-flow: column;
+          -webkit-box-align: center;
+              -ms-flex-align: center;
+                  align-items: center;
+          background-color: #191919;
+          color: #78dde2;
+          height: 20%;
+          padding: 10px;
+        }
         `;
 };
 

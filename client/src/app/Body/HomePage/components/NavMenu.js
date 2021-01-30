@@ -14,7 +14,7 @@ function NavMenu(props) {
   const { t, i18n } = useTranslation();
   return (
     isAuthenticated && (
-      <Navbar className='navMenu' collapseOnSelect expand="lg" bg="dark" variant="dark">
+      <Navbar className="navMenu" collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">

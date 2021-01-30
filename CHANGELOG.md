@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on forthetraveler.netlify.app(https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.12.0] - 2021-01-30
+### Added
+
+- Added footer.
+- Added burger menu.
+
+### Changed
+
+- Slightly improved design.
+
 ## [1.11.0] - 2021-01-28
 ### Added
 
