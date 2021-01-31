@@ -1,5 +1,6 @@
 import React, { memo, useCallback, useMemo } from 'react';
 import { TagCloud } from 'react-tagcloud';
+import PropTypes from 'prop-types';
 
 function TagsCloud(props) {
   const { setChoiseTag, items } = props;
@@ -48,5 +49,10 @@ function TagsCloud(props) {
 
   return <TagCloud tags={arrTags} minSize={3} maxSize={8} renderer={customRenderer} />;
 }
+
+TagsCloud.propTypes = {
+  setChoiseTag: PropTypes.func,
+  items: PropTypes.array,
+};
 
 export default memo(TagsCloud);

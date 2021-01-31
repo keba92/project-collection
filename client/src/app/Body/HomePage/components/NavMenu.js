@@ -4,6 +4,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { CSVLink } from 'react-csv';
+import PropTypes from 'prop-types';
 import Search from '../containers/Search';
 import AdminProfileButton from './AdminProfileButton';
 import UserProfileButton from './UserProfileButton';
@@ -76,5 +77,11 @@ function NavMenu(props) {
     )
   );
 }
+
+NavMenu.propTypes = {
+  page: PropTypes.string,
+  id: PropTypes.string,
+  headersCSV: PropTypes.array,
+};
 
 export default memo(NavMenu);

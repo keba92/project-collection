@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import io from 'socket.io-client';
 import { useAuth0 } from '@auth0/auth0-react';
+import PropTypes from 'prop-types';
 
-export default function LikeButton(props) {
+function LikeButton(props) {
   const socket = io({
     transports: ['websocket', 'polling'],
     reconnect: true,
@@ -57,3 +58,9 @@ export default function LikeButton(props) {
     </>
   );
 }
+
+LikeButton.propTypes = {
+  id: PropTypes.string,
+};
+
+export default LikeButton;

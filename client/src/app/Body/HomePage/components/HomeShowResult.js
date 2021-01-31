@@ -1,6 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import ResultSearch from './ResultSearch';
+import PropTypes from 'prop-types';
 
 function HomeShowResult(props) {
   const { items, choiseTag, setChoiseTag } = props;
@@ -32,5 +33,11 @@ function HomeShowResult(props) {
     )
   );
 }
+
+HomeShowResult.propTypes = {
+  items: PropTypes.array,
+  choiseTag: PropTypes.string,
+  setChoiseTag: PropTypes.func,
+};
 
 export default memo(HomeShowResult);

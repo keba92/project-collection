@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 import { useTranslation } from 'react-i18next';
 import NavMenu from '../../HomePage/components/NavMenu';
 
-export default function EditItem(props) {
+function EditItem(props) {
   const id = props.location.pathname.slice(10);
   const socket = io({
     transports: ['websocket', 'polling'],
@@ -115,3 +115,5 @@ export default function EditItem(props) {
     </div>
   );
 }
+
+export default EditItem;

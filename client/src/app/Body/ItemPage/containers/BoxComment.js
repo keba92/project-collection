@@ -3,9 +3,10 @@ import { InputGroup, FormControl, Button } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
 import io from 'socket.io-client';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 import Comment from '../components/Comment';
 
-export default function BoxComment(props) {
+function BoxComment(props) {
   const [textComment, setTextComment] = useState('');
   const [newArrComment, setNewArrComment] = useState([]);
   const { user, isAuthenticated } = useAuth0();
@@ -80,3 +81,9 @@ export default function BoxComment(props) {
     </div>
   );
 }
+
+BoxComment.propTypes = {
+  id: PropTypes.string,
+};
+
+export default BoxComment;

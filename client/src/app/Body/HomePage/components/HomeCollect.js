@@ -1,6 +1,7 @@
 import React, { memo, useMemo, useState } from 'react';
 import TableCollection from '../../UserPage/components/TableCollection';
 import HomeShowResult from './HomeShowResult';
+import PropTypes from 'prop-types';
 
 function HomeCollect(props) {
   const { countEl, dataCollect, items } = props;
@@ -29,5 +30,11 @@ function HomeCollect(props) {
     </div>
   );
 }
+
+HomeCollect.propTypes = {
+  countEl: PropTypes.object,
+  dataCollect: PropTypes.array,
+  items: PropTypes.array,
+};
 
 export default memo(HomeCollect);

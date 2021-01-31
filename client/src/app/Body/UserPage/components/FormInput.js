@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 
 function FormInput(props) {
   const { idContrl, lable, type, placeholder, setFunc, value, data } = props;
@@ -30,5 +31,15 @@ function FormInput(props) {
     </Form.Group>
   );
 }
+
+FormInput.propTypes = {
+  idContrl: PropTypes.number,
+  lable: PropTypes.string,
+  type: PropTypes.string,
+  placeholder: PropTypes.string,
+  setFunc: PropTypes.func,
+  value: PropTypes.string,
+  data: PropTypes.string,
+};
 
 export default memo(FormInput);

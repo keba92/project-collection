@@ -1,6 +1,7 @@
 import React, { memo, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import AdminCheckbox from './AdminCheckbox';
+import PropTypes from 'prop-types';
 
 function AdminTableRow(props) {
   const { data, adminList, handleChange, checkedItems, idUsers } = props;
@@ -34,5 +35,13 @@ function AdminTableRow(props) {
 
   return <tbody>{tableTemplate}</tbody>;
 }
+
+AdminTableRow.propTypes = {
+  data: PropTypes.array,
+  adminList: PropTypes.array,
+  handleChange: PropTypes.func,
+  checkedItems: PropTypes.object,
+  idUsers: PropTypes.array,
+};
 
 export default memo(AdminTableRow);

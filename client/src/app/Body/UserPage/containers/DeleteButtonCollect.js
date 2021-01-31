@@ -2,8 +2,9 @@ import React, { useCallback } from 'react';
 import { Button } from 'react-bootstrap';
 import io from 'socket.io-client';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 
-export default function DeleteButtonCollect(props) {
+function DeleteButtonCollect(props) {
   const { id } = props;
   const socket = io({
     transports: ['websocket', 'polling'],
@@ -33,3 +34,9 @@ export default function DeleteButtonCollect(props) {
     </>
   );
 }
+
+DeleteButtonCollect.propTypes = {
+  id: PropTypes.string,
+};
+
+export default DeleteButtonCollect;

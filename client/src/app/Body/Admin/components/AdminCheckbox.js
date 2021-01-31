@@ -1,7 +1,8 @@
 import React, { memo } from 'react';
+import PropTypes from 'prop-types';
 
-const AdminCheckbox = (props) => {
-  const { type = 'checkbox', checked = false, onChange, title, value } = props;
+function AdminCheckbox(props) {
+  const { type, checked, onChange, title, value } = props;
   return (
     <input
       type={type}
@@ -12,6 +13,19 @@ const AdminCheckbox = (props) => {
       value={value}
     />
   );
+}
+
+AdminCheckbox.defaultProps = {
+  type: 'checkbox',
+  checked: false,
+};
+
+AdminCheckbox.propTypes = {
+  type: PropTypes.string,
+  checked: PropTypes.bool,
+  onChange: PropTypes.func,
+  title: PropTypes.string,
+  value: PropTypes.string,
 };
 
 export default memo(AdminCheckbox);

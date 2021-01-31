@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import { Card } from 'react-bootstrap';
 import { MarkdownPreview } from 'react-marked-markdown';
 import Tag from '@uiw/react-tag';
+import PropTypes from 'prop-types';
 
 function ItemBody(props) {
   const { data, pole, el } = props;
@@ -36,5 +37,11 @@ function ItemBody(props) {
     </Card.Body>
   );
 }
+
+ItemBody.propTypes = {
+  data: PropTypes.object,
+  pole: PropTypes.object,
+  el: PropTypes.object,
+};
 
 export default memo(ItemBody);

@@ -3,6 +3,7 @@ import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth0 } from '@auth0/auth0-react';
+import PropTypes from 'prop-types';
 import LikeButton from '../../ItemPage/containers/LikeButton';
 import ItemBody from '../../ItemPage/components/ItemBody';
 
@@ -35,5 +36,10 @@ function TabelItems(props) {
 
   return <div className="table-items">{makeItems()}</div>;
 }
+
+TabelItems.propTypes = {
+  dataItems: PropTypes.array,
+  idCollect: PropTypes.string,
+};
 
 export default TabelItems;

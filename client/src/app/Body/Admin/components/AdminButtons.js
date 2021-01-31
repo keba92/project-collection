@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 
 function AdminButtons(props) {
   const { blockUser, deleteUsers, makeAdmin } = props;
@@ -28,5 +29,11 @@ function AdminButtons(props) {
     </span>
   );
 }
+
+AdminButtons.propTypes = {
+  blockUser: PropTypes.func,
+  deleteUsers: PropTypes.func,
+  makeAdmin: PropTypes.func,
+};
 
 export default memo(AdminButtons);

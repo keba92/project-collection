@@ -5,12 +5,13 @@ import io from 'socket.io-client';
 import { useTranslation } from 'react-i18next';
 import { useDropzone } from 'react-dropzone';
 import { Image } from 'cloudinary-react';
+import PropTypes from 'prop-types';
 import FormInput from '../components/FormInput';
 import FormOption from '../components/FormOption';
 
 const TableCollection = React.lazy(() => import('../components/TableCollection'));
 
-export default function CreateCollection(props) {
+function CreateCollection(props) {
   const socket = io({
     transports: ['websocket', 'polling'],
     reconnect: true,
@@ -187,3 +188,9 @@ export default function CreateCollection(props) {
     </div>
   );
 }
+
+CreateCollection.propTypes = {
+  idLink: PropTypes.string,
+};
+
+export default CreateCollection;

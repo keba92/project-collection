@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 
 function Comment(props) {
   const { data } = props;
@@ -25,5 +26,9 @@ function Comment(props) {
     <div className="comment">{data.length != 0 ? makeComment : <p>{t('nonCommentP')}</p>}</div>
   );
 }
+
+Comment.propTypes = {
+  data: PropTypes.array,
+};
 
 export default Comment;

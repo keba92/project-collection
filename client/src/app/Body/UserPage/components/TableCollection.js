@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
 import { Image } from 'cloudinary-react';
+import PropTypes from 'prop-types';
 import DeleteButtonCollect from '../containers/DeleteButtonCollect';
 
 function TableCollection(props) {
@@ -60,5 +61,10 @@ function TableCollection(props) {
 
   return <div className="table-collection">{makeCollection}</div>;
 }
+
+TableCollection.propTypes = {
+  dataCollect: PropTypes.array,
+  setCollect: PropTypes.func,
+};
 
 export default memo(TableCollection);
